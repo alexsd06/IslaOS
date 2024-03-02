@@ -1,5 +1,5 @@
 #include "textmode.h"
-
+#include "kernel/math/math.h"
 
 size_t VGA_WIDTH = 80;
 size_t VGA_HEIGHT = 25;
@@ -144,7 +144,7 @@ void text_mode_debug()
 	}
 
 	terminal_writestringint("The magic number is: ", magic_nr, true);
-	terminal_writestringstring("The bootloader name is: ", mb_info->boot_loader_name, true); 
+	terminal_writestringstring("The bootloader name is: ", (char*) mb_info->boot_loader_name, true); 
 	terminal_writestringint("The framebuffer width is: ", mb_info->framebuffer_width, true);
 	terminal_writestringint("The framebuffer height is: ", mb_info->framebuffer_height, true);
 	

@@ -7,6 +7,8 @@ build:
 	
 	i686-elf-gcc -I. -c kernel/kernel.c -o kernel/kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
+	i686-elf-gcc -I. -c kernel/std/delay.c -o kernel/std/delay.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+
 	i686-elf-gcc -I. -c kernel/memory/kmalloc.c -o kernel/memory/kmalloc.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
 	i686-elf-gcc -I. -c kernel/drivers/io.c -o kernel/drivers/io.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
@@ -23,7 +25,8 @@ build:
 	
 	i686-elf-gcc -T linker/linker.ld -o dist/IslaOS.bin -ffreestanding -O2 -nostdlib -lgcc \
 	 kernel/textmode/textmode.o boot/multiboot_islaos.o boot/asm/boot.o kernel/kernel.o fonts/psf/font.o \
-	 fonts/font_lib.o kernel/memory/kmalloc.o kernel/drivers/io.o kernel/drivers/keyboard.o kernel/math/math.o
+	 fonts/font_lib.o kernel/memory/kmalloc.o kernel/drivers/io.o kernel/drivers/keyboard.o kernel/math/math.o \
+	 kernel/std/delay.o
 	
 	
 	grub-file --is-x86-multiboot dist/IslaOS.bin
@@ -32,7 +35,7 @@ build:
 	cp cfg/grub.cfg isodir/boot/grub/grub.cfg
 	grub-mkrescue -o iso/IslaOS.iso isodir
 	qemu-system-i386 -cdrom iso/IslaOS.iso -machine q35 -m 1024M
-	#qemu-system-i386 -kernel bin/IslaOS.bin -machine q35 -m 256M
+	#qemu-system-i386 -kernel dist/IslaOS.bin -machine q35 -m 256M
 
 
 default:

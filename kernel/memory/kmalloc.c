@@ -14,19 +14,19 @@ void kinit_memory()
 }
 void* kmalloc (int size)
 {
-    void *pointer=mem_lower;
+    void *pointer=(void*) mem_lower;
     mem_lower+=size;
     return pointer;
 }
 
-void kmemset (char *addr, int c, size_t n)
+void kmemset (char *addr, int c, int n)
 {
     for (int i=0; i<n; i++) {
         addr[i]=c;
     }
 }
 
-void* kcalloc (int nelem, size_t bytes) {
+void* kcalloc (int nelem, int bytes) {
     void *pointer=kmalloc(nelem*bytes);
     kmemset(pointer, 0, nelem*bytes);
     return pointer;

@@ -120,7 +120,6 @@ struct multiboot_header
   multiboot_uint32_t height;
   multiboot_uint32_t depth;
 };
-__attribute__((section(".multiboot")));
 /* The symbol table for a.out. */
 struct multiboot_aout_symbol_table
 {

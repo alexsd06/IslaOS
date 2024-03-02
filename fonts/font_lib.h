@@ -25,22 +25,26 @@ typedef struct {
 } PSF_font;
 
 void psf_init();
-void putchar(
-    char *fb,
-    int scanline,
-    unsigned short int c,
-    int cx, int cy,
-    uint32_t fg, uint32_t bg);
 
-extern char _binary_fonts_psf_font_psf_start;
-extern char _binary_fonts_psf_font_psf_end;
+extern char *_binary_fonts_psf_font_psf_start;
+extern char *_binary_fonts_psf_font_psf_end;
  
 extern uint16_t *unicode;
 
 #define PIXEL uint32_t   /* pixel pointer */
 
-void write_string (char *s);
 void init_putchar();
+
+void write_chard (char c, bool deleteable);
+void write_stringd (char *s, bool deletable);
+
+void kprintd(char *s, bool deletable);
 void kprint(char *s);
-void kputint (int cif);
+
+void kputintd (int cif, bool deletable);
+
+void kprintintd(int data, bool deletable);
 void kprintint(int data);
+
+void kprintlnd(char *s, bool deletable);
+void kprintln(char *s);

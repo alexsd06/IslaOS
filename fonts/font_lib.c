@@ -1,4 +1,5 @@
 #include "font_lib.h"
+#include "kernel/math/math.h"
 #include "boot/multiboot_islaos.h"
 #include "kernel/memory/kmalloc.h"
 
@@ -8,6 +9,9 @@
 #include <stdint.h>
 
 uint16_t *unicode;
+
+int line_size[1080];
+bool char_deletable[1080][1920];
 
 void psf_init()
 {
@@ -59,7 +63,7 @@ void psf_init()
 
 void putchar(
     /* The framebuffer */
-    char *fb,
+    unsigned char *fb,
     /* number of bytes in each line, it's possible it's not screen width * bytesperpixel! */
     int scanline,
     /* note that this is int, not char as it's a unicode character */
@@ -112,10 +116,13 @@ void init_putchar()
     __putchar_column=0;
     __putchar_line=0;
 }
+
 void write_next_line()
 {
     __putchar_column=0;
     __putchar_line+=1;
+    char_deletable[__putchar_line][__putchar_column]=true;
+    line_size[__putchar_line]=__putchar_column;
 }
 void clear_screen()
 {
@@ -124,13 +131,37 @@ void clear_screen()
     int font_max_columns=FRAMEBUFFER_WIDTH/(font->width+1); 
     int font_max_lines=FRAMEBUFFER_HEIGHT/font->height;
     for (int i=0; i<font_max_columns; i++) {
+        line_size[i]=0;
         for (int j=0; j<font_max_lines; j++) {
             putchar(framebuffer, bytesperline, ' ', i, j, 0xFFFFFF, 0x000000);
         }
     }
     init_putchar();
 }
-void write_char (char c)
+
+void cursor_back()
+{
+    PSF_font *font = (PSF_font*)&_binary_fonts_psf_font_psf_start;
+    int font_max_columns=FRAMEBUFFER_WIDTH/(font->width+1); 
+    if (__putchar_column>0) {
+        __putchar_column--;
+        line_size[__putchar_line]=__putchar_column;
+    }
+    else if (__putchar_column==0) {
+        if (__putchar_line>0) {
+             __putchar_line--;
+             __putchar_column=line_size[__putchar_line];
+        }
+    }
+}
+bool last_char_deletable()
+{
+    if (__putchar_column>0) return char_deletable[__putchar_line][__putchar_column-1];
+    else if (__putchar_line>0) return char_deletable[__putchar_line-1][line_size[__putchar_line-1]];
+    return false;
+}
+
+void write_chard (char c, bool deleteable)
 {
     if (!__init_putchar) init_putchar();
     int bytesperline=pixelwidth*FRAMEBUFFER_WIDTH;
@@ -146,6 +177,15 @@ void write_char (char c)
         write_next_line();
         return;
     }
+    if (c=='\b')
+    {
+        if (last_char_deletable()) {
+            cursor_back();
+            write_chard(' ', deleteable);
+            cursor_back();
+        }
+        return;
+    }
     if (__putchar_column>=font_max_columns) {
         write_next_line();
         return;
@@ -154,9 +194,11 @@ void write_char (char c)
         clear_screen();
     }
     putchar(framebuffer, bytesperline,  c, __putchar_column, __putchar_line, 0xFFFFFF, 0x000000);
+    char_deletable[__putchar_line][__putchar_column]=deleteable;
+    line_size[__putchar_line]=__putchar_column;
     __putchar_column++;
 }
-void write_string (char *s)
+void write_stringd (char *s, bool deletable)
 {
     int i=0;
     if (!__init_putchar) init_putchar();
@@ -167,37 +209,56 @@ void write_string (char *s)
     int font_max_lines=FRAMEBUFFER_HEIGHT/font->height;
 
     while (s[i]!='\0') {
-        write_char(s[i]);
+        write_chard(s[i], deletable);
         i++;
     }
 }
 
+void kprintd(char *s, bool deletable)
+{
+    write_stringd(s, deletable);
+}
 void kprint(char *s)
 {
-    write_string(s);
+    kprintd(s, false);
 }
 
-void kputint (int cif)
+void kputintd (int cif, bool deletable)
 {
 	char c=cif+'0';
-	write_char(c);
+	write_chard(c, deletable);
 }
 
-void kprintint(int data)
+void kprintintd(int data, bool deletable)
 {
 	int zero_before;
 	data=oglindit(data, &zero_before);
     if (data==0) {
-        kputint(0);
+        kputintd(0, deletable);
         return;
     }
 	while (data) {
 		int cif=data%10;
-		kputint (cif);
+		kputintd (cif, deletable);
 		data/=10;
 	}
 	while (zero_before) {
-		kputint(0);
+		kputintd(0, deletable);
 		zero_before--;
 	}
+}
+void kprintint(int data)
+{
+	kprintintd(data, false);
+}
+
+void kprintlnd(char *s, bool deletable)
+{
+    kprintd(s, deletable);
+    kprintd("\n", deletable);
+}
+
+void kprintln(char *s)
+{
+    kprintlnd(s, false);
 }
