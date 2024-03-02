@@ -26,8 +26,8 @@ typedef struct {
 
 void psf_init();
 
-extern char *_binary_fonts_psf_font_psf_start;
-extern char *_binary_fonts_psf_font_psf_end;
+extern PSF_font _binary_fonts_psf_font_psf_start;
+extern PSF_font _binary_fonts_psf_font_psf_end;
  
 extern uint16_t *unicode;
 

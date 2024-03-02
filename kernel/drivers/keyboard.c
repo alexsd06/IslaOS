@@ -46,10 +46,9 @@ unsigned char scancodes[128] =
     0,	/* All other keys are undefined */
 };
 
-bool keypress[256];
-int key_last_typed[256];
+int keypress[256];
 int time_since_last_print=0;
-int key_print_delay=300000;
+int key_print_delay=200000;
 
 int get_last_key_scancode()
 {
@@ -74,12 +73,18 @@ void update_keyboard_status()
 	bool pressed;
 	int keycode=get_last_key_char(&pressed);
 	if (keycode==0) return;
-	keypress[keycode]=pressed;
+	if (pressed) {
+		if (keypress[keycode]<INT32_MAX) {
+			keypress[keycode]++;
+		}
+	}
+	else {
+		keypress[keycode]=0;
+	}
 }
 
 void init_keyboard()
 {
-	int response;
 	kprintln("Init keyboard called!");
 	/*
 	outb(0x60, bin_to_dec(00100000)); //00100000 00000100
@@ -94,13 +99,13 @@ void init_keyboard()
 		mode=inb(0x60);
 	}
 	if (mode==0x43) kprint("Keyboard is in scancode 1! ");
-	else if (mode==0x41) kprint("Keyboard is in scancode 2!\nBut it gets translated to scancode 1 ");
+	else if (mode==0x41) kprint("Keyboard is in scancode 1 because of the PS/2 Controller! "); //Scanmode 2
 	else if (mode==0x3f) kprint("Keyboard is in scancode 3! ");
 	else {
 		kprint("Keyboard is an unknown scancode! ");
 	}
-	char *hex_mode=dec_to_hex(mode);
-	kprintln(hex_mode);
+	//char *hex_mode=dec_to_hex(mode);
+	//kprintln(hex_mode);
 }
 void keyboard_read_key()
 {

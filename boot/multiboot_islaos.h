@@ -1,6 +1,7 @@
+#include <stdint.h>
 extern int magic_nr;
 extern int pixelwidth, pitch;
-extern int FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT;
+extern uint32_t FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT;
 extern unsigned char *framebuffer;
 extern struct multiboot_info *mb_info;
 

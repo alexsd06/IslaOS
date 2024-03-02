@@ -13,11 +13,13 @@ uint16_t *unicode;
 int line_size[1080];
 bool char_deletable[1080][1920];
 
+int font_width, font_height;
+
 void psf_init()
 {
     uint16_t glyph = 0;
     /* cast the address to PSF header struct */
-    PSF_font *font = (PSF_font*)&_binary_fonts_psf_font_psf_start;
+    PSF_font *font = (PSF_font*) &_binary_fonts_psf_font_psf_start;
     /* is there a unicode table? */
     if (font->flags) {
         unicode = NULL;
@@ -25,16 +27,16 @@ void psf_init()
     }
  
     /* get the offset of the table */
-    char *s = (char *)(
-    (unsigned char*)&_binary_fonts_psf_font_psf_start +
+    char *s = (char *)(&_binary_fonts_psf_font_psf_start +
       font->headersize +
       font->numglyph * font->bytesperglyph
     );
     /* allocate memory for translation table */
-    //unicode = calloc(USHRT_MAX, 2);
+    //unicode = calloc(USHRT_dMAX, 2);
     unicode=(uint16_t*) kcalloc(USHRT_MAX, 2); 
-    while(s>_binary_fonts_psf_font_psf_end) {
-        uint16_t uc = (uint16_t)((unsigned char *)s[0]);
+    while(s>(char *)&_binary_fonts_psf_font_psf_end) {
+
+        uint16_t uc = (uint16_t)(s[0]);
         if(uc == 0xFF) {
             glyph++;
             s++;
@@ -74,8 +76,11 @@ void putchar(
     uint32_t fg, uint32_t bg) //THIS FUCKING NEEDS 32bit DEPTH!!! WHY!?
 {
     /* cast the address to PSF header struct */
-    PSF_font *font = (PSF_font*)&_binary_fonts_psf_font_psf_start;
+    PSF_font *font = (PSF_font*) &_binary_fonts_psf_font_psf_start;
     /* we need to know how many bytes encode one row */
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored  "-Warray-bounds="
+    font_width=font->width; font_height=font->height;
     int bytesperline=(font->width+7)/8;
     //int bytesperline=pixelwidth*FRAMEBUFFER_WIDTH/9;
     /* unicode translation */
@@ -90,12 +95,12 @@ void putchar(
     int offs = (cy * font->height * scanline) + (cx * (font->width + 1) * sizeof(PIXEL));
     /* finally display pixels according to the bitmap */
     int x,y, line,mask;
-    for(y=0;y<font->height;y++){
+    for(y=0;y<(int)font->height;y++){
         /* save the starting position of the line */
         line=offs;
         mask=1<<(font->width-1);
         /* display a row */
-        for(x=0;x<font->width;x++){
+        for(x=0;x<(int)font->width;x++){
             *((PIXEL*)(fb + line)) = *((unsigned int*)glyph) & mask ? fg : bg;
             /* adjust to the next pixel */
             mask >>= 1;
@@ -106,9 +111,10 @@ void putchar(
         glyph += bytesperline;
         offs  += scanline;
     }
+    #pragma GCC diagnostic pop
 }
 
-int __putchar_line, __putchar_column;
+uint32_t __putchar_line, __putchar_column;
 int __init_putchar=0;
 void init_putchar()
 {
@@ -128,11 +134,11 @@ void clear_screen()
 {
     int bytesperline=pixelwidth*FRAMEBUFFER_WIDTH;
     PSF_font *font = (PSF_font*)&_binary_fonts_psf_font_psf_start;
-    int font_max_columns=FRAMEBUFFER_WIDTH/(font->width+1); 
-    int font_max_lines=FRAMEBUFFER_HEIGHT/font->height;
-    for (int i=0; i<font_max_columns; i++) {
+    uint32_t font_max_columns=FRAMEBUFFER_WIDTH/(font->width+1); 
+    uint32_t font_max_lines=FRAMEBUFFER_HEIGHT/font->height;
+    for (uint32_t i=0; i<font_max_columns; i++) {
         line_size[i]=0;
-        for (int j=0; j<font_max_lines; j++) {
+        for (uint32_t j=0; j<font_max_lines; j++) {
             putchar(framebuffer, bytesperline, ' ', i, j, 0xFFFFFF, 0x000000);
         }
     }
@@ -141,8 +147,6 @@ void clear_screen()
 
 void cursor_back()
 {
-    PSF_font *font = (PSF_font*)&_binary_fonts_psf_font_psf_start;
-    int font_max_columns=FRAMEBUFFER_WIDTH/(font->width+1); 
     if (__putchar_column>0) {
         __putchar_column--;
         line_size[__putchar_line]=__putchar_column;
@@ -165,10 +169,10 @@ void write_chard (char c, bool deleteable)
 {
     if (!__init_putchar) init_putchar();
     int bytesperline=pixelwidth*FRAMEBUFFER_WIDTH;
-    PSF_font *font = (PSF_font*)&_binary_fonts_psf_font_psf_start;
+    PSF_font *font = &_binary_fonts_psf_font_psf_start;
 
-    int font_max_columns=FRAMEBUFFER_WIDTH/(font->width+1); 
-    int font_max_lines=FRAMEBUFFER_HEIGHT/font->height;
+    uint32_t font_max_columns=FRAMEBUFFER_WIDTH/(font->width+1); 
+    uint32_t font_max_lines=FRAMEBUFFER_HEIGHT/font->height;
     if (c==' '&&font_max_columns-__putchar_column<6) {
         write_next_line();
         return;
@@ -202,12 +206,6 @@ void write_stringd (char *s, bool deletable)
 {
     int i=0;
     if (!__init_putchar) init_putchar();
-    int bytesperline=pixelwidth*FRAMEBUFFER_WIDTH;
-    PSF_font *font = (PSF_font*)&_binary_fonts_psf_font_psf_start;
-
-    int font_max_columns=FRAMEBUFFER_WIDTH/(font->width+1); 
-    int font_max_lines=FRAMEBUFFER_HEIGHT/font->height;
-
     while (s[i]!='\0') {
         write_chard(s[i], deletable);
         i++;

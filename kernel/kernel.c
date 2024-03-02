@@ -58,8 +58,8 @@ void draw_random_pixels()
 	srand(1);
 
 	while (true) {
-		for (int i=0; i<FRAMEBUFFER_WIDTH; i++) {
-			for (int j=0; j<FRAMEBUFFER_HEIGHT; j++) {
+		for (int i=0; i<(int)FRAMEBUFFER_WIDTH; i++) {
+			for (int j=0; j<(int)FRAMEBUFFER_HEIGHT; j++) {
 				int r=rand()%255;
 				int g=rand()%255;
 				int b=rand()%255;
@@ -82,10 +82,20 @@ void log_text()
 		if (time_since_last_print==INT32_MAX) time_since_last_print=0;
 		update_keyboard_status();
 		for (int i=0; i<128; i++) {
-			if (keypress[i]&&time_since_last_print>key_print_delay) {
-				write_chard(i, true);
-				time_since_last_print=0;
-				if (i=='\n') kprint("kernel@IslaOS:/$ ");
+			if (keypress[i]!=0) {
+				//keypress[i] grows extremlu slow compared to the size of key_print_delay;
+				//TODO: Fix it
+				//TODO: Make the delay short only between same type keys.
+				if (keypress[i]<key_print_delay&&time_since_last_print>key_print_delay) {
+					write_chard(i, true);
+					time_since_last_print=0;
+					if (i=='\n') kprint("kernel@IslaOS:/$ ");
+				}
+				else if (keypress[i]>key_print_delay&&time_since_last_print>key_print_delay/3) {
+					write_chard(i, true);
+					time_since_last_print=0;
+					if (i=='\n') kprint("kernel@IslaOS:/$ ");
+				}
 			}
 		}
 	}
@@ -93,7 +103,11 @@ void log_text()
 
 void gui_mode()
 {
-	framebuffer=(char*) mb_info->framebuffer_addr;
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wint-to-pointer-cast"
+
+	framebuffer=(unsigned char*) mb_info->framebuffer_addr;
+	#pragma GCC diagnostic pop
 
 	pitch=mb_info->framebuffer_pitch;
 	pixelwidth=mb_info->framebuffer_bpp/8; //BitPerPixel to BytePerPixel

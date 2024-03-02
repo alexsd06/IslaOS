@@ -1,8 +1,9 @@
 #include "multiboot_islaos.h"
+#include <stdint.h>
 
 int magic_nr;
 int pixelwidth, pitch;
-int FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT;
+uint32_t FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT;
 
 unsigned char *framebuffer;
 
