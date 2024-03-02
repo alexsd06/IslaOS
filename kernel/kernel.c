@@ -6,7 +6,8 @@
 #include "boot/multiboot.h"
 #include "boot/multiboot_islaos.h"
 #include "fonts/font_lib.h"
-#include "include/data.h"
+#include "memory/kmalloc.h"
+#include "drivers/keyboard.h"
 
  
 /* Check if the compiler thinks you are targeting the wrong operating system. */
@@ -31,6 +32,8 @@ static void putpixel(unsigned char* screen, int x,int y, int r, int g, int b) {
     //screen[where + 1] = (color >> 8) & 255;   // GREEN
     //screen[where + 2] = (color >> 16) & 255;  // RED
 }
+
+int NEXT_RAND;
 
 void get_first_seed(int random_seed)
 {
@@ -64,12 +67,25 @@ void draw_random_pixels()
 	}
 }
 
+void beta_delay()
+{
+	int a;
+	for (int i=1; i<=10000000; i++) {
+		a=rand();
+	}
+}
+
 void log_text()
 {
-	init_putchar();
-	int bytesperline=FRAMEBUFFER_WIDTH*pixelwidth;
-	write_string("Hello world from the frame buffer and pfs font :))!\n");
-	write_string("Welcome to Operating System development; the great frontier. Not all \"make it\" in this field, many don't even pass the \"Hello World\" of OS development, but perhaps you will go further and create the next Linux? Or Windows? Or are your goals lower - MenuetOS? Or even CP/M? Whatever your goals, OSDev'ing is the great pinnacle of programming. But, you're not alone. In fact, this entire website, including the forums and this Wiki, are dedicated to OSDev'ing. This is not only about great programming skills, but is about community and developing friendships. Be those friendships between fellow forum members or IRQs and processes. What do you need to succeed in OSDev'ing? You should read the Getting Started article. If you are going to use C/C++ as your language of choice, you are required to build a GCC Cross-Compiler first. And if you prefer to use other Languages then it is important to have some similar tools (e.g. compiler) or if there's no such tools it is often only your efforts that can help you. But going along with your preferred language can add some motivation and excitement during your work. Good luck!");
+	kprint("IslaOS Kernel initialized!\n\n");
+	kprint("kernel@IslaOS:/$ \n");
+	kprint("Welcome to Operating System development; the great frontier. Not all \"make it\" in this field, many don't even pass the \"Hello World\" of OS development, but perhaps you will go further and create the next Linux? Or Windows? Or are your goals lower - MenuetOS? Or even CP/M? Whatever your goals, OSDev'ing is the great pinnacle of programming. But, you're not alone. In fact, this entire website, including the forums and this Wiki, are dedicated to OSDev'ing. This is not only about great programming skills, but is about community and developing friendships. Be those friendships between fellow forum members or IRQs and processes. What do you need to succeed in OSDev'ing? You should read the Getting Started article. If you are going to use C/C++ as your language of choice, you are required to build a GCC Cross-Compiler first. And if you prefer to use other Languages then it is important to have some similar tools (e.g. compiler) or if there's no such tools it is often only your efforts that can help you. But going along with your preferred language can add some motivation and excitement during your work. Good luck!");
+	kprint("\n");
+	char s[]="IslaOS ";
+	while (true) {
+		kprint(s);
+		beta_delay();
+	}
 }
 
 void gui_mode()
@@ -89,9 +105,9 @@ void gui_mode()
 	
 }
 int NEXT_RAND;
-unsigned char *framebuffer;
 void kernel_main(void) 
 {
 	//text_mode_debug(); /*For this to work remove some video flags from boot.s*/
+	kinit_memory();
 	gui_mode();
 }

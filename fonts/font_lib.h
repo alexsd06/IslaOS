@@ -41,3 +41,6 @@ extern uint16_t *unicode;
 
 void write_string (char *s);
 void init_putchar();
+void kprint(char *s);
+void kputint (int cif);
+void kprintint(int data);

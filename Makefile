@@ -6,7 +6,15 @@ build:
 	i686-elf-as boot/asm/boot.s -o boot/asm/boot.o
 	
 	i686-elf-gcc -I. -c kernel/kernel.c -o kernel/kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+
+	i686-elf-gcc -I. -c kernel/memory/kmalloc.c -o kernel/memory/kmalloc.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+
+	i686-elf-gcc -I. -c kernel/drivers/io.c -o kernel/drivers/io.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+
+	i686-elf-gcc -I. -c kernel/drivers/keyboard.c -o kernel/drivers/keyboard.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 	
+	i686-elf-gcc -I. -c kernel/math/math.c -o kernel/math/math.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+
 	i686-elf-gcc -I. -c kernel/textmode/textmode.c -o kernel/textmode/textmode.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 	
 	i686-elf-gcc -I. -c boot/multiboot_islaos.c -o boot/multiboot_islaos.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
@@ -15,7 +23,7 @@ build:
 	
 	i686-elf-gcc -T linker/linker.ld -o dist/IslaOS.bin -ffreestanding -O2 -nostdlib -lgcc \
 	 kernel/textmode/textmode.o boot/multiboot_islaos.o boot/asm/boot.o kernel/kernel.o fonts/psf/font.o \
-	 fonts/font_lib.o
+	 fonts/font_lib.o kernel/memory/kmalloc.o kernel/drivers/io.o kernel/drivers/keyboard.o kernel/math/math.o
 	
 	
 	grub-file --is-x86-multiboot dist/IslaOS.bin

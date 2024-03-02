@@ -50,8 +50,6 @@ void terminal_write(const char* data, size_t size);
  
 void terminal_writestring(const char* data);
 
-int oglindit (int nr, int *zero_before);
-
 void terminal_putint (int cif);
 void terminal_writeint(int data);
 

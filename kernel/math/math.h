@@ -1,0 +1,1 @@
+int oglindit (int nr, int *zero_before);

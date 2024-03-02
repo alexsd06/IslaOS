@@ -1,6 +1,6 @@
 #include "font_lib.h"
-#include "include/data.h"
 #include "boot/multiboot_islaos.h"
+#include "kernel/memory/kmalloc.h"
 
 #include <stdint.h>
 #include <stddef.h>
@@ -28,12 +28,7 @@ void psf_init()
     );
     /* allocate memory for translation table */
     //unicode = calloc(USHRT_MAX, 2);
-    unicode=0x20000; 
-    /* 
-    Memory probably free... 
-    TODO: Write a memory allocator.... 
-    Use the mem_lower and mem_upper from the multiboot info
-    */
+    unicode=(uint16_t*) kcalloc(USHRT_MAX, 2); 
     while(s>_binary_fonts_psf_font_psf_end) {
         uint16_t uc = (uint16_t)((unsigned char *)s[0]);
         if(uc == 0xFF) {
@@ -110,8 +105,10 @@ void putchar(
 }
 
 int __putchar_line, __putchar_column;
+int __init_putchar=0;
 void init_putchar()
 {
+    __init_putchar=1;
     __putchar_column=0;
     __putchar_line=0;
 }
@@ -120,40 +117,87 @@ void write_next_line()
     __putchar_column=0;
     __putchar_line+=1;
 }
-void write_string (char *s)
+void clear_screen()
 {
-    int i=0;
+    int bytesperline=pixelwidth*FRAMEBUFFER_WIDTH;
+    PSF_font *font = (PSF_font*)&_binary_fonts_psf_font_psf_start;
+    int font_max_columns=FRAMEBUFFER_WIDTH/(font->width+1); 
+    int font_max_lines=FRAMEBUFFER_HEIGHT/font->height;
+    for (int i=0; i<font_max_columns; i++) {
+        for (int j=0; j<font_max_lines; j++) {
+            putchar(framebuffer, bytesperline, ' ', i, j, 0xFFFFFF, 0x000000);
+        }
+    }
+    init_putchar();
+}
+void write_char (char c)
+{
+    if (!__init_putchar) init_putchar();
     int bytesperline=pixelwidth*FRAMEBUFFER_WIDTH;
     PSF_font *font = (PSF_font*)&_binary_fonts_psf_font_psf_start;
 
     int font_max_columns=FRAMEBUFFER_WIDTH/(font->width+1); 
-    /*
-    Why the fuck is -18 necessary? 
-    EDIT: This shit only works at 600x800, which is wrong anyway because it should be 800x600
-    */
+    int font_max_lines=FRAMEBUFFER_HEIGHT/font->height;
+    if (c==' '&&font_max_columns-__putchar_column<6) {
+        write_next_line();
+        return;
+    }
+    if (c=='\n') {
+        write_next_line();
+        return;
+    }
+    if (__putchar_column>=font_max_columns) {
+        write_next_line();
+        return;
+    }
+    if (__putchar_line>=font_max_lines) {
+        clear_screen();
+    }
+    putchar(framebuffer, bytesperline,  c, __putchar_column, __putchar_line, 0xFFFFFF, 0x000000);
+    __putchar_column++;
+}
+void write_string (char *s)
+{
+    int i=0;
+    if (!__init_putchar) init_putchar();
+    int bytesperline=pixelwidth*FRAMEBUFFER_WIDTH;
+    PSF_font *font = (PSF_font*)&_binary_fonts_psf_font_psf_start;
+
+    int font_max_columns=FRAMEBUFFER_WIDTH/(font->width+1); 
     int font_max_lines=FRAMEBUFFER_HEIGHT/font->height;
 
     while (s[i]!='\0') {
-        if (s[i]==' '&&font_max_columns-__putchar_column<6) {
-            write_next_line();
-            i++;
-            while (s[i]==' ') i++;
-            continue;
-        }
-        if (s[i]=='\n') {
-            write_next_line();
-            i++;
-            while (s[i]==' ') i++;
-            continue;
-        }
-        if (__putchar_column>=font_max_columns) {
-            write_next_line();
-            i++;
-            while (s[i]==' ') i++;
-            continue;
-        }
-        putchar(framebuffer, bytesperline,  s[i], __putchar_column, __putchar_line, 0xFFFFFF, 0x000000);
-        __putchar_column++;
+        write_char(s[i]);
         i++;
     }
+}
+
+void kprint(char *s)
+{
+    write_string(s);
+}
+
+void kputint (int cif)
+{
+	char c=cif+'0';
+	write_char(c);
+}
+
+void kprintint(int data)
+{
+	int zero_before;
+	data=oglindit(data, &zero_before);
+    if (data==0) {
+        kputint(0);
+        return;
+    }
+	while (data) {
+		int cif=data%10;
+		kputint (cif);
+		data/=10;
+	}
+	while (zero_before) {
+		kputint(0);
+		zero_before--;
+	}
 }
