@@ -8,7 +8,7 @@
 #include "fonts/font_lib.h"
 #include "memory/kmalloc.h"
 #include "drivers/keyboard/keyboard.h"
-#include "math/math.h"
+#include "kernel/std/math.h"
 #include "mainframe/mainframe.h"
 #include "kernel/drivers/video/video.h"
 #include "kernel/std/time.h"

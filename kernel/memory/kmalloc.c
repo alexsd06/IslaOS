@@ -31,3 +31,18 @@ void* kcalloc (int nelem, int bytes) {
     kmemset(pointer, 0, nelem*bytes);
     return pointer;
 }
+
+int ram_size(struct multiboot_info *mb_info, char unit)
+{
+	int size_bytes=mb_info->mem_upper-mb_info->mem_lower;
+	if (unit=='M') return size_bytes/1024;
+	if (unit=='G') return size_bytes/(1024*1024);
+	return size_bytes;
+}
+int ram_available(char unit)
+{
+	int size_bytes=mem_upper-mem_lower;
+	if (unit=='M') return size_bytes/1024;
+	if (unit=='G') return size_bytes/(1024*1024);
+	return size_bytes;
+}

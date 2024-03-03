@@ -21,7 +21,7 @@ forced to be within the first 8 KiB of the kernel file.
 
 .long 0, 0, 0, 0, 0
 .long 0 # 0 = set graphics mode
-.long 1280, 720, 32 # Width, height, depth
+.long 800, 600, 32 # Width, height, depth
 
 /*
 The multiboot standard does not define the value of the stack pointer register

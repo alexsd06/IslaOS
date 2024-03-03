@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include "boot/multiboot.h"
 
 #define PSF1_FONT_MAGIC 0x0436
  
@@ -50,3 +51,4 @@ void kprintlnd(char *s, bool deletable);
 void kprintln(char *s);
 
 void cursor_back();
+void clear_screen();

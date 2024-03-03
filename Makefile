@@ -4,6 +4,7 @@ build:
 
 	
 	i686-elf-as boot/asm/boot.s -o boot/asm/boot.o
+	i686-elf-as boot/asm/shutdown.s -o boot/asm/shutdown.o
 	
 	i686-elf-gcc -I. -c kernel/kernel.c -o kernel/kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
@@ -21,7 +22,7 @@ build:
 
 	i686-elf-gcc -I. -c kernel/drivers/keyboard/keyboard.c -o kernel/drivers/keyboard/keyboard.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 	
-	i686-elf-gcc -I. -c kernel/math/math.c -o kernel/math/math.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+	i686-elf-gcc -I. -c kernel/std/math.c -o kernel/std/math.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
 	i686-elf-gcc -I. -c kernel/textmode/textmode.c -o kernel/textmode/textmode.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 	
@@ -31,8 +32,8 @@ build:
 	
 	i686-elf-gcc -T linker/linker.ld -o dist/IslaOS.bin -ffreestanding -O2 -nostdlib -lgcc \
 	 kernel/textmode/textmode.o boot/multiboot_islaos.o boot/asm/boot.o kernel/kernel.o fonts/psf/font.o \
-	 fonts/font_lib.o kernel/memory/kmalloc.o kernel/drivers/io/io.o kernel/drivers/keyboard/keyboard.o kernel/math/math.o \
-	 kernel/std/time.o kernel/mainframe/mainframe.o kernel/drivers/video/video.o kernel/std/string.o 
+	 fonts/font_lib.o kernel/memory/kmalloc.o kernel/drivers/io/io.o kernel/drivers/keyboard/keyboard.o kernel/std/math.o \
+	 kernel/std/time.o kernel/mainframe/mainframe.o kernel/drivers/video/video.o kernel/std/string.o boot/asm/shutdown.o
 	
 	grub-file --is-x86-multiboot dist/IslaOS.bin
 	mkdir -p isodir/boot/grub

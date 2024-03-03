@@ -1,6 +1,7 @@
 #include "textmode.h"
-#include "kernel/math/math.h"
+#include "kernel/std/math.h"
 #include "kernel/std/string.h"
+#include "kernel/memory/kmalloc.h"
 
 size_t VGA_WIDTH = 80;
 size_t VGA_HEIGHT = 25;
@@ -20,14 +21,6 @@ inline uint16_t vga_entry(unsigned char uc, uint8_t color)
 	return (uint16_t) uc | (uint16_t) color << 8;
 }
 
-
-int ram_size(struct multiboot_info *mb_info, char unit)
-{
-	int size_bytes=mb_info->mem_upper-mb_info->mem_lower;
-	if (unit=='M') return size_bytes/1024;
-	if (unit=='G') return size_bytes/(1024*1024);
-	return size_bytes;
-}
 void terminal_initialize(void) 
 {
 	terminal_row = 0;

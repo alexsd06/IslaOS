@@ -1,5 +1,5 @@
 #include "font_lib.h"
-#include "kernel/math/math.h"
+#include "kernel/std/math.h"
 #include "kernel/drivers/video/video.h"
 #include "kernel/memory/kmalloc.h"
 #include "kernel/mainframe/mainframe.h"
