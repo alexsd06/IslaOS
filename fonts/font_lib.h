@@ -48,3 +48,5 @@ void kprintint(int data);
 
 void kprintlnd(char *s, bool deletable);
 void kprintln(char *s);
+
+void cursor_back();

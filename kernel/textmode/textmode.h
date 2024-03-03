@@ -28,7 +28,6 @@ enum vga_color {
  
 //inline uint16_t vga_entry(unsigned char uc, uint8_t color);
  
-size_t strlen(const char* str);
 
 extern size_t VGA_WIDTH;
 extern size_t VGA_HEIGHT;

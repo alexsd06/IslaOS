@@ -7,13 +7,19 @@ build:
 	
 	i686-elf-gcc -I. -c kernel/kernel.c -o kernel/kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
-	i686-elf-gcc -I. -c kernel/std/delay.c -o kernel/std/delay.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+	i686-elf-gcc -I. -c kernel/mainframe/mainframe.c -o kernel/mainframe/mainframe.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+
+	i686-elf-gcc -I. -c kernel/std/time.c -o kernel/std/time.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+
+	i686-elf-gcc -I. -c kernel/std/string.c -o kernel/std/string.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
 	i686-elf-gcc -I. -c kernel/memory/kmalloc.c -o kernel/memory/kmalloc.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
-	i686-elf-gcc -I. -c kernel/drivers/io.c -o kernel/drivers/io.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+	i686-elf-gcc -I. -c kernel/drivers/io/io.c -o kernel/drivers/io/io.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
-	i686-elf-gcc -I. -c kernel/drivers/keyboard.c -o kernel/drivers/keyboard.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+	i686-elf-gcc -I. -c kernel/drivers/video/video.c -o kernel/drivers/video/video.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+
+	i686-elf-gcc -I. -c kernel/drivers/keyboard/keyboard.c -o kernel/drivers/keyboard/keyboard.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 	
 	i686-elf-gcc -I. -c kernel/math/math.c -o kernel/math/math.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
@@ -25,9 +31,8 @@ build:
 	
 	i686-elf-gcc -T linker/linker.ld -o dist/IslaOS.bin -ffreestanding -O2 -nostdlib -lgcc \
 	 kernel/textmode/textmode.o boot/multiboot_islaos.o boot/asm/boot.o kernel/kernel.o fonts/psf/font.o \
-	 fonts/font_lib.o kernel/memory/kmalloc.o kernel/drivers/io.o kernel/drivers/keyboard.o kernel/math/math.o \
-	 kernel/std/delay.o
-	
+	 fonts/font_lib.o kernel/memory/kmalloc.o kernel/drivers/io/io.o kernel/drivers/keyboard/keyboard.o kernel/math/math.o \
+	 kernel/std/time.o kernel/mainframe/mainframe.o kernel/drivers/video/video.o kernel/std/string.o 
 	
 	grub-file --is-x86-multiboot dist/IslaOS.bin
 	mkdir -p isodir/boot/grub

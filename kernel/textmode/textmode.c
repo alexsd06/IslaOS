@@ -1,5 +1,6 @@
 #include "textmode.h"
 #include "kernel/math/math.h"
+#include "kernel/std/string.h"
 
 size_t VGA_WIDTH = 80;
 size_t VGA_HEIGHT = 25;
@@ -27,15 +28,6 @@ int ram_size(struct multiboot_info *mb_info, char unit)
 	if (unit=='G') return size_bytes/(1024*1024);
 	return size_bytes;
 }
-
-size_t strlen(const char* str) 
-{
-	size_t len = 0;
-	while (str[len])
-		len++;
-	return len;
-}
-
 void terminal_initialize(void) 
 {
 	terminal_row = 0;

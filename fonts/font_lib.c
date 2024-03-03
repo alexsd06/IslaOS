@@ -1,7 +1,8 @@
 #include "font_lib.h"
 #include "kernel/math/math.h"
-#include "boot/multiboot_islaos.h"
+#include "kernel/drivers/video/video.h"
 #include "kernel/memory/kmalloc.h"
+#include "kernel/mainframe/mainframe.h"
 
 #include <stdint.h>
 #include <stddef.h>
@@ -142,6 +143,7 @@ void clear_screen()
             putchar(framebuffer, bytesperline, ' ', i, j, 0xFFFFFF, 0x000000);
         }
     }
+    command_buffer_size=0;
     init_putchar();
 }
 

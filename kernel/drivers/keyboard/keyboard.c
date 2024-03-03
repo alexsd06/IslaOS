@@ -1,8 +1,8 @@
-#include "io.h"
+#include "kernel/drivers/io/io.h"
 #include "keyboard.h"
 #include "fonts/font_lib.h"
 #include "kernel/math/math.h"
-#include "kernel/std/delay.h"
+#include "kernel/std/time.h"
 
 int lastkey;
 
@@ -47,8 +47,6 @@ unsigned char scancodes[128] =
 };
 
 int keypress[256];
-int time_since_last_print=0;
-int key_print_delay=200000;
 
 int get_last_key_scancode()
 {
@@ -78,12 +76,9 @@ void update_keyboard_status()
 			keypress[keycode]++;
 		}
 	}
-	else {
-		keypress[keycode]=0;
-	}
 }
 
-void init_keyboard()
+void kinit_keyboard()
 {
 	kprintln("Init keyboard called!");
 	/*
