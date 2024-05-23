@@ -53,4 +53,9 @@ int ram_available(char unit)
 	return size_bytes;
 }
 
-void kfree(void * ptr) {}
+void kfree() {} 
+/* 
+TODO: Write this deallocator, make kmalloc work by fragmenting the heap 1 byte and in the deallocator
+free it by deallocating continous chunks of free memory (either by setting it to 0 or by keeping track
+of unused sectors in some separate array).
+*/

@@ -133,14 +133,9 @@ void write_next_line()
 }
 void clear_screen()
 {
-    int bytesperline=pixelwidth*FRAMEBUFFER_WIDTH;
-    PSF_font *font = (PSF_font*)&_binary_fonts_psf_font_psf_start;
-    uint32_t font_max_columns=FRAMEBUFFER_WIDTH/(font->width+1); 
-    uint32_t font_max_lines=FRAMEBUFFER_HEIGHT/font->height;
-    for (uint32_t i=0; i<font_max_columns; i++) {
-        line_size[i]=0;
-        for (uint32_t j=0; j<font_max_lines; j++) {
-            putchar(framebuffer, bytesperline, ' ', i, j, 0xFFFFFF, 0x000000);
+    for (int i=0; i<(int) FRAMEBUFFER_HEIGHT; i++) {
+        for (int j=0; j<(int) FRAMEBUFFER_WIDTH; j++) {
+            write_pixel(i, j, 0);
         }
     }
     command_buffer_size=0;
@@ -229,7 +224,7 @@ void kputintd (int cif, bool deletable)
 	write_chard(c, deletable);
 }
 
-void kprintintd(int data, bool deletable)
+void kprintintd(uint32_t data, bool deletable)
 {
 	int zero_before;
 	data=oglindit(data, &zero_before);
@@ -247,28 +242,29 @@ void kprintintd(int data, bool deletable)
 		zero_before--;
 	}
 }
-void kprintinthex(int data)
+void kprintinthex(uint32_t data)
 {
     char analog[]="0123456789ABCDEF";
     char rez[64];
+    int ind_rez=0;
     rez[0]=0;
     while (data!=0) {
         int cif=data%16;
         char chr=analog[cif];
-        rez[++rez[0]]=chr;
+        rez[++ind_rez]=chr;
         data/=16;
     }
     char fin[128];
     fin[0]='0'; fin[1]='x';
     int ind=2;
-    for (int i=rez[0]; i>=1; i--) {
+    for (int i=ind_rez; i>=1; i--) {
         fin[ind]=rez[i];
         ind++;
     }
     fin[ind]='\0';
     kprint(fin);
 }
-void kprintint(int data)
+void kprintint(uint32_t data)
 {
 	kprintintd(data, false);
 }

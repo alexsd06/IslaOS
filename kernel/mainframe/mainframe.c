@@ -46,6 +46,16 @@ void exit()
 	shutdown();
 }
 
+void islafetch()
+{
+	read_image();
+}
+
+void unknown()
+{
+	kprintln ("Unknown command typed!\n");
+}
+
 void help()
 {
 	kprintln ("Help for IslaOS Kernel 1.0");
@@ -54,17 +64,7 @@ void help()
 	kprintln ("info - Shows some info about the system");
 	kprintln ("clear - Clears the screen");
 	kprintln ("exit - Shutdowns the PC");
-	kprintln ("islafetch - ...");
-}
-
-void unknown()
-{
-	kprintln ("Unknown command typed!");
-}
-
-void islafetch()
-{
-	read_image();
+	kprintln ("islafetch / fetch - Neofetch for IslaOS");
 }
 
 int last_key_typed;
@@ -77,8 +77,9 @@ void exec()
 	else if (strcmp(command_buffer, "info")==0) info();
 	else if (strcmp(command_buffer, "clear")==0) clear_screen();
 	else if (strcmp(command_buffer, "exit")==0) exit();
-	else if (strcmp(command_buffer, "islafetch")==0) islafetch();
-	else islafetch();
+	else if (strcmp(command_buffer, "islafetch")==0 || strcmp(command_buffer, "fetch")==0) islafetch();
+	else if (strcmp(command_buffer, "")==0) return;
+	else unknown();
 }
 
 void type_key(int key)
@@ -110,6 +111,11 @@ void type_key(int key)
 	time_since_last_print=0;
 	last_key_typed=key;
 }
+/*
+-clear doesn't clear islafetch...
+-when pressing space continuously, 
+ the cursor doesnt clear at the end of the line.
+*/
 
 void mainframe()
 {

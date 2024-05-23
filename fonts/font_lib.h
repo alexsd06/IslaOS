@@ -44,8 +44,8 @@ void kprint(char *s);
 
 void kputintd (int cif, bool deletable);
 
-void kprintintd(int data, bool deletable);
-void kprintint(int data);
+void kprintintd(uint32_t data, bool deletable);
+void kprintint(uint32_t data);
 
 void kprintlnd(char *s, bool deletable);
 void kprintln(char *s);
@@ -53,4 +53,4 @@ void kprintln(char *s);
 void cursor_back();
 void clear_screen();
 
-void kprintinthex(int data);
+void kprintinthex(uint32_t data);
