@@ -1,5 +1,3 @@
 .vscode/
-iso/
 isodir/
-dist/
 *.o

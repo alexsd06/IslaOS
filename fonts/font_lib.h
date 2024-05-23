@@ -52,3 +52,5 @@ void kprintln(char *s);
 
 void cursor_back();
 void clear_screen();
+
+void kprintinthex(int data);

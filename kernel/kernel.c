@@ -2,7 +2,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "textmode/textmode.h"
 #include "boot/multiboot.h"
 #include "boot/multiboot_islaos.h"
 #include "fonts/font_lib.h"

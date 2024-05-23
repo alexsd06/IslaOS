@@ -16,3 +16,12 @@ int strcmp(const char *s1, const char *s2)
     }
     return 0;
 }
+void strcpy (char *dest, char *src)
+{
+    int i=0;
+    while (src[i]!='\0') {
+        dest[i]=src[i];
+        i++;
+    }
+    dest[i]='\0';
+}

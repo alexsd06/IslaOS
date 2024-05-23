@@ -247,6 +247,27 @@ void kprintintd(int data, bool deletable)
 		zero_before--;
 	}
 }
+void kprintinthex(int data)
+{
+    char analog[]="0123456789ABCDEF";
+    char rez[64];
+    rez[0]=0;
+    while (data!=0) {
+        int cif=data%16;
+        char chr=analog[cif];
+        rez[++rez[0]]=chr;
+        data/=16;
+    }
+    char fin[128];
+    fin[0]='0'; fin[1]='x';
+    int ind=2;
+    for (int i=rez[0]; i>=1; i--) {
+        fin[ind]=rez[i];
+        ind++;
+    }
+    fin[ind]='\0';
+    kprint(fin);
+}
 void kprintint(int data)
 {
 	kprintintd(data, false);

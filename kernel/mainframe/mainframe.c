@@ -10,6 +10,8 @@
 #include "kernel/std/time.h"
 #include "kernel/drivers/io/io.h"
 #include "kernel/std/string.h"
+#include "kernel/mainframe/images/tga.h"
+#include "kernel/drivers/video/video.h"
 
 int time_since_last_print=0;
 int key_print_delay=200000;
@@ -27,23 +29,12 @@ void info()
 	}
 
 	kprint("The magic number is: "); kprintint(magic_nr); kprintln("");
-	kprint("The bootloader name is: "); kprint((char*) mb_info->boot_loader_name); kprintln(""); 
-	kprint("The framebuffer width is: "); kprintint(mb_info->framebuffer_width); kprintln("");
-	kprint("The framebuffer height is: "); kprintint(mb_info->framebuffer_height); kprintln("");
+	kprint("The bootloader name is: "); kprint(bootloader_name); kprintln(""); 
+	kprint("The framebuffer width is: "); kprintint(FRAMEBUFFER_WIDTH); kprintln("");
+	kprint("The framebuffer height is: "); kprintint(FRAMEBUFFER_HEIGHT); kprintln("");
 	
-	kprint("Total RAM size: "); kprintint(ram_size(mb_info, 'M')); kprintln(" MB");
+	kprint("Total RAM size: "); kprintint(ram_size('M')); kprintln(" MB");
 	kprint("Total RAM available: "); kprintint(ram_available('M')); kprintln(" MB");
-	
-	/*
-	kprint("vbe_control_info: "); kprintint(mb_info->vbe_control_info); kprintln("");
-	kprint("vbe_mode_info: "); kprintint(mb_info->vbe_mode_info); kprintln("");
-	kprint("vbe_mode: "); kprintint(mb_info->vbe_mode); kprintln("");
-	
-	
-	kprint("vbe_interface_seg: "); kprintint(mb_info->vbe_interface_seg); kprintln("");
-	kprint("vbe_interface_off: "); kprintint(mb_info->vbe_interface_off); kprintln("");
-	kprint("vbe_interface_len: "); kprintint(mb_info->vbe_interface_len); kprintln("");
-	*/
 	
 }
 
@@ -52,12 +43,6 @@ void shutdown(void);
 void exit()
 {
 	kprintln("Shuting down!");
-	/*
-	outw(0xB004, 0x2000);
-	outw(0x604, 0x2000);
-	outw(0x4004, 0x3400);
-	outw(0x600, 0x34);
-	*/
 	shutdown();
 }
 
@@ -69,6 +54,17 @@ void help()
 	kprintln ("info - Shows some info about the system");
 	kprintln ("clear - Clears the screen");
 	kprintln ("exit - Shutdowns the PC");
+	kprintln ("islafetch - ...");
+}
+
+void unknown()
+{
+	kprintln ("Unknown command typed!");
+}
+
+void islafetch()
+{
+	read_image();
 }
 
 int last_key_typed;
@@ -77,10 +73,12 @@ void exec()
 {
 	//kprintln(command_buffer);
 	if (strcmp(command_buffer, "help")==0) help();
-	if (strcmp(command_buffer, "plm")==0) kprintln("Ba de ce ma injuri bagami-as eax-ul in ecx-ul matii!?");
-	if (strcmp(command_buffer, "info")==0) info();
-	if (strcmp(command_buffer, "clear")==0) clear_screen();
-	if (strcmp(command_buffer, "exit")==0) exit();
+	else if (strcmp(command_buffer, "plm")==0) kprintln("Ba de ce ma injuri bagami-as eax-ul in ecx-ul matii!?");
+	else if (strcmp(command_buffer, "info")==0) info();
+	else if (strcmp(command_buffer, "clear")==0) clear_screen();
+	else if (strcmp(command_buffer, "exit")==0) exit();
+	else if (strcmp(command_buffer, "islafetch")==0) islafetch();
+	else islafetch();
 }
 
 void type_key(int key)
