@@ -64,6 +64,17 @@ void psf_init()
     }
 }
 
+int get_font_width()
+{
+    PSF_font *font = (PSF_font*) &_binary_fonts_psf_font_psf_start;
+    return font->width;
+}
+int get_font_height()
+{
+    PSF_font *font = (PSF_font*) &_binary_fonts_psf_font_psf_start;
+    return font->height;
+}
+
 void putchar(
     /* The framebuffer */
     unsigned char *fb,
@@ -140,6 +151,16 @@ void clear_screen()
     }
     command_buffer_size=0;
     init_putchar();
+}
+
+int get_cursor_line()
+{
+    return __putchar_line;
+}
+
+int get_cursor_column()
+{
+    return __putchar_column;
 }
 
 void cursor_back()

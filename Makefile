@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := default
 build:
 	objcopy -O elf32-i386 -B i386 -I binary fonts/psf/font.psf fonts/psf/font.o
-	objcopy -O elf32-i386 -B i386 -I binary isla/isla_normal.tga isla/isla_normal.o
+	objcopy -O elf32-i386 -B i386 -I binary isla/isla.tga isla/isla.o
 	objcopy -O elf32-i386 -B i386 -I binary isla/devil_homura.tga isla/devil_homura.o
 
 	i686-elf-as boot/asm/boot.s -o boot/asm/boot.o
@@ -35,7 +35,7 @@ build:
 	 boot/multiboot_islaos.o boot/asm/boot.o kernel/kernel.o fonts/psf/font.o \
 	 fonts/font_lib.o kernel/memory/kmalloc.o kernel/drivers/io/io.o kernel/drivers/keyboard/keyboard.o kernel/std/math.o \
 	 kernel/std/time.o kernel/mainframe/mainframe.o kernel/drivers/video/video.o kernel/std/string.o boot/asm/shutdown.o \
-	 kernel/mainframe/images/tga.o isla/isla_normal.o isla/devil_homura.o
+	 kernel/mainframe/images/tga.o isla/isla.o isla/devil_homura.o
 	
 	grub2-file --is-x86-multiboot dist/IslaOS.bin
 	mkdir -p isodir/boot/grub

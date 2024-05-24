@@ -53,4 +53,10 @@ void kprintln(char *s);
 void cursor_back();
 void clear_screen();
 
+int get_cursor_line();
+int get_cursor_column();
+
+int get_font_width();
+int get_font_height();
+
 void kprintinthex(uint32_t data);
