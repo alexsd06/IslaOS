@@ -46,11 +46,6 @@ void exit()
 	shutdown();
 }
 
-void islafetch()
-{
-	read_image();
-}
-
 void unknown()
 {
 	kprintln ("Unknown command typed!\n");
@@ -77,7 +72,8 @@ void exec()
 	else if (strcmp(command_buffer, "info")==0) info();
 	else if (strcmp(command_buffer, "clear")==0) clear_screen();
 	else if (strcmp(command_buffer, "exit")==0) exit();
-	else if (strcmp(command_buffer, "islafetch")==0 || strcmp(command_buffer, "fetch")==0) islafetch();
+	else if (strcmp(command_buffer, "islafetch")==0 || strcmp(command_buffer, "fetch")==0) fetch("isla");
+	else if (strcmp(command_buffer, "homufetch")==0) fetch("homu");
 	else if (strcmp(command_buffer, "")==0) return;
 	else unknown();
 }

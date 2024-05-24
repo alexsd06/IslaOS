@@ -12,4 +12,4 @@ typedef struct {
   unsigned char pixeltype;          // must be 40
 } __attribute__((packed)) tga_header_t;
 
-void read_image();
+void fetch(char str[]);
