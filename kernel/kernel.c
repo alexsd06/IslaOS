@@ -11,6 +11,7 @@
 #include "mainframe/mainframe.h"
 #include "kernel/drivers/video/video.h"
 #include "kernel/std/time.h"
+#include "kernel/ramdisk/ramdisk.h"
 
  
 /* Check if the compiler thinks you are targeting the wrong operating system. */
@@ -74,6 +75,7 @@ int NEXT_RAND;
 void kernel_main(void) 
 {
 	//text_mode_debug(); /*For this to work remove some video flags from boot.s*/
+	parse_ramdisk();
 	srand(1);
 	kinit_memory();
 	kinit_timer();

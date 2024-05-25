@@ -4,7 +4,7 @@
 
 #include "boot/multiboot_islaos.h"
 #include "boot/multiboot.h"
-#include "fonts/font_lib.h"
+#include "kernel/fonts/font_lib.h"
 
 int mem_lower, mem_lower_init, mem_upper;
 

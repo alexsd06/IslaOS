@@ -1,4 +1,4 @@
-#include "fonts/font_lib.h"
+#include "kernel/fonts/font_lib.h"
 int oglindit (int nr, int *zero_before)
 {
 	int ogli=0;

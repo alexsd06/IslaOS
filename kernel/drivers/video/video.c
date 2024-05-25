@@ -1,6 +1,6 @@
 #include "boot/multiboot_islaos.h"
 #include "boot/multiboot.h"
-#include "fonts/font_lib.h"
+#include "kernel/fonts/font_lib.h"
 #include <stdint.h>
 
 uint32_t FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT;

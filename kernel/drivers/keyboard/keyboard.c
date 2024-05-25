@@ -1,6 +1,6 @@
 #include "kernel/drivers/io/io.h"
 #include "keyboard.h"
-#include "fonts/font_lib.h"
+#include "kernel/fonts/font_lib.h"
 #include "kernel/std/math.h"
 #include "kernel/std/time.h"
 

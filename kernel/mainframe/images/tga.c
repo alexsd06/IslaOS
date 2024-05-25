@@ -1,10 +1,11 @@
 #include "kernel/memory/kmalloc.h"
 #include "tga.h"
 #include <stddef.h>
-#include "fonts/font_lib.h"
+#include "kernel/fonts/font_lib.h"
 #include "kernel/drivers/video/video.h"
 #include "boot/multiboot_islaos.h"
 #include "kernel/std/string.h"
+#include "kernel/ramdisk/ramdisk.h"
 
 #define free kfree
 #define malloc kmalloc
@@ -24,8 +25,10 @@ void fetch(char str[])
 {
     /* TODO: The memory allocation in this area is overwriteing multiboot data; */
     tga_header_t *image=NULL;
-    if (strcmp(str, "isla")==0) image=(tga_header_t *) &_binary_isla_isla_tga_start;
-    if (strcmp(str, "homu")==0) image=(tga_header_t *) &_binary_isla_devil_homura_tga_start;
+    //if (strcmp(str, "isla")==0) image=(tga_header_t *) &_binary_isla_isla_tga_start;
+    //if (strcmp(str, "homu")==0) image=(tga_header_t *) &_binary_isla_devil_homura_tga_start;
+    if (strcmp(str, "isla")==0) image=(tga_header_t *) get_pointer_to_file("isla.tga");
+    if (strcmp(str, "homu")==0) image=(tga_header_t *) get_pointer_to_file("devil_homura.tga");
     uint32_t  *image_normal = (uint32_t*) image;
     int width=image->w, height=image->h;
     int image_bpp=image->bpp;

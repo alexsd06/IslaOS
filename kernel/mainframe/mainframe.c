@@ -4,7 +4,7 @@
 
 #include "boot/multiboot.h"
 #include "boot/multiboot_islaos.h"
-#include "fonts/font_lib.h"
+#include "kernel/fonts/font_lib.h"
 #include "kernel/memory/kmalloc.h"
 #include "kernel/drivers/keyboard/keyboard.h"
 #include "kernel/std/time.h"
@@ -12,6 +12,7 @@
 #include "kernel/std/string.h"
 #include "kernel/mainframe/images/tga.h"
 #include "kernel/drivers/video/video.h"
+#include "kernel/ramdisk/ramdisk.h"
 
 int time_since_last_print=0;
 int key_print_delay=200000;
@@ -22,6 +23,7 @@ int command_buffer_size=0;
 
 void info()
 {
+	kprintln("");
 	if (magic_nr!=732803074) {
 		kprint("The magic number is not: "); kprintint(732803074); kprintln("");
 		kprint("It is instead: "); kprintint(magic_nr); kprintln("");
@@ -35,7 +37,7 @@ void info()
 	
 	kprint("Total RAM size: "); kprintint(ram_size('M')); kprintln(" MB");
 	kprint("Total RAM available: "); kprintint(ram_available('M')); kprintln(" MB");
-	
+	kprintln("");
 }
 
 void shutdown(void);
@@ -53,6 +55,7 @@ void unknown()
 
 void help()
 {
+	kprintln("");
 	kprintln ("Help for IslaOS Kernel 1.0");
 	kprintln ("help - Shows this menu");
 	kprintln ("plm - Try it and see the result");
@@ -60,6 +63,17 @@ void help()
 	kprintln ("clear - Clears the screen");
 	kprintln ("exit - Shutdowns the PC");
 	kprintln ("islafetch / fetch - Neofetch for IslaOS");
+	kprintln ("homufetch - Homura neofetch for IslaOS");
+	kprintln ("crdisk - Show info about the ramdisk");
+	kprintln ("dir / ls - List the file on the ramdisk");
+	kprintln("");
+}
+
+void plm()
+{
+	kprintln("");
+	kprintln("Ba de ce ma injuri bagami-as eax-ul in ecx-ul matii!?");
+	kprintln("");
 }
 
 int last_key_typed;
@@ -68,12 +82,14 @@ void exec()
 {
 	//kprintln(command_buffer);
 	if (strcmp(command_buffer, "help")==0) help();
-	else if (strcmp(command_buffer, "plm")==0) kprintln("Ba de ce ma injuri bagami-as eax-ul in ecx-ul matii!?");
+	else if (strcmp(command_buffer, "plm")==0) plm();
 	else if (strcmp(command_buffer, "info")==0) info();
 	else if (strcmp(command_buffer, "clear")==0) clear_screen();
 	else if (strcmp(command_buffer, "exit")==0) exit();
 	else if (strcmp(command_buffer, "islafetch")==0 || strcmp(command_buffer, "fetch")==0) fetch("isla");
 	else if (strcmp(command_buffer, "homufetch")==0) fetch("homu");
+	else if (strcmp(command_buffer, "crdisk")==0) info_ramdisk();
+	else if (strcmp(command_buffer, "dir")==0||strcmp(command_buffer, "ls")==0) dir();
 	else if (strcmp(command_buffer, "")==0) return;
 	else unknown();
 }
