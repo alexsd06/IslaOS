@@ -40,11 +40,11 @@ build:
 	 kernel/std/time.o kernel/mainframe/mainframe.o kernel/drivers/video/video.o kernel/std/string.o boot/asm/shutdown.o \
 	 kernel/mainframe/images/tga.o kernel/ramdisk/ramdisk.o ramdisk.o
 	
-	grub2-file --is-x86-multiboot dist/IslaOS.bin
+	grub-file --is-x86-multiboot dist/IslaOS.bin
 	mkdir -p isodir/boot/grub
 	cp dist/IslaOS.bin isodir/boot/IslaOS.bin
 	cp cfg/grub.cfg isodir/boot/grub/grub.cfg
-	grub2-mkrescue -o iso/IslaOS.iso isodir
+	grub-mkrescue -o iso/IslaOS.iso isodir
 	qemu-system-i386 -cdrom iso/IslaOS.iso -machine q35 -m 1024M
 	#qemu-system-i386 -kernel dist/IslaOS.bin -machine q35 -m 256M
 

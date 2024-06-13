@@ -25,8 +25,9 @@ chown alex gcc-14.1.0.tar.xz
 
 
 mkdir build-binutils
+cd build-binutils
 ../binutils-2.42/configure --target=$TARGET_OSDEV --prefix="$PREFIX_OSDEV" --with-sysroot --disable-nls --disable-werror
-make
+make -j 12
 make install
 cd ..
 
@@ -34,7 +35,7 @@ cd ..
 mkdir build-gdb
 cd build-gdb/
 ../gdb-14.2/configure --target=$TARGET_OSDEV --prefix="$PREFIX_OSDEV" --disable-werror
-make all-gdb
+make all-gdb -j 12
 make install-gdb
 cd ..
 
@@ -45,8 +46,10 @@ which -- $TARGET_OSDEV-as || echo $TARGET_OSDEV-as is not in the PATH
 mkdir build-gcc
 cd build-gcc
 ../gcc-14.1.0/configure --target=$TARGET_OSDEV --prefix="$PREFIX_OSDEV" --disable-nls --enable-languages=c,c++ --without-headers
-make all-gcc
-make all-target-libgcc
+make all-gcc -j 12
+make all-target-libgcc -j 12
 make install-gcc
 make install-target-libgcc
+cd ..
 
+# sudo pacman -S mtools
