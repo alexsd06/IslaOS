@@ -41,11 +41,14 @@ build:
 	cp dist/IslaOS.bin isodir/boot/IslaOS.bin
 	cp cfg/grub.cfg isodir/boot/grub/grub.cfg
 	grub-mkrescue -o iso/IslaOS.iso isodir
-	qemu-system-i386 -cdrom iso/IslaOS.iso -machine q35 -m 1024M    -d int -no-shutdown -no-reboot
+	qemu-system-i386 -cdrom iso/IslaOS.iso -machine q35 -m 1024M    # -d int -no-shutdown -no-reboot
 	#qemu-system-i386 -kernel dist/IslaOS.bin -machine q35 -m 256M
 
 clean:
 	find . -name "*.o" -type f -delete
+	find . -name "*.iso" -type f -delete
+	find . -name "*.tar" -type f -delete
+	find . -name "*.bin" -type f -delete
 default:
 	make build 
 	make boot

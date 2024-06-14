@@ -1,6 +1,7 @@
 #include "kernel/drivers/io/io.h"
 #include "kernel/std/math.h"
 #include "kernel/fonts/font_lib.h"
+#include "kernel/std/time.h"
 
 unsigned int read_pit_count(void) {
 	unsigned count = 0;
@@ -27,10 +28,12 @@ const int MAXL=2000000000;
 void check_pit()
 {
     unsigned int pit_count=read_pit_count();
-    int diff=last_pit_count-pit_count;
-    if (diff < 0) {
-        diff=last_pit_count+0xffff-pit_count;
-    }
+
+    int diff=0;
+    if (last_pit_count>=pit_count) diff=last_pit_count-pit_count;
+    else diff=last_pit_count+0xffff-pit_count;
+    last_pit_count=pit_count;
+
     pit_timer+=diff;
     if (pit_timer>MAXL/838) pit_timer=0;
     system_time_nsecs=pit_timer*838;
@@ -38,6 +41,7 @@ void check_pit()
     if (abs(system_time_usecs/1000-system_time_msecs)>1) system_time_msecs++;
     if (abs(system_time_msecs/1000-system_time_secs)>1) system_time_secs++;
 
+    if (system_time_nsecs>MAXL) system_time_nsecs=0;
     if (system_time_usecs>MAXL) system_time_usecs=0;
     if (system_time_msecs>MAXL) system_time_msecs=0;
     if (system_time_secs>MAXL) system_time_secs=0;
@@ -47,14 +51,6 @@ unsigned int get_system_us() {return system_time_usecs;}
 unsigned int get_system_ms() {return system_time_msecs;}
 unsigned int get_system_se() {return system_time_secs;}
 
-void mstime()
-{
-    kprint ("Time in milliseconds since boot: "); kprintint(system_time_msecs); kprintln("...");
-}
-void time()
-{
-    kprint ("Time in seconds since boot: "); kprintint(system_time_secs); kprintln("...");
-}
 
 void ustime()
 {
@@ -64,3 +60,49 @@ void nstime()
 {
     kprint ("Time in nanoseconds since boot: "); kprintint(system_time_nsecs); kprintln("...");
 }
+void mstime()
+{
+    kprint ("Time in milliseconds since boot: "); kprintint(system_time_msecs); kprintln("...");
+}
+void time()
+{
+    kprint ("Time in seconds since boot: "); kprintint(system_time_secs); kprintln("...");
+}
+
+
+
+void cnstime()
+{
+    while (true) {
+        clear();
+        kprint ("Time in nanoseconds since boot: "); kprintint(system_time_nsecs); kprintln("...");
+        delay(200);
+    }
+}
+void custime()
+{
+    while (true) {
+        clear();
+        kprint ("Time in microseconds since boot: "); kprintint(system_time_usecs); kprintln("...");
+        delay(200);
+    }
+}
+void cmstime()
+{
+    while (true) {
+        clear();
+        kprint ("Time in milliseconds since boot: "); kprintint(system_time_msecs); kprintln("...");
+        delay(200);
+    }
+}
+void ctime()
+{
+    while (true) {
+        clear();
+        kprint ("Time in seconds since boot: "); kprintint(system_time_secs); kprintln("...");
+        delay(200);
+    }
+}
+
+
+

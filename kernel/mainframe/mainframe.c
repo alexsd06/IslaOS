@@ -71,10 +71,14 @@ void help()
 	kprintln ("crdisk - Show info about the ramdisk");
 	kprintln ("dir / ls - List the file on the ramdisk");
 	kprintln ("tetris - Starts a cool game of tetris!");
+	kprintln ("nstime - Prints time since boot in nanoseconds.");
+	kprintln ("ustime -  Print time in microseconds since boot.");
 	kprintln ("mstime -  Print time in milliseconds since boot.");
 	kprintln ("time - Prints time since boot in seconds.");
-	kprintln ("ustime -  Print time in microseconds since boot.");
-	kprintln ("nstime - Prints time since boot in nanoseconds.");
+	kprintln ("cnstime - Prints time since boot in nanoseconds.");
+	kprintln ("custime -  Print time in microseconds since boot.");
+	kprintln ("cmstime -  Print time in milliseconds since boot.");
+	kprintln ("ctime - Prints time since boot in seconds.");
 	kprintln("");
 }
 
@@ -85,29 +89,32 @@ void plm()
 	kprintln("");
 }
 
+typedef void (*FunctionCallback)();
 int last_key_typed;
+char command_string[][25]={
+	"help", "plm", "info", "clear", "exit", "islafetch", "homufetch", "crdisk", "dir", "ls",
+	"tetris", "nstime", "ustime", "mstime", "time", "cnstime", "custime", "cmstime", "ctime"
+};
 
+FunctionCallback command_functions[]={
+	&help, &plm, &info, &clear, &exit, &islafetch, &homufetch, &crdisk, &dir, &ls,
+	&tetris, &nstime, &ustime, &mstime, &time, &cnstime, &custime, &cmstime, &ctime
+};
 void exec()
 {
-	//kprintln(command_buffer);
-	if (strcmp(command_buffer, "help")==0) help();
-	else if (strcmp(command_buffer, "plm")==0) plm();
-	else if (strcmp(command_buffer, "info")==0) info();
-	else if (strcmp(command_buffer, "clear")==0) clear_screen();
-	else if (strcmp(command_buffer, "exit")==0) exit();
-	else if (strcmp(command_buffer, "islafetch")==0 || strcmp(command_buffer, "fetch")==0) fetch("isla");
-	else if (strcmp(command_buffer, "homufetch")==0) fetch("homu");
-	else if (strcmp(command_buffer, "crdisk")==0) info_ramdisk();
-	else if (strcmp(command_buffer, "dir")==0||strcmp(command_buffer, "ls")==0) dir();
-	else if (strcmp(command_buffer, "tetris")==0) tetris();
-	else if (strcmp(command_buffer, "mstime")==0) mstime();
-	else if (strcmp(command_buffer, "time")==0) time();
-	else if (strcmp(command_buffer, "ustime")==0) ustime();
-	else if (strcmp(command_buffer, "nstime")==0) nstime();
+	for (int i=0; i<sizeof(command_string)/25/sizeof(char); i++) {
+		//kprint(command_string[i]); kprint(" "); kprintint(strcmppoz(command_buffer, command_string[i]));
+		//kprint(" "); kprintint(strlen(command_string[i])); kprintln("");
+		if (strcmppoz(command_buffer, command_string[i])==strlen(command_string[i])) {
+			command_functions[i]();
+			return;
+		}
+	}
+	if (strcmp(command_buffer, "")==0) return;
+	else unknown();
+	//TODO: 
 	//else if (strcmp(command_buffer, "print-isr")==0) print_isr();
 	//else if (strcmp(command_buffer, "print-gdt")==0) print_gdt();
-	else if (strcmp(command_buffer, "")==0) return;
-	else unknown();
 }
 
 void type_key(int key)
@@ -140,14 +147,12 @@ void type_key(int key)
 	last_key_typed=key;
 }
 /*
--clear doesn't clear islafetch...
--when pressing space continuously, 
- the cursor doesnt clear at the end of the line.
+BUGS:
 */
 void mainframe()
 {
 	last_key_typed=0;
-	kprint("\nIslaOS Kernel initialized!\n\n");
+	kprint("IslaOS Kernel initialized!\n\n");
 	kprint("kernel@IslaOS:/$ ");
 	write_chard('|', true);
 	command_buffer[0]=0;
@@ -157,7 +162,7 @@ void mainframe()
 		update_keyboard_status();
 		for (int i=0; i<256; i++) {
 			if (keypress[i]!=0) {
-				if (i!=last_key_typed&&get_system_ms()-last_key_print>key_print_delay) type_key(i);
+				if (i!=last_key_typed&&(int)get_system_ms()-last_key_print>key_print_delay) type_key(i);
 				else if (keypress[i]!=0) type_key(i);
 				keypress[i]=0;
 			}

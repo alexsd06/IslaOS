@@ -12,8 +12,9 @@ typedef struct
 
 unsigned int parse_ramdisk();
 unsigned int getsize(const char *in);
-void info_ramdisk();
+void crdisk();
 void dir();
+void ls();
 int get_pointer_to_file_header(char *filename);
 int get_pointer_to_file(char *filename);
 int get_file_size (char *filename);

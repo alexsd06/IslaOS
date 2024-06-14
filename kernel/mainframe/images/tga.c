@@ -24,11 +24,7 @@ Just use the following code snippet: */
 void fetch(char str[])
 {
     /* TODO: The memory allocation in this area is overwriteing multiboot data; */
-    tga_header_t *image=NULL;
-    //if (strcmp(str, "isla")==0) image=(tga_header_t *) &_binary_isla_isla_tga_start;
-    //if (strcmp(str, "homu")==0) image=(tga_header_t *) &_binary_isla_devil_homura_tga_start;
-    if (strcmp(str, "isla")==0) image=(tga_header_t *) get_pointer_to_file("isla.tga");
-    if (strcmp(str, "homu")==0) image=(tga_header_t *) get_pointer_to_file("devil_homura.tga");
+    tga_header_t *image=(tga_header_t *) get_pointer_to_file(str);
     uint32_t  *image_normal = (uint32_t*) image;
     int width=image->w, height=image->h;
     int image_bpp=image->bpp;
@@ -63,3 +59,6 @@ void fetch(char str[])
         }
     }
 }
+
+void islafetch() {fetch("isla.tga");}
+void homufetch() {fetch("devil_homura.tga");}

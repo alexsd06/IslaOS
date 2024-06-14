@@ -51,7 +51,7 @@ void kprintlnd(char *s, bool deletable);
 void kprintln(char *s);
 
 void cursor_back();
-void clear_screen();
+void clear();
 
 int get_cursor_line();
 int get_cursor_column();

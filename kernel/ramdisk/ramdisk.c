@@ -66,7 +66,7 @@ int get_pointer_to_file(char *filename)
     }
     return 0;
 }
-void info_ramdisk()
+void crdisk()
 {
     kprintln("");
     tar_header *ramdisk=&_binary_ramdisk_tar_start;
@@ -106,4 +106,8 @@ void dir()
         ramdisk_cnt++;
     }
     kprintln("");
+}
+void ls()
+{
+    dir();
 }

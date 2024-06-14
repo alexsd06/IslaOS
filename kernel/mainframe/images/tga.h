@@ -13,3 +13,5 @@ typedef struct {
 } __attribute__((packed)) tga_header_t;
 
 void fetch(char str[]);
+void islafetch();
+void homufetch();

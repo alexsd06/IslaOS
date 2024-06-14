@@ -144,7 +144,7 @@ void write_next_line()
     char_deletable[__putchar_line][__putchar_column]=true;
     line_size[__putchar_line]=__putchar_column;
 }
-void clear_screen()
+void clear()
 {
     for (int i=0; i<(int) FRAMEBUFFER_HEIGHT; i++) {
         for (int j=0; j<(int) FRAMEBUFFER_WIDTH; j++) {
@@ -185,7 +185,7 @@ bool last_char_deletable()
     return false;
 }
 
-void write_chard (char c, bool deleteable)
+void write_chard (char c, bool deletable)
 {
     if (!__init_putchar) init_putchar();
     int bytesperline=pixelwidth*FRAMEBUFFER_WIDTH;
@@ -193,8 +193,9 @@ void write_chard (char c, bool deleteable)
 
     uint32_t font_max_columns=FRAMEBUFFER_WIDTH/(font->width+1); 
     uint32_t font_max_lines=FRAMEBUFFER_HEIGHT/font->height;
-    if (c==' '&&font_max_columns-__putchar_column<6) {
+    if (font_max_columns-__putchar_column<6) {
         write_next_line();
+        write_chard(c, deletable);
         return;
     }
     if (c=='\n') {
@@ -205,7 +206,7 @@ void write_chard (char c, bool deleteable)
     {
         if (last_char_deletable()) {
             cursor_back();
-            write_chard(' ', deleteable);
+            write_chard(' ', deletable);
             cursor_back();
         }
         return;
@@ -215,10 +216,10 @@ void write_chard (char c, bool deleteable)
         return;
     }
     if (__putchar_line>=font_max_lines) {
-        clear_screen();
+        clear();
     }
     putchar(framebuffer, bytesperline,  c, __putchar_column, __putchar_line, 0xFFFFFF, 0x000000);
-    char_deletable[__putchar_line][__putchar_column]=deleteable;
+    char_deletable[__putchar_line][__putchar_column]=deletable;
     line_size[__putchar_line]=__putchar_column;
     __putchar_column++;
 }
