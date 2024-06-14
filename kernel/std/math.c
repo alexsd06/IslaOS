@@ -54,3 +54,9 @@ char * dec_to_hex (int dec)
 	hex_nr[0]='0'; hex_nr[1]='x';
 	return hex_nr;
 }
+
+unsigned int abs (int data)
+{
+	if (data<0) return -1*data;
+	return data;
+}

@@ -58,3 +58,8 @@ uint32_t inl(uint16_t port)
                    : "memory");
     return ret;
 }
+
+void cli()
+{
+    __asm__ volatile ("cli");
+}

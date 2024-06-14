@@ -11,11 +11,15 @@
 #include "kernel/drivers/io/io.h"
 #include "kernel/std/string.h"
 #include "kernel/mainframe/images/tga.h"
+#include "kernel/mainframe/games/tetris.h"
 #include "kernel/drivers/video/video.h"
 #include "kernel/ramdisk/ramdisk.h"
+#include "kernel/int/int.h"
+#include "kernel/gdt/gdt.h"
+#include "kernel/pit/pit.h"
 
-int time_since_last_print=0;
-int key_print_delay=200000;
+int last_key_print=0;
+int key_print_delay=50; //milliseconds
 
 
 char command_buffer[1080*1920];
@@ -66,6 +70,11 @@ void help()
 	kprintln ("homufetch - Homura neofetch for IslaOS");
 	kprintln ("crdisk - Show info about the ramdisk");
 	kprintln ("dir / ls - List the file on the ramdisk");
+	kprintln ("tetris - Starts a cool game of tetris!");
+	kprintln ("mstime -  Print time in milliseconds since boot.");
+	kprintln ("time - Prints time since boot in seconds.");
+	kprintln ("ustime -  Print time in microseconds since boot.");
+	kprintln ("nstime - Prints time since boot in nanoseconds.");
 	kprintln("");
 }
 
@@ -90,6 +99,13 @@ void exec()
 	else if (strcmp(command_buffer, "homufetch")==0) fetch("homu");
 	else if (strcmp(command_buffer, "crdisk")==0) info_ramdisk();
 	else if (strcmp(command_buffer, "dir")==0||strcmp(command_buffer, "ls")==0) dir();
+	else if (strcmp(command_buffer, "tetris")==0) tetris();
+	else if (strcmp(command_buffer, "mstime")==0) mstime();
+	else if (strcmp(command_buffer, "time")==0) time();
+	else if (strcmp(command_buffer, "ustime")==0) ustime();
+	else if (strcmp(command_buffer, "nstime")==0) nstime();
+	//else if (strcmp(command_buffer, "print-isr")==0) print_isr();
+	//else if (strcmp(command_buffer, "print-gdt")==0) print_gdt();
 	else if (strcmp(command_buffer, "")==0) return;
 	else unknown();
 }
@@ -120,7 +136,7 @@ void type_key(int key)
 		write_chard('|', true);
 		cursor_back();
 	}
-	time_since_last_print=0;
+	last_key_print=get_system_ms();
 	last_key_typed=key;
 }
 /*
@@ -128,7 +144,6 @@ void type_key(int key)
 -when pressing space continuously, 
  the cursor doesnt clear at the end of the line.
 */
-
 void mainframe()
 {
 	last_key_typed=0;
@@ -138,17 +153,15 @@ void mainframe()
 	command_buffer[0]=0;
 	cursor_back();
 	while (true) {
-		time_since_last_print+=1;
-		if (time_since_last_print==INT32_MAX) time_since_last_print=0;
+		if (last_key_print==INT32_MAX) last_key_print=0;
 		update_keyboard_status();
 		for (int i=0; i<256; i++) {
 			if (keypress[i]!=0) {
-				if (i!=last_key_typed&&time_since_last_print>key_print_delay) type_key(i);
+				if (i!=last_key_typed&&get_system_ms()-last_key_print>key_print_delay) type_key(i);
 				else if (keypress[i]!=0) type_key(i);
 				keypress[i]=0;
 			}
 		}
-		time_since_last_print++;
-		increase_timer();
+		check_pit();
 	}
 }
