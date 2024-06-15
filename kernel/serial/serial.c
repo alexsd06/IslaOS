@@ -47,7 +47,7 @@ void write_serial(char a) {
 void write_serial_string (char str[])
 {
     int i=0;
-    while (str[i]!=0) {
+    while (str[i]!='\0') {
         write_serial(str[i]);
         i++;
     }
