@@ -12,18 +12,12 @@
 #include "kernel/drivers/video/video.h"
 #include "kernel/std/time.h"
 #include "kernel/ramdisk/ramdisk.h"
-#include "kernel/int/int.h"
-#include "kernel/gdt/gdt.h"
+#include "kernel/serial/serial.h"
 
  
 /* Check if the compiler thinks you are targeting the wrong operating system. */
 #if defined(__linux__)
 #error "You are not using a cross-compiler, you will most certainly run into trouble"
-#endif
- 
-/* This tutorial will only work for the 32-bit ix86 targets. */
-#if !defined(__i386__)
-#error "This tutorial needs to be compiled with a ix86-elf compiler"
 #endif
  
 /* Hardware text mode color constants. */
@@ -77,6 +71,10 @@ int NEXT_RAND;
 void kernel_main(void) 
 {
 	//text_mode_debug(); /*For this to work remove some video flags from boot.s*/
+	init_serial();
+	write_serial_string("Hello from IslaOS "ARCH"!\n"); //IT PRINTS THE FIRST LETTER IN X64!!!
+	write_serial_string("The magic number is: "); write_serial_int(magic_nr); write_serial_string("\n");
+	write_serial_string("The multiboot data is at: "); write_serial_int((uint_t)mb_info); write_serial_string("\n");
 
 	parse_ramdisk();
 	srand(1);

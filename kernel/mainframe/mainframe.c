@@ -14,8 +14,6 @@
 #include "kernel/mainframe/games/tetris.h"
 #include "kernel/drivers/video/video.h"
 #include "kernel/ramdisk/ramdisk.h"
-#include "kernel/int/int.h"
-#include "kernel/gdt/gdt.h"
 #include "kernel/pit/pit.h"
 
 int last_key_print=0;
@@ -49,7 +47,6 @@ void shutdown(void);
 void exit()
 {
 	kprintln("Shuting down!");
-	shutdown();
 }
 
 void unknown()
@@ -102,7 +99,7 @@ FunctionCallback command_functions[]={
 };
 void exec()
 {
-	for (int i=0; i<sizeof(command_string)/25/sizeof(char); i++) {
+	for (int i=0; i<(int)(sizeof(command_string)/25/sizeof(char)); i++) {
 		//kprint(command_string[i]); kprint(" "); kprintint(strcmppoz(command_buffer, command_string[i]));
 		//kprint(" "); kprintint(strlen(command_string[i])); kprintln("");
 		if (strcmppoz(command_buffer, command_string[i])==strlen(command_string[i])) {

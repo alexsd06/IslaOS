@@ -5,6 +5,7 @@
 #include "boot/multiboot_islaos.h"
 #include "boot/multiboot.h"
 #include "kernel/fonts/font_lib.h"
+#include "kernel/arch/arch.h"
 
 int mem_lower, mem_lower_init, mem_upper;
 
@@ -20,7 +21,7 @@ void* kmalloc (int size)
         kprintln("Can't allocate any more memory!");
         return NULL;
     }
-    void *pointer=(void*) mem_lower;
+    void *pointer=(void*) (uint_t) mem_lower;
     mem_lower+=size;
     return pointer;
 }

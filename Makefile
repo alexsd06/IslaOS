@@ -1,40 +1,61 @@
 .DEFAULT_GOAL := default
-OSDEV_CFLAGS =-std=gnu99 -ffreestanding -O2 -Wall -Wextra
+OSDEV_CFLAGS =-std=gnu99 -ffreestanding -O2 -Wall -Wextra -g
+
+BITS?=x32
+UEFI=false
+
+ARCH=i686#x86_64
+QEMU_ARCH=i386#x86_64
+OVMF_ARCH=ia32#x64
+OBJCOPY_ARCH1=elf32-i386#elf64-x86-64
+OBJCOPY_ARCH2=i386#i386:x86-64
+
+ifeq ($(BITS), x64)
+	ARCH=x86_64
+	QEMU_ARCH=x86_64
+	OVMF_ARCH=x64
+	OBJCOPY_ARCH1=elf64-x86-64
+	OBJCOPY_ARCH2=i386:x86-64
+endif
+
+ifeq ($(UEFI), true)
+	BIOS=-bios /usr/share/edk2/$(OVMF_ARCH)/OVMF.fd
+endif
+
 compile:
 	tar -C ramdisk  --transform='s,^\./,,' --format=ustar -cvf ramdisk.tar .
 	tar -vf ramdisk.tar --delete .
 
-	objcopy -O elf32-i386 -B i386 -I binary ramdisk.tar ramdisk.o
+	objcopy -O $(OBJCOPY_ARCH1) -B $(OBJCOPY_ARCH2) -I binary ramdisk.tar ramdisk.o
 
-	i686-elf-as boot/asm/boot.s -o boot/asm/boot.o
-	i686-elf-as boot/asm/shutdown.s -o boot/asm/shutdown.o
+	$(ARCH)-elf-as boot/asm/$(BITS)/boot.s -o boot/asm/$(BITS)/boot.o
 	
-	nasm -f elf32 kernel/gdt/asm/gdt.s -o kernel/gdt/asm/gdt.o
-	nasm -f elf32 kernel/int/asm/int.s -o kernel/int/asm/int.o
+	#nasm -f elf32 kernel/gdt/asm/gdt.s -o kernel/gdt/asm/gdt.o
+	#nasm -f elf32 kernel/int/asm/int.s -o kernel/int/asm/int.o
 	
-	i686-elf-gcc -g -I. -c kernel/kernel.c -o kernel/kernel.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c kernel/mainframe/mainframe.c -o kernel/mainframe/mainframe.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c kernel/std/time.c -o kernel/std/time.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c kernel/std/string.c -o kernel/std/string.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c kernel/memory/kmalloc.c -o kernel/memory/kmalloc.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c kernel/drivers/io/io.c -o kernel/drivers/io/io.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c kernel/drivers/video/video.c -o kernel/drivers/video/video.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c kernel/drivers/keyboard/keyboard.c -o kernel/drivers/keyboard/keyboard.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c kernel/std/math.c -o kernel/std/math.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c boot/multiboot_islaos.c -o boot/multiboot_islaos.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c kernel/fonts/font_lib.c -o kernel/fonts/font_lib.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c kernel/mainframe/images/tga.c -o kernel/mainframe/images/tga.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c kernel/mainframe/games/tetris.c -o kernel/mainframe/games/tetris.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c kernel/ramdisk/ramdisk.c -o kernel/ramdisk/ramdisk.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c kernel/int/int.c -o kernel/int/int.o $(OSDEV_CFLAGS)
-	i686-elf-gcc -g -I. -c kernel/pit/pit.c -o kernel/pit/pit.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/kernel.c -o kernel/kernel.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/mainframe/mainframe.c -o kernel/mainframe/mainframe.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/std/time.c -o kernel/std/time.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/std/string.c -o kernel/std/string.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/memory/kmalloc.c -o kernel/memory/kmalloc.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/drivers/io/io.c -o kernel/drivers/io/io.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/drivers/video/video.c -o kernel/drivers/video/video.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/drivers/keyboard/keyboard.c -o kernel/drivers/keyboard/keyboard.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/std/math.c -o kernel/std/math.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c boot/multiboot_islaos.c -o boot/multiboot_islaos.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/fonts/font_lib.c -o kernel/fonts/font_lib.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/mainframe/images/tga.c -o kernel/mainframe/images/tga.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/mainframe/games/tetris.c -o kernel/mainframe/games/tetris.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/ramdisk/ramdisk.c -o kernel/ramdisk/ramdisk.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/pit/pit.c -o kernel/pit/pit.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/serial/serial.c -o kernel/serial/serial.o $(OSDEV_CFLAGS)
 
-	i686-elf-gcc -T linker/linker.ld -o dist/IslaOS.bin -ffreestanding -O2 -nostdlib -lgcc \
-	 boot/multiboot_islaos.o boot/asm/boot.o kernel/kernel.o kernel/fonts/font_lib.o kernel/memory/kmalloc.o \
+	$(ARCH)-elf-gcc -T linker.ld -o dist/IslaOS.bin -ffreestanding -O2 -nostdlib -lgcc \
+	 boot/multiboot_islaos.o boot/asm/$(BITS)/boot.o kernel/kernel.o kernel/fonts/font_lib.o kernel/memory/kmalloc.o \
 	 kernel/drivers/io/io.o kernel/drivers/keyboard/keyboard.o kernel/std/math.o \
-	 kernel/std/time.o kernel/mainframe/mainframe.o kernel/drivers/video/video.o kernel/std/string.o boot/asm/shutdown.o \
-	 kernel/mainframe/images/tga.o kernel/ramdisk/ramdisk.o ramdisk.o kernel/int/int.o \
-	 kernel/mainframe/games/tetris.o kernel/int/asm/int.o kernel/gdt/asm/gdt.o kernel/pit/pit.o
+	 kernel/std/time.o kernel/mainframe/mainframe.o kernel/drivers/video/video.o kernel/std/string.o \
+	 kernel/mainframe/images/tga.o kernel/ramdisk/ramdisk.o ramdisk.o  \
+	 kernel/mainframe/games/tetris.o kernel/pit/pit.o kernel/serial/serial.o
 
 build_iso:
 	cp -v dist/IslaOS.bin iso_root/boot/
@@ -62,5 +83,5 @@ clean:
 default:
 	make compile
 	make build_iso
-	qemu-system-i386 -serial file:serial.log -cdrom iso/IslaOS.iso -machine q35 -m 1024M \
-	#-d int -no-shutdown -no-reboot -bios /usr/share/edk2/ia32/OVMF.fd
+	qemu-system-$(QEMU_ARCH) -serial file:serial.log -cdrom iso/IslaOS.iso -machine q35 -m 1024M \
+	-d int -no-shutdown -no-reboot $(BIOS)

@@ -6,6 +6,8 @@
 #include "boot/multiboot_islaos.h"
 #include "kernel/std/string.h"
 #include "kernel/ramdisk/ramdisk.h"
+#include "kernel/arch/arch.h"
+#include <stdint.h>
 
 #define free kfree
 #define malloc kmalloc
@@ -30,7 +32,7 @@ void fetch(char str[])
     int image_bpp=image->bpp;
     int image_pixeltype=image->pixeltype;
     //unsigned int *image_pixels=isla_normal+sizeof(tga_header_t); //NOT WORKING!!
-    uint32_t *image_pixels=(uint32_t*)((uint32_t)image_normal+sizeof(tga_header_t));
+    uint_t *image_pixels=(uint_t*)((uint_t)image_normal+sizeof(tga_header_t));
     kprintln("");
     int cursor_line=get_cursor_line(), font_height=get_font_height();
     kprint ("                               IslaOS Version 1.0!"); kprintln("");
@@ -38,9 +40,9 @@ void fetch(char str[])
     kprint ("                               RAW Image height: "); kprintint (height); kprintln("");
     kprint ("                               RAW Image bpp: "); kprintint(image_bpp); kprintln("");
     kprint ("                               RAW Image pixeltype: "); kprintint (image_pixeltype); kprintln("");
-    kprint ("                               Header adress: "); kprintint((int)image_normal); kprintln("");
-    kprint ("                               Data adress: "); kprintint((int)image_pixels); kprintln("");
-    kprint ("                               Size of int: "); kprintint(sizeof(int)); kprintln(" bytes!");
+    kprint ("                               Header adress: "); kprintint((uint_t)image_normal); kprintln("");
+    kprint ("                               Data adress: "); kprintint((uint_t)image_pixels); kprintln("");
+    kprint ("                               Size of uint_t: "); kprintint(sizeof(uint_t)); kprintln(" bytes!");
 
 	kprint ("                               The magic number is: "); kprintint(magic_nr); kprintln("");
 	kprint ("                               The bootloader name is: "); kprint(bootloader_name); kprintln(""); 

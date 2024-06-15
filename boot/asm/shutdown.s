@@ -1,3 +1,0 @@
-.globl shutdown
-shutdown:
-    ret

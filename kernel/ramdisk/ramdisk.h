@@ -1,3 +1,6 @@
+#include "kernel/arch/arch.h"
+#include <stdint.h>
+
 typedef struct
 {
     char filename[100];
@@ -15,6 +18,6 @@ unsigned int getsize(const char *in);
 void crdisk();
 void dir();
 void ls();
-int get_pointer_to_file_header(char *filename);
-int get_pointer_to_file(char *filename);
+uint_t get_pointer_to_file_header(char *filename);
+uint_t get_pointer_to_file(char *filename);
 int get_file_size (char *filename);

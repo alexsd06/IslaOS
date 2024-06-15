@@ -1,6 +1,8 @@
 #include "ramdisk.h"
 #include "kernel/std/string.h"
 #include "kernel/fonts/font_lib.h"
+#include "kernel/arch/arch.h"
+
 extern tar_header _binary_ramdisk_tar_start;
 unsigned int getsize(const char *in)
 {
@@ -20,7 +22,7 @@ int ramdisk_cnt=0;
 unsigned int parse_ramdisk()
 {
     tar_header *ramdisk=&_binary_ramdisk_tar_start;
-    unsigned int address = (int) ramdisk;
+    uint_t address = (uint_t) ramdisk;
     unsigned int i;
     for (i = 0; ; i++)
     {
@@ -46,22 +48,22 @@ int get_file_size (char *filename)
     }
     return 0;
 }
-int get_pointer_to_file_header(char *filename)
+uint_t get_pointer_to_file_header(char *filename)
 {
     for (int i=0; i<ramdisk_cnt; i++) {
         if (strcmp(headers[i]->filename, filename)==0) {
             
-            return ((int)headers[i]);
+            return ((uint_t)headers[i]);
         }
     }
     return 0;
 }
-int get_pointer_to_file(char *filename)
+uint_t get_pointer_to_file(char *filename)
 {
     for (int i=0; i<ramdisk_cnt; i++) {
         if (strcmp(headers[i]->filename, filename)==0) {
             char *addr=(char *)headers[i]+512;
-            return (int) addr;
+            return (uint_t) addr;
         }
     }
     return 0;
@@ -70,12 +72,12 @@ void crdisk()
 {
     kprintln("");
     tar_header *ramdisk=&_binary_ramdisk_tar_start;
-    kprint ("The adress of the ramdisk is: "); kprintint((int)ramdisk); kprintln("");
+    kprint ("The adress of the ramdisk is: "); kprintint((uint_t)ramdisk); kprintln("");
     kprint ("There are: "); kprintint(ramdisk_cnt); kprintln(" files in the ramdisk!");
     //char *addr=(char *) ramdisk;
     //for (int i=0; i<256; i++) {kprintinthex((char)*(addr+i)); kprint(" ");}
     tar_header *info_header=(tar_header *) get_pointer_to_file_header("ramdisk.inf");
-    kprint ("The info header is at: "); kprintint((int) info_header); kprintln("");
+    kprint ("The info header is at: "); kprintint((uint_t) info_header); kprintln("");
     char *info_addr=(char *)info_header+512;
     kprint(info_addr);
     kprintln("");
@@ -85,7 +87,7 @@ void dir()
 {
     kprintln("");
     tar_header *ramdisk=&_binary_ramdisk_tar_start;
-    unsigned int address = (int) ramdisk;
+    uint_t address = (uint_t) ramdisk;
     unsigned int i;
     for (i = 0; ; i++)
     {

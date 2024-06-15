@@ -81,9 +81,6 @@ _start:
 	runtime support to work as well.
 	*/
 
-	call load_gdt
-	/* TODO: Fucking IRQs. It also ignores ; comments and executes what is inside... */
-
 	push %ebx
 	push %eax
 

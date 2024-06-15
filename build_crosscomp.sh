@@ -5,7 +5,7 @@ mkdir cross
 cd cross
 
 export PREFIX_OSDEV="$HOME/Documents/OSDev/cross"
-export TARGET_OSDEV=i686-elf
+export TARGET_OSDEV=i686-elf #x86_64-elf
 export PATH="$PREFIX_OSDEV/bin:$PATH"
 
 BINUTILS_VER=2.42
@@ -14,6 +14,7 @@ GCC_VER=14.1.0
 
 mkdir src
 cd src/
+rm -rf *
 
 wget -nc https://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VER}.tar.xz
 wget -nc https://ftp.gnu.org/gnu/gdb/gdb-${GDB_VER}.tar.xz

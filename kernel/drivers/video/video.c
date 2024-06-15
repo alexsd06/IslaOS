@@ -2,6 +2,7 @@
 #include "boot/multiboot.h"
 #include "kernel/fonts/font_lib.h"
 #include <stdint.h>
+#include "kernel/arch/arch.h"
 
 uint32_t FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT;
 void *framebuffer;
@@ -21,13 +22,13 @@ void kinit_videobuffer()
 }
 
 //column line
-void write_pixel(uint32_t y, uint32_t x, uint32_t color) {
+void write_pixel(uint_t y, uint_t x, uint_t color) {
 	int bytesperline=pixelwidth*FRAMEBUFFER_WIDTH;
     // Calculate the address of the pixel in the framebuffer
-    uint32_t pixel_address = mb_info->framebuffer_addr +
+    uint_t pixel_address = mb_info->framebuffer_addr +
                              (y * bytesperline) +
                              (x * pixelwidth);
 
     // Write the color to the framebuffer
-    *((uint32_t *)pixel_address) = color;
+    *((uint_t *)pixel_address) = color;
 }
