@@ -1,5 +1,6 @@
 .DEFAULT_GOAL := default
 OSDEV_CFLAGS =-std=gnu99 -ffreestanding -O2 -Wall -Wextra -g
+OSDEV_LDFLAGS=-T linker/x32/linker.ld -ffreestanding -O2 -nostdlib -lgcc 
 
 BITS?=x64
 UEFI=false
@@ -16,6 +17,13 @@ ifeq ($(BITS), x64)
 	OVMF_ARCH=x64
 	OBJCOPY_ARCH1=elf64-x86-64
 	OBJCOPY_ARCH2=i386:x86-64
+	#OSDEV_CFLAGS =-ffreestanding -mcmodel=large -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -g -std=gnu99 -O2 -Wall -Wextra
+	#OSDEV_CFLAGS= -m64 -ffreestanding -z max-page-size=0x1000 -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -std=gnu99 -O2 -Wall -Wextra
+	
+	#OSDEV_CFLAGS = -Wall -Wextra -std=gnu11 -ffreestanding -fno-stack-protector -fno-stack-check -fno-lto -fPIE -m64 -march=x86-64 -mno-80387 -mno-mmx -mno-sse -mno-sse2 -mno-red-zone
+ 	#OSDEV_LDFLAGS = -nostdlib -pie -z text -z max-page-size=0x1000 -T linker/x64/linker.ld
+	
+	#Without this OSDEV_CFLAGS I get the first letter from write_serial_string();
 endif
 
 ifeq ($(UEFI), true)
@@ -50,7 +58,7 @@ compile:
 	$(ARCH)-elf-gcc -I. -c kernel/pit/pit.c -o kernel/pit/pit.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/serial/serial.c -o kernel/serial/serial.o $(OSDEV_CFLAGS)
 
-	$(ARCH)-elf-gcc -T linker.ld -o dist/IslaOS.bin -ffreestanding -O2 -nostdlib -lgcc \
+	$(ARCH)-elf-gcc $(OSDEV_LDFLAGS) -o dist/IslaOS.bin\
 	 boot/multiboot_islaos.o boot/asm/$(BITS)/boot.o kernel/kernel.o kernel/fonts/font_lib.o kernel/memory/kmalloc.o \
 	 kernel/drivers/io/io.o kernel/drivers/keyboard/keyboard.o kernel/std/math.o \
 	 kernel/std/time.o kernel/mainframe/mainframe.o kernel/drivers/video/video.o kernel/std/string.o \
@@ -83,5 +91,7 @@ clean:
 default:
 	make compile
 	make build_iso
-	qemu-system-$(QEMU_ARCH) -serial file:serial.log -cdrom iso/IslaOS.iso -machine q35 -m 1024M \
-	-d int -no-shutdown -no-reboot $(BIOS)
+	#qemu-system-$(QEMU_ARCH) -serial file:serial.log -cdrom iso/IslaOS.iso -machine q35 -m 1024M \
+	#-d int -no-shutdown -no-reboot $(BIOS)
+	bochs -f bochsrc -q
+

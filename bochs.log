@@ -1,0 +1,476 @@
+00000000000i[      ] Bochs x86 Emulator 2.8
+00000000000i[      ]   Built from GitHub snapshot on March 10, 2024
+00000000000i[      ]   Timestamp: Sun Mar 10 08:00:00 CET 2024
+00000000000i[      ] System configuration
+00000000000i[      ]   processors: 1 (cores=1, HT threads=1)
+00000000000i[      ]   A20 line support: yes
+00000000000i[      ] IPS is set to 1000000
+00000000000i[      ] CPU configuration
+00000000000i[      ]   SMP support: yes, quantum=16
+00000000000i[      ]   Using pre-defined CPU configuration: corei7_icelake_u
+00000000000i[      ] Optimization configuration
+00000000000i[      ]   RepeatSpeedups support: no
+00000000000i[      ]   Fast function calls: no
+00000000000i[      ]   Handlers Chaining speedups: no
+00000000000i[      ] Devices configuration
+00000000000i[      ]   PCI support: i440FX i430FX i440BX
+00000000000i[      ]   Networking: no
+00000000000i[      ]   Sound support: no
+00000000000i[      ]   USB support: UHCI
+00000000000i[      ]   VGA extension support: vbe
+00000000000i[IMG   ] Disk image modules
+00000000000i[IMG   ]   flat concat sparse dll growing undoable volatile vmware3
+00000000000i[IMG   ]   vmware4 vbox vpc vvfat
+00000000000i[USBCTL] Pluggable USB devices
+00000000000i[USBCTL]   floppy mouse tablet keypad keyboard hub disk cdrom
+00000000000i[USBCTL]   printer
+00000000000i[MEM0  ] allocated memory at 0x7b596a200010. after alignment, vector=0x7b596a201000, block_size = 128K
+00000000000i[MEM0  ] 2048.00MB
+00000000000i[MEM0  ] mem block size = 0x00020000, blocks=16384
+00000000000i[MEM0  ] rom at 0xfffe0000/131072 ('/usr/share/bochs/BIOS-bochs-latest')
+00000000000i[CPU0  ] WARNING: RDRAND would not produce true random numbers !
+00000000000i[CPU0  ] WARNING: RDSEED would not produce true random numbers !
+00000000000i[DEV   ] will paste characters every 100 iodev timer ticks
+00000000000i[PLUGIN] init_dev of 'pci' plugin device by virtual method
+00000000000i[DEV   ] i440FX PMC present at device 0, function 0
+00000000000i[PLUGIN] init_dev of 'pci2isa' plugin device by virtual method
+00000000000i[DEV   ] PIIX3 PCI-to-ISA bridge present at device 1, function 0
+00000000000i[PLUGIN] init_dev of 'cmos' plugin device by virtual method
+00000000000i[CMOS  ] Using local time for initial clock
+00000000000i[CMOS  ] Setting initial clock to: Sun Jun 16 15:55:05   2024 tz=utc (time0=1718553305)
+00000000000i[PLUGIN] init_dev of 'dma' plugin device by virtual method
+00000000000i[DMA   ] channel 4 used by cascade
+00000000000i[PLUGIN] init_dev of 'pic' plugin device by virtual method
+00000000000i[PLUGIN] init_dev of 'pit' plugin device by virtual method
+00000000000i[PIT   ] PIT using realtime synchronisation method
+00000000000i[PLUGIN] init_dev of 'vga' plugin device by virtual method
+00000000000i[MEM0  ] Register memory access handlers: 0x0000000a0000 - 0x0000000bffff
+00000000000i[VGA   ] interval=100000, mode=realtime
+00000000000i[VGA   ] Setting VGA update interval to 100000 (10.0 Hz)
+00000000000i[VGA   ] VSYNC using realtime mode
+00000000000i[MEM0  ] Register memory access handlers: 0x0000e0000000 - 0x0000e0ffffff
+00000000000i[BXVGA ] VBE Bochs Display Extension Enabled
+00000000000i[XGUI  ] test_alloc_colors: 16 colors available out of 16 colors tried
+00000000000i[XGUI  ] font 8 wide x 16 high, display depth = 24
+00000000000i[XGUI  ] maximum host resolution: x=3840 y=1030
+00000000000i[MEM0  ] rom at 0xc0000/36352 ('/usr/share/bochs/VGABIOS-lgpl-latest')
+00000000000i[PLUGIN] init_dev of 'floppy' plugin device by virtual method
+00000000000i[DMA   ] channel 2 used by Floppy Drive
+00000000000i[FLOPPY] Using boot sequence cdrom, none, none
+00000000000i[FLOPPY] Floppy boot signature check is enabled
+00000000000i[PLUGIN] init_dev of 'acpi' plugin device by virtual method
+00000000000i[DEV   ] ACPI Controller present at device 1, function 3
+00000000000i[PLUGIN] init_dev of 'hpet' plugin device by virtual method
+00000000000i[HPET  ] initializing HPET
+00000000000i[MEM0  ] Register memory access handlers: 0x0000fed00000 - 0x0000fed003ff
+00000000000i[PLUGIN] init_dev of 'ioapic' plugin device by virtual method
+00000000000i[IOAPIC] initializing I/O APIC
+00000000000i[MEM0  ] Register memory access handlers: 0x0000fec00000 - 0x0000fec00fff
+00000000000i[IOAPIC] IOAPIC enabled (base address = 0xfec00000)
+00000000000i[PLUGIN] init_dev of 'keyboard' plugin device by virtual method
+00000000000i[PLUGIN] init_dev of 'harddrv' plugin device by virtual method
+00000000000i[HD    ] CD on ata0-0: 'iso/IslaOS.iso'
+00000000000i[CD1   ] load cdrom with path='iso/IslaOS.iso'
+00000000000i[CD1   ] Opening image file as a cd.
+00000000000i[HD    ] Media present in CD-ROM drive
+00000000000i[HD    ] Capacity is 1464 sectors (2.86 MB)
+00000000000i[PLUGIN] init_dev of 'pci_ide' plugin device by virtual method
+00000000000i[DEV   ] PIIX3 PCI IDE controller present at device 1, function 1
+00000000000i[PLUGIN] init_dev of 'unmapped' plugin device by virtual method
+00000000000i[PLUGIN] init_dev of 'biosdev' plugin device by virtual method
+00000000000i[PLUGIN] init_dev of 'speaker' plugin device by virtual method
+00000000000e[PCSPK ] Failed to open /dev/console: Permission denied
+00000000000e[PCSPK ] Deactivating beep on console
+00000000000i[PLUGIN] init_dev of 'extfpuirq' plugin device by virtual method
+00000000000i[PLUGIN] init_dev of 'parallel' plugin device by virtual method
+00000000000i[PAR   ] parallel port 1 at 0x0378 irq 7
+00000000000i[PLUGIN] init_dev of 'serial' plugin device by virtual method
+00000000000i[SER   ] com1 at 0x03f8 irq 4 (mode: file)
+00000000000i[PLUGIN] init_dev of 'iodebug' plugin device by virtual method
+00000000000i[PLUGIN] init_dev of 'usb_uhci' plugin device by virtual method
+00000000000i[DEV   ] USB UHCI present at device 1, function 2
+00000000000i[UHCI  ] USB UHCI initialized
+00000000000i[PLUGIN] register state of 'pci' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'pci2isa' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'cmos' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'dma' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'pic' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'pit' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'vga' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'floppy' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'unmapped' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'biosdev' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'speaker' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'extfpuirq' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'parallel' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'serial' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'iodebug' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'usb_uhci' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'acpi' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'hpet' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'ioapic' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'keyboard' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'harddrv' plugin device by virtual method
+00000000000i[PLUGIN] register state of 'pci_ide' plugin device by virtual method
+00000000000i[SYS   ] bx_pc_system_c::Reset(HARDWARE) called
+00000000000i[CPU0  ] cpu hardware reset
+00000000000i[APIC0 ] allocate APIC id=0 (MMIO enabled) to 0x0000fee00000
+00000000000i[CPU0  ] CPU[0] is the bootstrap processor
+00000000000i[CPU0  ] CPUID[0x00000000]: 0000001b 756e6547 6c65746e 49656e69
+00000000000i[CPU0  ] CPUID[0x00000001]: 000706e5 00010800 77faf39f bfebfbff
+00000000000i[CPU0  ] CPUID[0x00000002]: 00feff01 000000f0 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x00000003]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x00000004]: 1c004121 02c0003f 0000003f 00000000
+00000000000i[CPU0  ] CPUID[0x00000005]: 00000040 00000040 00000003 11121020
+00000000000i[CPU0  ] CPUID[0x00000006]: 0007aff5 00000002 00000009 00000000
+00000000000i[CPU0  ] CPUID[0x00000007]: 00000000 f0bf27eb 00405f46 bc000110
+00000000000i[CPU0  ] CPUID[0x00000008]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x00000009]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] WARNING: Architectural Performance Monitoring is not implemented
+00000000000i[CPU0  ] CPUID[0x0000000a]: 08300805 00000000 0000000f 00008604
+00000000000i[CPU0  ] CPUID[0x0000000b]: 00000001 00000001 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x0000000c]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x0000000d]: 000000e7 00000240 00000a80 00000000
+00000000000i[CPU0  ] CPUID[0x0000000e]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x0000000f]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x00000010]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x00000011]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x00000012]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x00000013]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x00000014]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x00000015]: 00000002 0000004e 0249f000 00000000
+00000000000i[CPU0  ] CPUID[0x00000016]: 000005dc 00000f3c 00000064 00000000
+00000000000i[CPU0  ] CPUID[0x00000017]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x00000018]: 00000007 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x00000019]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x0000001a]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x0000001b]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x80000000]: 80000008 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x80000001]: 00000000 00000000 00000121 2c100000
+00000000000i[CPU0  ] CPUID[0x80000002]: 64617551 65726f43 746e4920 43206c65
+00000000000i[CPU0  ] CPUID[0x80000003]: 2065726f 312d3769 47353630 31202c37
+00000000000i[CPU0  ] CPUID[0x80000004]: 20303033 007a484d 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x80000005]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0  ] CPUID[0x80000006]: 00000000 00000000 01006040 00000000
+00000000000i[CPU0  ] CPUID[0x80000007]: 00000000 00000000 00000000 00000100
+00000000000i[CPU0  ] CPUID[0x80000008]: 00003028 00000200 00000000 00000000
+00000000000i[CPU0  ] CPU Features supported:
+00000000000i[CPU0  ] 		"x87"
+00000000000i[CPU0  ] 		"486ni"
+00000000000i[CPU0  ] 		"pentium_ni"
+00000000000i[CPU0  ] 		"p6ni"
+00000000000i[CPU0  ] 		"mmx"
+00000000000i[CPU0  ] 		"debugext"
+00000000000i[CPU0  ] 		"vme"
+00000000000i[CPU0  ] 		"pse"
+00000000000i[CPU0  ] 		"pae"
+00000000000i[CPU0  ] 		"pge"
+00000000000i[CPU0  ] 		"pse36"
+00000000000i[CPU0  ] 		"mtrr"
+00000000000i[CPU0  ] 		"pat"
+00000000000i[CPU0  ] 		"sysenter_sysexit"
+00000000000i[CPU0  ] 		"clflush"
+00000000000i[CPU0  ] 		"clflushopt"
+00000000000i[CPU0  ] 		"sse"
+00000000000i[CPU0  ] 		"sse2"
+00000000000i[CPU0  ] 		"sse3"
+00000000000i[CPU0  ] 		"ssse3"
+00000000000i[CPU0  ] 		"sse4_1"
+00000000000i[CPU0  ] 		"sse4_2"
+00000000000i[CPU0  ] 		"popcnt"
+00000000000i[CPU0  ] 		"mwait"
+00000000000i[CPU0  ] 		"longmode"
+00000000000i[CPU0  ] 		"lm_lahf_sahf"
+00000000000i[CPU0  ] 		"nx"
+00000000000i[CPU0  ] 		"1g_pages"
+00000000000i[CPU0  ] 		"cmpxhg16b"
+00000000000i[CPU0  ] 		"rdtscp"
+00000000000i[CPU0  ] 		"xsave"
+00000000000i[CPU0  ] 		"xsaveopt"
+00000000000i[CPU0  ] 		"xsavec"
+00000000000i[CPU0  ] 		"xsaves"
+00000000000i[CPU0  ] 		"aes_pclmulqdq"
+00000000000i[CPU0  ] 		"vaes_vpclmulqdq"
+00000000000i[CPU0  ] 		"movbe"
+00000000000i[CPU0  ] 		"fsgsbase"
+00000000000i[CPU0  ] 		"invpcid"
+00000000000i[CPU0  ] 		"avx"
+00000000000i[CPU0  ] 		"avx2"
+00000000000i[CPU0  ] 		"avx_f16c"
+00000000000i[CPU0  ] 		"avx_fma"
+00000000000i[CPU0  ] 		"lzcnt"
+00000000000i[CPU0  ] 		"bmi1"
+00000000000i[CPU0  ] 		"bmi2"
+00000000000i[CPU0  ] 		"rdrand"
+00000000000i[CPU0  ] 		"rdseed"
+00000000000i[CPU0  ] 		"adx"
+00000000000i[CPU0  ] 		"smap"
+00000000000i[CPU0  ] 		"sha"
+00000000000i[CPU0  ] 		"gfni"
+00000000000i[CPU0  ] 		"avx512"
+00000000000i[CPU0  ] 		"avx512dq"
+00000000000i[CPU0  ] 		"avx512bw"
+00000000000i[CPU0  ] 		"avx512cd"
+00000000000i[CPU0  ] 		"avx512vbmi"
+00000000000i[CPU0  ] 		"avx512vbmi2"
+00000000000i[CPU0  ] 		"avx512ifma52"
+00000000000i[CPU0  ] 		"avx512vpopcnt"
+00000000000i[CPU0  ] 		"avx512vnni"
+00000000000i[CPU0  ] 		"avx512bitalg"
+00000000000i[CPU0  ] 		"avx512vp2intersect"
+00000000000i[CPU0  ] 		"xapic"
+00000000000i[CPU0  ] 		"x2apic"
+00000000000i[CPU0  ] 		"pcid"
+00000000000i[CPU0  ] 		"smep"
+00000000000i[CPU0  ] 		"tsc_adjust"
+00000000000i[CPU0  ] 		"tsc_deadline"
+00000000000i[CPU0  ] 		"fcs_fds_deprecation"
+00000000000i[CPU0  ] 		"fdp_deprecation"
+00000000000i[CPU0  ] 		"umip"
+00000000000i[CPU0  ] 		"rdpid"
+00000000000i[CPU0  ] 		"sca_mitigations"
+00000000000i[PLUGIN] reset of 'pci' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'pci2isa' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'cmos' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'dma' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'pic' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'pit' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'vga' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'floppy' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'acpi' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'hpet' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'ioapic' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'keyboard' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'harddrv' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'pci_ide' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'unmapped' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'biosdev' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'speaker' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'extfpuirq' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'parallel' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'serial' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'iodebug' plugin device by virtual method
+00000000000i[PLUGIN] reset of 'usb_uhci' plugin device by virtual method
+00000001740i[BIOS  ] BIOS BUILD DATE: 03/10/24
+00000313994i[KBD   ] reset-disable command received
+00000315066i[BIOS  ] Starting rombios32
+00000315504i[BIOS  ] Shutdown flag 0
+00000316112i[BIOS  ] ram_size=0x80000000
+00000316590i[BIOS  ] ram_end=2048MB
+00000328850i[BIOS  ] Found 1 cpu(s)
+00000342788i[BIOS  ] bios_table_addr: 0x000fa128 end=0x000fcc00
+00000670604i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00000998539i[P2ISA ] PCI IRQ routing: PIRQA# set to 0x0b
+00000998563i[P2ISA ] PCI IRQ routing: PIRQB# set to 0x09
+00000998587i[P2ISA ] PCI IRQ routing: PIRQC# set to 0x0b
+00000998611i[P2ISA ] PCI IRQ routing: PIRQD# set to 0x09
+00000998621i[P2ISA ] write: ELCR2 = 0x0a
+00000999390i[BIOS  ] PIIX3/PIIX4 init: elcr=00 0a
+00001013066i[BIOS  ] PCI: bus=0 devfn=0x00: vendor_id=0x8086 device_id=0x1237 class=0x0600
+00001015410i[BIOS  ] PCI: bus=0 devfn=0x08: vendor_id=0x8086 device_id=0x7000 class=0x0601
+00001017593i[BIOS  ] PCI: bus=0 devfn=0x09: vendor_id=0x8086 device_id=0x7010 class=0x0101
+00001017828i[PIDE  ] BAR #4: i/o base address = 0xc000
+00001018444i[BIOS  ] region 4: 0x0000c000
+00001020479i[BIOS  ] PCI: bus=0 devfn=0x0a: vendor_id=0x8086 device_id=0x7020 class=0x0c03
+00001020692i[UHCI  ] BAR #4: i/o base address = 0xc020
+00001021308i[BIOS  ] region 4: 0x0000c020
+00001021436i[UHCI  ] new IRQ line = 9
+00001023358i[BIOS  ] PCI: bus=0 devfn=0x0b: vendor_id=0x8086 device_id=0x7113 class=0x0680
+00001023634i[ACPI  ] new IRQ line = 11
+00001023648i[ACPI  ] new IRQ line = 9
+00001023676i[ACPI  ] new PM base address: 0xb000
+00001023690i[ACPI  ] new SM base address: 0xb100
+00001023718i[PCI   ] setting SMRAM control register to 0x4a
+00001187853i[CPU0  ] Enter to System Management Mode
+00001187863i[CPU0  ] RSM: Resuming from System Management Mode
+00001351919i[PCI   ] setting SMRAM control register to 0x0a
+00001378584i[BIOS  ] MP table addr=0x000fa200 MPC table addr=0x000fa130 size=0xc8
+00001380291i[BIOS  ] SMBIOS table addr=0x000fa210
+00001382390i[BIOS  ] ACPI tables: RSDP addr=0x000fa330 ACPI DATA addr=0x7fff0000 size=0xff8
+00001385397i[BIOS  ] Firmware waking vector 0x7fff00cc
+00001387651i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
+00001388381i[BIOS  ] bios_table_cur_addr: 0x000fa354
+00001499088i[VBIOS ] VGABios ID: vgabios.c 2024-03-03
+00001499159i[BXVGA ] VBE known Display Interface b0c0
+00001499191i[BXVGA ] VBE known Display Interface b0c5
+00001500612i[VBIOS ] VBE Bios ID: vbe.c 2024-03-03
+00005108556i[BIOS  ] IDE time out
+02745654179i[BIOS  ] Booting from 07c0:0000
+02750305799i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=80
+02750309537i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=81
+02750313275i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=82
+02750317013i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=83
+02750320751i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=84
+02750324489i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=85
+02750328227i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=86
+02750331965i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=87
+02750335316i[BIOS  ] int13_harddisk: function 48, ELDL out of range 88
+02750338667i[BIOS  ] int13_harddisk: function 48, ELDL out of range 89
+02750342019i[BIOS  ] int13_harddisk: function 48, ELDL out of range 8a
+02750345371i[BIOS  ] int13_harddisk: function 48, ELDL out of range 8b
+02750348723i[BIOS  ] int13_harddisk: function 48, ELDL out of range 8c
+02750352075i[BIOS  ] int13_harddisk: function 48, ELDL out of range 8d
+02750355427i[BIOS  ] int13_harddisk: function 48, ELDL out of range 8e
+02750358779i[BIOS  ] int13_harddisk: function 48, ELDL out of range 8f
+02750362130i[BIOS  ] int13_harddisk: function 48, ELDL out of range 90
+02750365481i[BIOS  ] int13_harddisk: function 48, ELDL out of range 91
+02750368832i[BIOS  ] int13_harddisk: function 48, ELDL out of range 92
+02750372183i[BIOS  ] int13_harddisk: function 48, ELDL out of range 93
+02750375534i[BIOS  ] int13_harddisk: function 48, ELDL out of range 94
+02750378885i[BIOS  ] int13_harddisk: function 48, ELDL out of range 95
+02750382236i[BIOS  ] int13_harddisk: function 48, ELDL out of range 96
+02750385587i[BIOS  ] int13_harddisk: function 48, ELDL out of range 97
+02750388938i[BIOS  ] int13_harddisk: function 48, ELDL out of range 98
+02750392289i[BIOS  ] int13_harddisk: function 48, ELDL out of range 99
+02750395641i[BIOS  ] int13_harddisk: function 48, ELDL out of range 9a
+02750398993i[BIOS  ] int13_harddisk: function 48, ELDL out of range 9b
+02750402345i[BIOS  ] int13_harddisk: function 48, ELDL out of range 9c
+02750405697i[BIOS  ] int13_harddisk: function 48, ELDL out of range 9d
+02750409049i[BIOS  ] int13_harddisk: function 48, ELDL out of range 9e
+02750412401i[BIOS  ] int13_harddisk: function 48, ELDL out of range 9f
+02750415753i[BIOS  ] int13_harddisk: function 48, ELDL out of range a0
+02750419105i[BIOS  ] int13_harddisk: function 48, ELDL out of range a1
+02750422457i[BIOS  ] int13_harddisk: function 48, ELDL out of range a2
+02750425809i[BIOS  ] int13_harddisk: function 48, ELDL out of range a3
+02750429161i[BIOS  ] int13_harddisk: function 48, ELDL out of range a4
+02750432513i[BIOS  ] int13_harddisk: function 48, ELDL out of range a5
+02750435865i[BIOS  ] int13_harddisk: function 48, ELDL out of range a6
+02750439217i[BIOS  ] int13_harddisk: function 48, ELDL out of range a7
+02750442569i[BIOS  ] int13_harddisk: function 48, ELDL out of range a8
+02750445921i[BIOS  ] int13_harddisk: function 48, ELDL out of range a9
+02750449274i[BIOS  ] int13_harddisk: function 48, ELDL out of range aa
+02750452627i[BIOS  ] int13_harddisk: function 48, ELDL out of range ab
+02750455980i[BIOS  ] int13_harddisk: function 48, ELDL out of range ac
+02750459333i[BIOS  ] int13_harddisk: function 48, ELDL out of range ad
+02750462686i[BIOS  ] int13_harddisk: function 48, ELDL out of range ae
+02750466039i[BIOS  ] int13_harddisk: function 48, ELDL out of range af
+02750469391i[BIOS  ] int13_harddisk: function 48, ELDL out of range b0
+02750472743i[BIOS  ] int13_harddisk: function 48, ELDL out of range b1
+02750476095i[BIOS  ] int13_harddisk: function 48, ELDL out of range b2
+02750479447i[BIOS  ] int13_harddisk: function 48, ELDL out of range b3
+02750482799i[BIOS  ] int13_harddisk: function 48, ELDL out of range b4
+02750486151i[BIOS  ] int13_harddisk: function 48, ELDL out of range b5
+02750489503i[BIOS  ] int13_harddisk: function 48, ELDL out of range b6
+02750492855i[BIOS  ] int13_harddisk: function 48, ELDL out of range b7
+02750496207i[BIOS  ] int13_harddisk: function 48, ELDL out of range b8
+02750499559i[BIOS  ] int13_harddisk: function 48, ELDL out of range b9
+02750502912i[BIOS  ] int13_harddisk: function 48, ELDL out of range ba
+02750506265i[BIOS  ] int13_harddisk: function 48, ELDL out of range bb
+02750509618i[BIOS  ] int13_harddisk: function 48, ELDL out of range bc
+02750512971i[BIOS  ] int13_harddisk: function 48, ELDL out of range bd
+02750516324i[BIOS  ] int13_harddisk: function 48, ELDL out of range be
+02750519677i[BIOS  ] int13_harddisk: function 48, ELDL out of range bf
+02750523029i[BIOS  ] int13_harddisk: function 48, ELDL out of range c0
+02750526381i[BIOS  ] int13_harddisk: function 48, ELDL out of range c1
+02750529733i[BIOS  ] int13_harddisk: function 48, ELDL out of range c2
+02750533085i[BIOS  ] int13_harddisk: function 48, ELDL out of range c3
+02750536437i[BIOS  ] int13_harddisk: function 48, ELDL out of range c4
+02750539789i[BIOS  ] int13_harddisk: function 48, ELDL out of range c5
+02750543141i[BIOS  ] int13_harddisk: function 48, ELDL out of range c6
+02750546493i[BIOS  ] int13_harddisk: function 48, ELDL out of range c7
+02750549845i[BIOS  ] int13_harddisk: function 48, ELDL out of range c8
+02750553197i[BIOS  ] int13_harddisk: function 48, ELDL out of range c9
+02750556550i[BIOS  ] int13_harddisk: function 48, ELDL out of range ca
+02750559903i[BIOS  ] int13_harddisk: function 48, ELDL out of range cb
+02750563256i[BIOS  ] int13_harddisk: function 48, ELDL out of range cc
+02750566609i[BIOS  ] int13_harddisk: function 48, ELDL out of range cd
+02750569962i[BIOS  ] int13_harddisk: function 48, ELDL out of range ce
+02750573315i[BIOS  ] int13_harddisk: function 48, ELDL out of range cf
+02750576667i[BIOS  ] int13_harddisk: function 48, ELDL out of range d0
+02750580019i[BIOS  ] int13_harddisk: function 48, ELDL out of range d1
+02750583371i[BIOS  ] int13_harddisk: function 48, ELDL out of range d2
+02750586723i[BIOS  ] int13_harddisk: function 48, ELDL out of range d3
+02750590075i[BIOS  ] int13_harddisk: function 48, ELDL out of range d4
+02750593427i[BIOS  ] int13_harddisk: function 48, ELDL out of range d5
+02750596779i[BIOS  ] int13_harddisk: function 48, ELDL out of range d6
+02750600131i[BIOS  ] int13_harddisk: function 48, ELDL out of range d7
+02750603483i[BIOS  ] int13_harddisk: function 48, ELDL out of range d8
+02750606835i[BIOS  ] int13_harddisk: function 48, ELDL out of range d9
+02750610188i[BIOS  ] int13_harddisk: function 48, ELDL out of range da
+02750613541i[BIOS  ] int13_harddisk: function 48, ELDL out of range db
+02750616894i[BIOS  ] int13_harddisk: function 48, ELDL out of range dc
+02750620247i[BIOS  ] int13_harddisk: function 48, ELDL out of range dd
+02750623600i[BIOS  ] int13_harddisk: function 48, ELDL out of range de
+02750626953i[BIOS  ] int13_harddisk: function 48, ELDL out of range df
+02752420124i[BIOS  ] int13_cdrom: function 48, unmapped device for ELDL=e1
+02752423702i[BIOS  ] int13_cdrom: function 48, unmapped device for ELDL=e2
+02752427280i[BIOS  ] int13_cdrom: function 48, unmapped device for ELDL=e3
+02752430858i[BIOS  ] int13_cdrom: function 48, unmapped device for ELDL=e4
+02752434436i[BIOS  ] int13_cdrom: function 48, unmapped device for ELDL=e5
+02752438014i[BIOS  ] int13_cdrom: function 48, unmapped device for ELDL=e6
+02752441592i[BIOS  ] int13_cdrom: function 48, unmapped device for ELDL=e7
+02752444783i[BIOS  ] int13_cdrom: function 48, ELDL out of range e8
+02752447974i[BIOS  ] int13_cdrom: function 48, ELDL out of range e9
+02752451166i[BIOS  ] int13_cdrom: function 48, ELDL out of range ea
+02752454358i[BIOS  ] int13_cdrom: function 48, ELDL out of range eb
+02752457550i[BIOS  ] int13_cdrom: function 48, ELDL out of range ec
+02752460742i[BIOS  ] int13_cdrom: function 48, ELDL out of range ed
+02752463934i[BIOS  ] int13_cdrom: function 48, ELDL out of range ee
+02752467126i[BIOS  ] int13_cdrom: function 48, ELDL out of range ef
+02752470317i[BIOS  ] int13_cdrom: function 48, ELDL out of range f0
+02752473508i[BIOS  ] int13_cdrom: function 48, ELDL out of range f1
+02752476699i[BIOS  ] int13_cdrom: function 48, ELDL out of range f2
+02752479890i[BIOS  ] int13_cdrom: function 48, ELDL out of range f3
+02752483081i[BIOS  ] int13_cdrom: function 48, ELDL out of range f4
+02752486272i[BIOS  ] int13_cdrom: function 48, ELDL out of range f5
+02752489463i[BIOS  ] int13_cdrom: function 48, ELDL out of range f6
+02752492654i[BIOS  ] int13_cdrom: function 48, ELDL out of range f7
+02752495845i[BIOS  ] int13_cdrom: function 48, ELDL out of range f8
+02752499036i[BIOS  ] int13_cdrom: function 48, ELDL out of range f9
+02752502228i[BIOS  ] int13_cdrom: function 48, ELDL out of range fa
+02752505420i[BIOS  ] int13_cdrom: function 48, ELDL out of range fb
+02752508612i[BIOS  ] int13_cdrom: function 48, ELDL out of range fc
+02752511804i[BIOS  ] int13_cdrom: function 48, ELDL out of range fd
+02752514996i[BIOS  ] int13_cdrom: function 48, ELDL out of range fe
+02752518188i[BIOS  ] int13_cdrom: function 48, ELDL out of range ff
+02755015802i[BXVGA ] VBE set bpp (32)
+02755015814i[BXVGA ] VBE set xres (1024)
+02755015826i[BXVGA ] VBE set yres (768)
+02755015908i[BXVGA ] VBE enabling x 1024, y 768, bpp 32, 3145728 bytes visible
+02815209534i[BXVGA ] VBE disabling
+02815209551i[BXVGA ] VBE set bpp (32)
+02815209563i[BXVGA ] VBE set xres (800)
+02815209575i[BXVGA ] VBE set yres (600)
+02815209659i[BXVGA ] VBE enabling x 800, y 600, bpp 32, 1920000 bytes visible
+02824727604i[SER   ] com1: FIFO enabled
+02824727687e[CPU0  ] interrupt(): gate.type(9) != {5,6,7,14,15}
+02824727687e[CPU0  ] interrupt(): gate descriptor is not valid sys seg (vector=0x0d)
+02824727687e[CPU0  ] interrupt(): gate descriptor is not valid sys seg (vector=0x08)
+02824727687i[CPU0  ] CPU is in protected mode (active)
+02824727687i[CPU0  ] CS.mode = 32 bit
+02824727687i[CPU0  ] SS.mode = 32 bit
+02824727687i[CPU0  ] EFER   = 0x00000000
+02824727687i[CPU0  ] | EAX=00000048  EBX=206f6c6c  ECX=00000002  EDX=000003f8
+02824727687i[CPU0  ] | ESP=6d6f726a  EBP=00000000  ESI=00000048  EDI=000003f8
+02824727687i[CPU0  ] | IOPL=0 id vip vif ac vm RF nt of df if tf SF zf af PF cf
+02824727687i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+02824727687i[CPU0  ] |  CS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+02824727687i[CPU0  ] |  DS:0020( 0004| 0|  0) 00000000 ffffffff 1 1
+02824727687i[CPU0  ] |  SS:0020( 0004| 0|  0) 00000000 ffffffff 1 1
+02824727687i[CPU0  ] |  ES:0020( 0004| 0|  0) 00000000 ffffffff 1 1
+02824727687i[CPU0  ] |  FS:0020( 0004| 0|  0) 00000000 ffffffff 1 1
+02824727687i[CPU0  ] |  GS:0020( 0004| 0|  0) 00000000 ffffffff 1 1
+02824727687i[CPU0  ] | EIP=00000003 (00000003)
+02824727687i[CPU0  ] | CR0=0x00000011 CR2=0x00000000
+02824727687i[CPU0  ] | CR3=0x00000000 CR4=0x00000000
+02824727687p[CPU0  ] >>PANIC<< exception(): 3rd (13) exception with no resolution
+02824727687i[CPU0  ] CPU is in protected mode (active)
+02824727687i[CPU0  ] CS.mode = 32 bit
+02824727687i[CPU0  ] SS.mode = 32 bit
+02824727687i[CPU0  ] EFER   = 0x00000000
+02824727687i[CPU0  ] | EAX=00000048  EBX=206f6c6c  ECX=00000002  EDX=000003f8
+02824727687i[CPU0  ] | ESP=6d6f726a  EBP=00000000  ESI=00000048  EDI=000003f8
+02824727687i[CPU0  ] | IOPL=0 id vip vif ac vm RF nt of df if tf SF zf af PF cf
+02824727687i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+02824727687i[CPU0  ] |  CS:0018( 0003| 0|  0) 00000000 ffffffff 1 1
+02824727687i[CPU0  ] |  DS:0020( 0004| 0|  0) 00000000 ffffffff 1 1
+02824727687i[CPU0  ] |  SS:0020( 0004| 0|  0) 00000000 ffffffff 1 1
+02824727687i[CPU0  ] |  ES:0020( 0004| 0|  0) 00000000 ffffffff 1 1
+02824727687i[CPU0  ] |  FS:0020( 0004| 0|  0) 00000000 ffffffff 1 1
+02824727687i[CPU0  ] |  GS:0020( 0004| 0|  0) 00000000 ffffffff 1 1
+02824727687i[CPU0  ] | EIP=00000003 (00000003)
+02824727687i[CPU0  ] | CR0=0x00000011 CR2=0x00000000
+02824727687i[CPU0  ] | CR3=0x00000000 CR4=0x00000000
+02824727687i[CMOS  ] Last time: 1718556129 tz=utc (Sun Jun 16 16:42:09   2024)
+02824727687i[XGUI  ] Exit
+02824727687i[SIM   ] quit_sim called with exit code 1

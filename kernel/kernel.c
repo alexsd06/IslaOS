@@ -68,6 +68,9 @@ void draw_random_pixels()
 	}
 }
 int NEXT_RAND;
+//home/alex/Documents/OSDev/IslaOS/kernel/std/string.c:35
+//home/alex/Documents/OSDev/IslaOS/kernel/std/string.c:39
+//home/alex/Documents/OSDev/IslaOS/kernel/ramdisk/ramdisk.c:14 (discriminator 1)
 void kernel_main(void) 
 {
 	//text_mode_debug(); /*For this to work remove some video flags from boot.s*/

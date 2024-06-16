@@ -1,0 +1,40 @@
+# Bochs configuration file
+
+# Log settings
+log: bochs.log
+
+# Memory settings
+megs: 2048
+
+# Display settings
+display_library: x, options="gui_debug"
+
+# BIOS settings
+romimage: file=/usr/share/bochs/BIOS-bochs-latest
+vgaromimage: file=/usr/share/bochs/VGABIOS-lgpl-latest
+
+# Boot from CD-ROM
+boot: cdrom
+
+# Define the CD-ROM drive
+ata0-master: type=cdrom, path="iso/IslaOS.iso", status=inserted
+
+# Enable serial port redirection
+com1: enabled=1, mode=file, dev="serial.log"
+
+# Machine settings
+cpu: count=1
+
+# Debugging options
+magic_break: enabled=1
+mouse: enabled=0
+
+# CPU configuration
+cpu: model=corei7_icelake_u, ips=1000000, reset_on_triple_fault=0
+
+
+# Enable real-time clock mode
+clock: sync=realtime
+
+#Enabling serial port
+com1: enabled=1, mode=file, dev=serial.log
