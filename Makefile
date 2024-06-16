@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := default
-OSDEV_CFLAGS =-std=gnu99 -ffreestanding -O2 -Wall -Wextra -g
+OSDEV_CFLAGS =-std=gnu99 -ffreestanding -g
 OSDEV_LDFLAGS=-T linker/x32/linker.ld -ffreestanding -O2 -nostdlib -lgcc 
 
 BITS?=x64
@@ -17,13 +17,14 @@ ifeq ($(BITS), x64)
 	OVMF_ARCH=x64
 	OBJCOPY_ARCH1=elf64-x86-64
 	OBJCOPY_ARCH2=i386:x86-64
-	#OSDEV_CFLAGS =-ffreestanding -mcmodel=large -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -g -std=gnu99 -O2 -Wall -Wextra
+	OSDEV_CFLAGS =-mno-red-zone -g -std=gnu99 -ffreestanding -MMD -ffreestanding -nostdlib
 	#OSDEV_CFLAGS= -m64 -ffreestanding -z max-page-size=0x1000 -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -std=gnu99 -O2 -Wall -Wextra
 	
 	#OSDEV_CFLAGS = -Wall -Wextra -std=gnu11 -ffreestanding -fno-stack-protector -fno-stack-check -fno-lto -fPIE -m64 -march=x86-64 -mno-80387 -mno-mmx -mno-sse -mno-sse2 -mno-red-zone
  	#OSDEV_LDFLAGS = -nostdlib -pie -z text -z max-page-size=0x1000 -T linker/x64/linker.ld
 	
-	#Without this OSDEV_CFLAGS I get the first letter from write_serial_string();
+	# Without -mno-red-zone the stack gets corrupted!
+	# Without this OSDEV_CFLAGS I get the first letter from write_serial_string();
 endif
 
 ifeq ($(UEFI), true)

@@ -45,17 +45,16 @@ void write_serial(char a) {
  
    outb(PORT,a);
 }
-
+//0x002028c3, 0x002028d0, 0x00200f6b
 void write_serial_string (char * str)
 {
     int i=0;
-    //It is writing only the first byte, than it returns
+    //It is writing an r and then ascii 20 forever!
     while (str[i]!='\0') {
         write_serial(str[i]);
         i++;
     }
 }
-
 void put_serial_int (int cif)
 {
 	char c=cif+'0';
@@ -102,3 +101,48 @@ void write_serial_hex(uint32_t data)
     fin[ind]='\0';
     write_serial_string(fin);
 }
+
+
+/*
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x00202856
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:40 (discriminator 1)
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x00202876
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:44 (discriminator 1)
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x0020287a
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:46
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x0020286c
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:44 (discriminator 1)
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x00202848
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:39
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x00200f50
+/home/alex/Documents/OSDev/IslaOS/kernel/drivers/io/io.c:8
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x00200f71
+/home/alex/Documents/OSDev/IslaOS/kernel/drivers/io/io.c:17
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x00202856
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:40 (discriminator 1)
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x00202876
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:44 (discriminator 1)
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x0020284c
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:40
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x00202870
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:44 (discriminator 1)
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x00202873
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:44 (discriminator 1)
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x00202874
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:44 (discriminator 1)
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x00202870
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:44 (discriminator 1)
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x00202879
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:44 (discriminator 1)
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x0020287a
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:46
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x00202878
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:44 (discriminator 1)
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x00200f6b
+/home/alex/Documents/OSDev/IslaOS/kernel/drivers/io/io.c:9
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x002028a5
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:54
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  addr2line -e IslaOS.bin 0x0020288d
+/home/alex/Documents/OSDev/IslaOS/kernel/serial/serial.c:47
+ alex@archlinux  ~/Documents/OSDev/IslaOS/dist   main ±  
+*/

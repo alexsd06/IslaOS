@@ -79,7 +79,6 @@ void kernel_main(void)
 	write_serial_string("Hello from IslaOS "ARCH"!\n"); //IT PRINTS THE FIRST LETTER IN X64!!!
 	write_serial_string("The magic number is: "); write_serial_int(magic_nr); write_serial_string("\n");
 	write_serial_string("The multiboot data is at: "); write_serial_int((uint_t)mb_info); write_serial_string("\n");
-
 	parse_ramdisk();
 	srand(1);
 	kinit_memory();
