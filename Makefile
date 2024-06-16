@@ -57,16 +57,19 @@ compile:
 	$(ARCH)-elf-gcc -I. -c kernel/ramdisk/ramdisk.c -o kernel/ramdisk/ramdisk.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/pit/pit.c -o kernel/pit/pit.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/serial/serial.c -o kernel/serial/serial.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/debug/debug.c -o kernel/debug/debug.o $(OSDEV_CFLAGS)
 
-	$(ARCH)-elf-gcc $(OSDEV_LDFLAGS) -o dist/IslaOS.bin\
+	$(ARCH)-elf-gcc $(OSDEV_LDFLAGS) -o dist/$(BITS)/IslaOS.bin \
 	 boot/multiboot_islaos.o boot/asm/$(BITS)/boot.o kernel/kernel.o kernel/fonts/font_lib.o kernel/memory/kmalloc.o \
 	 kernel/drivers/io/io.o kernel/drivers/keyboard/keyboard.o kernel/std/math.o \
 	 kernel/std/time.o kernel/mainframe/mainframe.o kernel/drivers/video/video.o kernel/std/string.o \
 	 kernel/mainframe/images/tga.o kernel/ramdisk/ramdisk.o ramdisk.o  \
-	 kernel/mainframe/games/tetris.o kernel/pit/pit.o kernel/serial/serial.o
+	 kernel/mainframe/games/tetris.o kernel/pit/pit.o kernel/serial/serial.o kernel/debug/debug.o
+	
+	cp dist/$(BITS)/IslaOS.bin dist/IslaOS.bin
 
 build_iso:
-	cp -v dist/IslaOS.bin iso_root/boot/
+	cp -v dist/$(BITS)/IslaOS.bin iso_root/boot/
 	mkdir -p iso_root/boot/limine
 	cp -v limine.cfg limine/limine-bios.sys limine/limine-bios-cd.bin \
 		limine/limine-uefi-cd.bin iso_root/boot/limine/
@@ -79,9 +82,10 @@ build_iso:
 			-no-emul-boot -boot-load-size 4 -boot-info-table \
 			--efi-boot boot/limine/limine-uefi-cd.bin \
 			-efi-boot-part --efi-boot-image --protective-msdos-label \
-			iso_root -o iso/IslaOS.iso
+			iso_root -o iso/$(BITS)/IslaOS.iso
 	
-	./limine/limine bios-install iso/IslaOS.iso
+	./limine/limine bios-install iso/$(BITS)/IslaOS.iso
+	cp iso/$(BITS)/IslaOS.iso iso/IslaOS.iso
 
 clean:
 	find . -name "*.o" -type f -delete
@@ -91,7 +95,7 @@ clean:
 default:
 	make compile
 	make build_iso
-	#qemu-system-$(QEMU_ARCH) -serial file:serial.log -cdrom iso/IslaOS.iso -machine q35 -m 1024M \
+	#qemu-system-$(QEMU_ARCH) -serial file:serial.log -cdrom iso/$(BITS)/IslaOS.iso -machine q35 -m 1024M \
 	#-d int -no-shutdown -no-reboot $(BIOS)
 	bochs -f bochsrc -q
 

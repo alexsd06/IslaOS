@@ -1,5 +1,7 @@
 #include "kernel/drivers/io/io.h"
 #include "kernel/std/math.h"
+#include "kernel/debug/debug.h"
+
 #define PORT 0x3f8          // COM1
  
 int init_serial() {
@@ -44,9 +46,10 @@ void write_serial(char a) {
    outb(PORT,a);
 }
 
-void write_serial_string (char str[])
+void write_serial_string (char * str)
 {
     int i=0;
+    //It is writing only the first byte, than it returns
     while (str[i]!='\0') {
         write_serial(str[i]);
         i++;

@@ -10,7 +10,7 @@ ENTRY(_start)
 PHDRS
 {
     text     PT_LOAD    FLAGS(0x05); /* Execute + Read */
-    rodata   PT_LOAD    FLAGS(0x04); /* Read only */
+    rodata   PT_LOAD    FLAGS(0x06); /* Read only */
     data     PT_LOAD    FLAGS(0x06); /* Write + Read */
     dynamic  PT_DYNAMIC FLAGS(0x06); /* Dynamic PHDR for relocations */
 }

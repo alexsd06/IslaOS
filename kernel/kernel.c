@@ -13,7 +13,7 @@
 #include "kernel/std/time.h"
 #include "kernel/ramdisk/ramdisk.h"
 #include "kernel/serial/serial.h"
-
+#include "kernel/debug/debug.h"
  
 /* Check if the compiler thinks you are targeting the wrong operating system. */
 #if defined(__linux__)
@@ -75,6 +75,7 @@ void kernel_main(void)
 {
 	//text_mode_debug(); /*For this to work remove some video flags from boot.s*/
 	init_serial();
+	debug();
 	write_serial_string("Hello from IslaOS "ARCH"!\n"); //IT PRINTS THE FIRST LETTER IN X64!!!
 	write_serial_string("The magic number is: "); write_serial_int(magic_nr); write_serial_string("\n");
 	write_serial_string("The multiboot data is at: "); write_serial_int((uint_t)mb_info); write_serial_string("\n");
