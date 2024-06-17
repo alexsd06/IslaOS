@@ -4,6 +4,7 @@
 #include "kernel/memory/kmalloc.h"
 #include "kernel/mainframe/mainframe.h"
 #include "kernel/ramdisk/ramdisk.h"
+#include "serial/serial.h"
 
 #include <stdint.h>
 #include <stddef.h>
@@ -16,6 +17,7 @@ int line_size[1080];
 bool char_deletable[1080][1920];
 
 int font_width, font_height;
+
 
 void psf_init()
 {
@@ -88,6 +90,7 @@ void putchar(
     /* foreground and background colors, say 0xFFFFFF and 0x000000 */
     uint32_t fg, uint32_t bg) //THIS FUCKING NEEDS 32bit DEPTH!!! WHY!?
 {
+
     /* cast the address to PSF header struct */
     PSF_font *font = (PSF_font*) get_pointer_to_file("font.psf");
     //PSF_font *font=NULL;
@@ -146,8 +149,8 @@ void write_next_line()
 }
 void clear()
 {
-    for (int i=0; i<(int) FRAMEBUFFER_HEIGHT; i++) {
-        for (int j=0; j<(int) FRAMEBUFFER_WIDTH; j++) {
+    for (int i=0; i<(int) get_framebuffer_height(); i++) {
+        for (int j=0; j<(int) get_framebuffer_width(); j++) {
             write_pixel(i, j, 0);
         }
     }
@@ -188,11 +191,11 @@ bool last_char_deletable()
 void write_chard (char c, bool deletable)
 {
     if (!__init_putchar) init_putchar();
-    int bytesperline=pixelwidth*FRAMEBUFFER_WIDTH;
+    int bytesperline=pixelwidth*get_framebuffer_width();
     PSF_font *font = (PSF_font *) get_pointer_to_file("font.psf");
 
-    uint32_t font_max_columns=FRAMEBUFFER_WIDTH/(font->width+1); 
-    uint32_t font_max_lines=FRAMEBUFFER_HEIGHT/font->height;
+    uint32_t font_max_columns=get_framebuffer_width()/(font->width+1); 
+    uint32_t font_max_lines=get_framebuffer_height()/font->height;
     if (font_max_columns-__putchar_column<6) {
         write_next_line();
         write_chard(c, deletable);
@@ -218,7 +221,7 @@ void write_chard (char c, bool deletable)
     if (__putchar_line>=font_max_lines) {
         clear();
     }
-    putchar(framebuffer, bytesperline,  c, __putchar_column, __putchar_line, 0xFFFFFF, 0x000000);
+    putchar(get_framebuffer(), bytesperline,  c, __putchar_column, __putchar_line, 0xFFFFFF, 0x000000);
     char_deletable[__putchar_line][__putchar_column]=deletable;
     line_size[__putchar_line]=__putchar_column;
     __putchar_column++;

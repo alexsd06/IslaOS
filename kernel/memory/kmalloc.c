@@ -2,18 +2,46 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "boot/multiboot_islaos.h"
-#include "boot/multiboot.h"
 #include "kernel/fonts/font_lib.h"
 #include "kernel/arch/arch.h"
+#include "kernel/limine.h"
+#include "kernel/kernel.h"
 
-int mem_lower, mem_lower_init, mem_upper;
-
-void kinit_memory()
+uint_t mem_lower, mem_lower_init, mem_upper;
+uint_t get_memory_lower()
 {
-    mem_lower=mb_info->mem_lower;
-    mem_lower_init=mb_info->mem_lower;
-    mem_upper=mb_info->mem_upper;
+    return mem_lower;
+}
+uint_t get_initial_memory_lower()
+{
+    return mem_lower_init;
+}
+uint_t get_memory_upper()
+{
+    return mem_upper;
+}
+
+void kinit_memory(struct limine_memmap_request memory_request)
+{
+
+    if (memory_request.response==NULL) hcf();
+    struct limine_memmap_response *response=memory_request.response;
+    if (response->entry_count<1) hcf();
+    uint_t entry_count=response->entry_count;
+    uint_t best_base=0, best_lenght=0;
+    for (int i=0; i<(int)entry_count; i++) {
+        struct limine_memmap_entry *entry=response->entries[i];
+        if (entry->type==LIMINE_MEMMAP_USABLE) {
+            if (entry->length>best_lenght) {
+                best_base=entry->base;
+                best_lenght=entry->length;
+            }
+        }
+    }
+
+    mem_lower=best_base;
+    mem_lower_init=best_base;
+    mem_upper=best_base+best_lenght;
 }
 void* kmalloc (int size)
 {
@@ -39,18 +67,18 @@ void* kcalloc (int nelem, int bytes) {
     return pointer;
 }
 
-int ram_size(char unit)
+uint_t ram_size(char unit)
 {
-	int size_bytes=mem_upper-mem_lower_init;
-	if (unit=='M') return size_bytes/1024;
-	if (unit=='G') return size_bytes/(1024*1024);
+	uint_t size_bytes=mem_upper-mem_lower_init;
+	if (unit=='M') return size_bytes/1024/1024;
+	if (unit=='G') return size_bytes/1024/1024/1024;
 	return size_bytes;
 }
-int ram_available(char unit)
+uint_t ram_available(char unit)
 {
-	int size_bytes=mem_upper-mem_lower;
-	if (unit=='M') return size_bytes/1024;
-	if (unit=='G') return size_bytes/(1024*1024);
+	uint_t size_bytes=mem_upper-mem_lower;
+	if (unit=='M') return size_bytes/1024/1024;
+	if (unit=='G') return size_bytes/1024/1024/1024;
 	return size_bytes;
 }
 

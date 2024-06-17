@@ -17,4 +17,7 @@ xorriso -as mkisofs -b boot/limine/limine-bios-cd.bin \
         iso_root -o IslaOS.iso
  
 # Install Limine stage 1 and 2 for legacy BIOS boot.
-./limine/limine bios-install IslaPS.iso
+./limine/limine bios-install IslaOS.iso
+cp IslaOS.iso iso/IslaOS.iso
+bochs -f bochsrc -q
+#qemu-system-x86_64 -serial file:serial.log -cdrom IslaOS.iso -machine q35 -m 4096M \

@@ -1,3 +1,8 @@
+#include "kernel/debug/debug.h"
+#include "kernel/arch/arch.h"
+#include "kernel/serial/serial.h"
+#include <stdint.h>
+
 int strlen(const char *s)
 {
     int size=0;
@@ -5,7 +10,7 @@ int strlen(const char *s)
         size++;
         continue;
     }
-    return size-1;
+    return size;
 }
 int strcmp(const char *s1, const char *s2)
 {
@@ -27,7 +32,7 @@ int strcmppoz(const char *s1, const char *s2)
         if (s1[i]>s2[i]) return i;
         i++;
     }
-    return i-1;
+    return i;
 }
 void strcpy (char *dest, char *src)
 {
@@ -37,4 +42,12 @@ void strcpy (char *dest, char *src)
         i++;
     }
     dest[i]='\0';
+}
+
+void strcat(char *dest, char *src)
+{
+    int len=strlen(dest);
+    for (int i=len; i<=len+strlen(src); i++) {
+        dest[i]=src[i-len];
+    }
 }

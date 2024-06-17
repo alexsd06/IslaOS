@@ -80,7 +80,7 @@ void update_keyboard_status()
 
 void kinit_keyboard()
 {
-	kprintln("Init keyboard called!");
+	kprintln("Keyboard driver initialization called!");
 	/*
 	outb(0x60, bin_to_dec(00100000)); //00100000 00000100
 	*/
@@ -90,15 +90,14 @@ void kinit_keyboard()
 	delay(10);
 	int mode=inb(0x60);
 	if (mode==0xFA) {
-		kprintln("Scan mode aknowledged!");
+		kprintln("Keyboard scan mode aknowledged!");
 		mode=inb(0x60);
 	}
 	if (mode==0x43) kprintln("Keyboard is in scancode 1! ");
 	else if (mode==0x41) kprintln("Keyboard is in scancode 1 because of the PS/2 Controller! "); //Scanmode 2
 	else if (mode==0x3f) kprintln("Keyboard is in scancode 3! ");
-	else {
-		kprintln("Keyboard is an unknown scancode! ");
-	}
+	else {kprintln("Keyboard is an unknown scancode! ");}
+
 	//char *hex_mode=dec_to_hex(mode);
 	//kprintln(hex_mode);
 }

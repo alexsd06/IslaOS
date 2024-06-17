@@ -2,8 +2,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "boot/multiboot.h"
-#include "boot/multiboot_islaos.h"
 #include "kernel/fonts/font_lib.h"
 #include "kernel/memory/kmalloc.h"
 #include "kernel/drivers/keyboard/keyboard.h"
@@ -15,6 +13,7 @@
 #include "kernel/drivers/video/video.h"
 #include "kernel/ramdisk/ramdisk.h"
 #include "kernel/pit/pit.h"
+#include "arch/arch.h"
 
 int last_key_print=0;
 int key_print_delay=50; //milliseconds
@@ -22,33 +21,6 @@ int key_print_delay=50; //milliseconds
 
 char command_buffer[1080*1920];
 int command_buffer_size=0;
-
-void info()
-{
-	kprintln("");
-	if (magic_nr!=732803074) {
-		kprint("The magic number is not: "); kprintint(732803074); kprintln("");
-		kprint("It is instead: "); kprintint(magic_nr); kprintln("");
-		kprint("Halting!\n");
-	}
-
-	kprint("The magic number is: "); kprintint(magic_nr); kprintln("");
-	kprint("The bootloader name is: "); kprint(bootloader_name); kprintln(""); 
-	kprint("The framebuffer width is: "); kprintint(FRAMEBUFFER_WIDTH); kprintln("");
-	kprint("The framebuffer height is: "); kprintint(FRAMEBUFFER_HEIGHT); kprintln("");
-	
-	kprint("Total RAM size: "); kprintint(ram_size('M')); kprintln(" MB");
-	kprint("Total RAM available: "); kprintint(ram_available('M')); kprintln(" MB");
-	kprintln("");
-}
-
-void shutdown(void);
-
-void exit()
-{
-	kprintln("Shuting down!");
-	outw(0x604, 0x2000);
-}
 
 void unknown()
 {
@@ -58,25 +30,17 @@ void unknown()
 void help()
 {
 	kprintln("");
-	kprintln ("Help for IslaOS Kernel 1.0");
+	kprintln ("Help for IslaOS "ARCH" Kernel 1.0");
 	kprintln ("help - Shows this menu");
 	kprintln ("plm - Try it and see the result");
-	kprintln ("info - Shows some info about the system");
 	kprintln ("clear - Clears the screen");
-	kprintln ("exit - Shutdowns the PC");
 	kprintln ("islafetch / fetch - Neofetch for IslaOS");
 	kprintln ("homufetch - Homura neofetch for IslaOS");
 	kprintln ("crdisk - Show info about the ramdisk");
 	kprintln ("dir / ls - List the file on the ramdisk");
-	kprintln ("tetris - Starts a cool game of tetris!");
-	kprintln ("nstime - Prints time since boot in nanoseconds.");
-	kprintln ("ustime -  Print time in microseconds since boot.");
-	kprintln ("mstime -  Print time in milliseconds since boot.");
-	kprintln ("time - Prints time since boot in seconds.");
-	kprintln ("cnstime - Prints time since boot in nanoseconds.");
-	kprintln ("custime -  Print time in microseconds since boot.");
-	kprintln ("cmstime -  Print time in milliseconds since boot.");
-	kprintln ("ctime - Prints time since boot in seconds.");
+	kprintln ("tetris - Starts a cool game of tetris");
+	kprintln ("ns/us/ms/time - Prints time since boot in different si units");
+	kprintln ("c/ns/us/ms/time - Sames as normal time, except it does it forever");
 	kprintln("");
 }
 
@@ -90,12 +54,12 @@ void plm()
 typedef void (*FunctionCallback)();
 int last_key_typed;
 char command_string[][25]={
-	"help", "plm", "info", "clear", "exit", "islafetch", "homufetch", "crdisk", "dir", "ls",
+	"help", "plm", "clear", "islafetch", "homufetch", "crdisk", "dir", "ls",
 	"tetris", "nstime", "ustime", "mstime", "time", "cnstime", "custime", "cmstime", "ctime"
 };
 
 FunctionCallback command_functions[]={
-	&help, &plm, &info, &clear, &exit, &islafetch, &homufetch, &crdisk, &dir, &ls,
+	&help, &plm, &clear, &islafetch, &homufetch, &crdisk, &dir, &ls,
 	&tetris, &nstime, &ustime, &mstime, &time, &cnstime, &custime, &cmstime, &ctime
 };
 void exec()
@@ -110,9 +74,6 @@ void exec()
 	}
 	if (strcmp(command_buffer, "")==0) return;
 	else unknown();
-	//TODO: 
-	//else if (strcmp(command_buffer, "print-isr")==0) print_isr();
-	//else if (strcmp(command_buffer, "print-gdt")==0) print_gdt();
 }
 
 void type_key(int key)
@@ -150,7 +111,7 @@ BUGS:
 void mainframe()
 {
 	last_key_typed=0;
-	kprint("IslaOS Kernel initialized!\n\n");
+	kprint("IslaOS "ARCH" Kernel initialized!\n\n");
 	kprint("kernel@IslaOS:/$ ");
 	write_chard('|', true);
 	command_buffer[0]=0;

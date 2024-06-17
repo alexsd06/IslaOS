@@ -3,7 +3,9 @@
 #include "kernel/fonts/font_lib.h"
 #include "kernel/arch/arch.h"
 
-extern tar_header _binary_ramdisk_tar_start;
+#define initramfs_start _binary_initramfs_tar_start
+
+extern tar_header initramfs_start;
 unsigned int getsize(const char *in)
 {
  
@@ -21,7 +23,7 @@ tar_header *headers[1024]; //This suports 1024 files. Adjust as needed...
 int ramdisk_cnt=0;
 unsigned int parse_ramdisk()
 {
-    tar_header *ramdisk=&_binary_ramdisk_tar_start;
+    tar_header *ramdisk=&initramfs_start;
     uint_t address = (uint_t) ramdisk;
     unsigned int i;
     for (i = 0; ; i++)
@@ -71,7 +73,7 @@ uint_t get_pointer_to_file(char *filename)
 void crdisk()
 {
     kprintln("");
-    tar_header *ramdisk=&_binary_ramdisk_tar_start;
+    tar_header *ramdisk=&initramfs_start;
     kprint ("The adress of the ramdisk is: "); kprintint((uint_t)ramdisk); kprintln("");
     kprint ("There are: "); kprintint(ramdisk_cnt); kprintln(" files in the ramdisk!");
     //char *addr=(char *) ramdisk;
@@ -86,7 +88,7 @@ void crdisk()
 void dir()
 {
     kprintln("");
-    tar_header *ramdisk=&_binary_ramdisk_tar_start;
+    tar_header *ramdisk=&initramfs_start;
     uint_t address = (uint_t) ramdisk;
     unsigned int i;
     for (i = 0; ; i++)

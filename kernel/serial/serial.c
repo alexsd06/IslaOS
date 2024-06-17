@@ -1,6 +1,8 @@
 #include "kernel/drivers/io/io.h"
 #include "kernel/std/math.h"
 #include "kernel/debug/debug.h"
+#include <stdint.h>
+#include "kernel/arch/arch.h"
 
 #define PORT 0x3f8          // COM1
  
@@ -61,7 +63,7 @@ void put_serial_int (int cif)
 	write_serial(c);
 }
 
-void write_serial_int(uint32_t data)
+void write_serial_int(uint_t data)
 {
 	int zero_before;
 	data=oglindit(data, &zero_before);
@@ -79,7 +81,7 @@ void write_serial_int(uint32_t data)
 		zero_before--;
 	}
 }
-void write_serial_hex(uint32_t data)
+void write_serial_hex(uint_t data)
 {
     char analog[]="0123456789ABCDEF";
     char rez[64];

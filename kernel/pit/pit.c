@@ -2,6 +2,7 @@
 #include "kernel/std/math.h"
 #include "kernel/fonts/font_lib.h"
 #include "kernel/std/time.h"
+#include "kernel/arch/arch.h"
 
 unsigned int read_pit_count(void) {
 	unsigned count = 0;
@@ -24,7 +25,7 @@ unsigned system_time_usecs=0;
 unsigned system_time_msecs=0;
 unsigned system_time_secs=0;
 
-const int MAXL=2000000000;
+const uint_t MAXL=2000000000;
 void check_pit()
 {
     unsigned int pit_count=read_pit_count();

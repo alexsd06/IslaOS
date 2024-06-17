@@ -1,0 +1,1 @@
+void hcf(void);

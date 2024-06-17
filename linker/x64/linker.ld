@@ -10,7 +10,7 @@ ENTRY(_start)
 PHDRS
 {
     text     PT_LOAD    FLAGS(0x05); /* Execute + Read */
-    rodata   PT_LOAD    FLAGS(0x06); /* Read only */
+    rodata   PT_LOAD    FLAGS(0x04); /* Read only */
     data     PT_LOAD    FLAGS(0x06); /* Write + Read */
     dynamic  PT_DYNAMIC FLAGS(0x06); /* Dynamic PHDR for relocations */
 }
@@ -23,8 +23,12 @@ SECTIONS
     /* that is the beginning of the region. */
     . = 0xffffffff80000000;
 
+    .multiboot ALIGN(4) :
+    {
+        *(.multiboot .multiboot.*)
+    }
+
     .text : {
-		KEEP(*(.multiboot))
         *(.text .text.*)
     } :text
 

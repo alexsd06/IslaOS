@@ -1,6 +1,8 @@
 .DEFAULT_GOAL := default
-OSDEV_CFLAGS =-std=gnu99 -ffreestanding -g
-OSDEV_LDFLAGS=-T linker/x32/linker.ld -ffreestanding -O2 -nostdlib -lgcc 
+OSDEV_CFLAGS =-std=gnu17 -ffreestanding -g -I. -Ikernel
+OSDEV_LDFLAGS=-T linker/x32/linker.ld -ffreestanding -O0 -nostdlib -lgcc 
+
+#https://stackoverflow.com/questions/76987932/litteral-string-is-not-displayed-osdev
 
 BITS?=x64
 UEFI=false
@@ -17,12 +19,12 @@ ifeq ($(BITS), x64)
 	OVMF_ARCH=x64
 	OBJCOPY_ARCH1=elf64-x86-64
 	OBJCOPY_ARCH2=i386:x86-64
-	OSDEV_CFLAGS =-mno-red-zone -g -std=gnu99 -ffreestanding -MMD -ffreestanding -nostdlib
-	#OSDEV_CFLAGS= -m64 -ffreestanding -z max-page-size=0x1000 -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -std=gnu99 -O2 -Wall -Wextra
-	
-	#OSDEV_CFLAGS = -Wall -Wextra -std=gnu11 -ffreestanding -fno-stack-protector -fno-stack-check -fno-lto -fPIE -m64 -march=x86-64 -mno-80387 -mno-mmx -mno-sse -mno-sse2 -mno-red-zone
- 	#OSDEV_LDFLAGS = -nostdlib -pie -z text -z max-page-size=0x1000 -T linker/x64/linker.ld
-	
+
+	OSDEV_CFLAGS= -g -Wall -Wextra -std=gnu11 -ffreestanding -fno-stack-protector -fno-stack-check -fno-lto -fPIE -m64 \
+	-march=x86-64 -mno-80387 -mno-mmx -mno-sse -mno-sse2 -mno-red-zone -I. -Ikernel
+	OSDEV_LDFLAGS=-nostdlib -pie -z text \-z max-page-size=0x1000 -T linker/x64/linker.ld
+
+
 	# Without -mno-red-zone the stack gets corrupted!
 	# Without this OSDEV_CFLAGS I get the first letter from write_serial_string();
 endif
@@ -32,15 +34,10 @@ ifeq ($(UEFI), true)
 endif
 
 compile:
-	tar -C ramdisk  --transform='s,^\./,,' --format=ustar -cvf ramdisk.tar .
-	tar -vf ramdisk.tar --delete .
+	tar -C initramfs  --transform='s,^\./,,' --format=ustar -cvf initramfs.tar .
+	tar -vf initramfs.tar --delete .
 
-	objcopy -O $(OBJCOPY_ARCH1) -B $(OBJCOPY_ARCH2) -I binary ramdisk.tar ramdisk.o
-
-	$(ARCH)-elf-as boot/asm/$(BITS)/boot.s -o boot/asm/$(BITS)/boot.o
-	
-	#nasm -f elf32 kernel/gdt/asm/gdt.s -o kernel/gdt/asm/gdt.o
-	#nasm -f elf32 kernel/int/asm/int.s -o kernel/int/asm/int.o
+	objcopy -O $(OBJCOPY_ARCH1) -B $(OBJCOPY_ARCH2) -I binary initramfs.tar initramfs.o
 	
 	$(ARCH)-elf-gcc -I. -c kernel/kernel.c -o kernel/kernel.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/mainframe/mainframe.c -o kernel/mainframe/mainframe.o $(OSDEV_CFLAGS)
@@ -51,7 +48,6 @@ compile:
 	$(ARCH)-elf-gcc -I. -c kernel/drivers/video/video.c -o kernel/drivers/video/video.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/drivers/keyboard/keyboard.c -o kernel/drivers/keyboard/keyboard.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/std/math.c -o kernel/std/math.o $(OSDEV_CFLAGS)
-	$(ARCH)-elf-gcc -I. -c boot/multiboot_islaos.c -o boot/multiboot_islaos.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/fonts/font_lib.c -o kernel/fonts/font_lib.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/mainframe/images/tga.c -o kernel/mainframe/images/tga.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/mainframe/games/tetris.c -o kernel/mainframe/games/tetris.o $(OSDEV_CFLAGS)
@@ -59,12 +55,14 @@ compile:
 	$(ARCH)-elf-gcc -I. -c kernel/pit/pit.c -o kernel/pit/pit.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/serial/serial.c -o kernel/serial/serial.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/debug/debug.c -o kernel/debug/debug.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/info/info.c -o kernel/info/info.o $(OSDEV_CFLAGS)
 
 	$(ARCH)-elf-gcc $(OSDEV_LDFLAGS) -o dist/$(BITS)/IslaOS.bin \
-	 boot/multiboot_islaos.o boot/asm/$(BITS)/boot.o kernel/kernel.o kernel/fonts/font_lib.o kernel/memory/kmalloc.o \
+	 kernel/kernel.o \
+	 kernel/fonts/font_lib.o kernel/memory/kmalloc.o \
 	 kernel/drivers/io/io.o kernel/drivers/keyboard/keyboard.o kernel/std/math.o \
 	 kernel/std/time.o kernel/mainframe/mainframe.o kernel/drivers/video/video.o kernel/std/string.o \
-	 kernel/mainframe/images/tga.o kernel/ramdisk/ramdisk.o ramdisk.o  \
+	 kernel/mainframe/images/tga.o kernel/ramdisk/ramdisk.o initramfs.o  kernel/info/info.o \
 	 kernel/mainframe/games/tetris.o kernel/pit/pit.o kernel/serial/serial.o kernel/debug/debug.o
 	
 	cp dist/$(BITS)/IslaOS.bin dist/IslaOS.bin
@@ -90,13 +88,14 @@ build_iso:
 
 clean:
 	find . -name "*.o" -type f -delete
+	find . -name "*.d" -type f -delete
 	find . -name "*.iso" -type f -delete
 	find . -name "*.tar" -type f -delete
 
 default:
 	make compile
 	make build_iso
-	#qemu-system-$(QEMU_ARCH) -serial file:serial.log -cdrom iso/$(BITS)/IslaOS.iso -machine q35 -m 1024M \
+	#bochs -f bochsrc -q
+	qemu-system-$(QEMU_ARCH) -serial file:serial.log -cdrom iso/IslaOS.iso -machine q35 -m 1024M $(BIOS)
 	#-d int -no-shutdown -no-reboot $(BIOS)
-	bochs -f bochsrc -q
 
