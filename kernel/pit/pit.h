@@ -1,8 +1,10 @@
+#include "arch/arch.h"
+
 void check_pit();
-unsigned int get_system_ns();
-unsigned int get_system_us();
-unsigned int get_system_ms();
-unsigned int get_system_se();
+uint_t get_system_time(char c);
+void ktime();
+void kctime();
+
 void nstime();
 void ustime();
 void mstime();

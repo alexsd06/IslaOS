@@ -3,6 +3,7 @@
 #include "kernel/fonts/font_lib.h"
 #include "kernel/std/time.h"
 #include "kernel/arch/arch.h"
+#include "kernel/drivers/keyboard/keyboard.h"
 
 unsigned int read_pit_count(void) {
 	unsigned count = 0;
@@ -52,58 +53,61 @@ unsigned int get_system_us() {return system_time_usecs;}
 unsigned int get_system_ms() {return system_time_msecs;}
 unsigned int get_system_se() {return system_time_secs;}
 
-
-void ustime()
-{
-    kprint ("Time in microseconds since boot: "); kprintint(system_time_usecs); kprintln("...");
-}
-void nstime()
-{
-    kprint ("Time in nanoseconds since boot: "); kprintint(system_time_nsecs); kprintln("...");
-}
-void mstime()
-{
-    kprint ("Time in milliseconds since boot: "); kprintint(system_time_msecs); kprintln("...");
-}
-void time()
-{
-    kprint ("Time in seconds since boot: "); kprintint(system_time_secs); kprintln("...");
+uint_t get_system_time(char c) {
+    switch (c) {
+        case 's':
+            return system_time_secs;
+        case 'm':
+            return system_time_msecs;
+        case 'u':
+            return system_time_secs;
+        case 'n':
+            return system_time_nsecs;
+            break;
+    }
+    return 0;
 }
 
 
-
-void cnstime()
-{
-    while (true) {
-        clear();
-        kprint ("Time in nanoseconds since boot: "); kprintint(system_time_nsecs); kprintln("...");
-        delay(200);
+void ktime(char c)   {
+    switch (c) {
+        case 's':
+            kprint ("Time in seconds since boot: "); kprintint(system_time_secs); kprintln("...");
+            break;
+        case 'm':
+            kprint ("Time in milliseconds since boot: "); kprintint(system_time_msecs); kprintln("...");
+            break;
+        case 'u':
+            kprint ("Time in microseconds since boot: "); kprintint(system_time_usecs); kprintln("...");
+            break;
+        case 'n':
+            kprint ("Time in nanoseconds since boot: "); kprintint(system_time_nsecs); kprintln("...");
+            break;
     }
 }
-void custime()
+
+
+void kctime(char c)
 {
     while (true) {
         clear();
-        kprint ("Time in microseconds since boot: "); kprintint(system_time_usecs); kprintln("...");
-        delay(200);
-    }
-}
-void cmstime()
-{
-    while (true) {
-        clear();
-        kprint ("Time in milliseconds since boot: "); kprintint(system_time_msecs); kprintln("...");
-        delay(200);
-    }
-}
-void ctime()
-{
-    while (true) {
-        clear();
-        kprint ("Time in seconds since boot: "); kprintint(system_time_secs); kprintln("...");
+        ktime(c);
+        update_keyboard_status();
+        if (keypress['c']!=0) {
+            keypress['c']=0;
+            break;
+        }
         delay(200);
     }
 }
 
 
 
+void nstime() {ktime('n');}
+void ustime() {ktime('u');}
+void mstime() {ktime('m');}
+void time()   {ktime('s');}
+void cnstime() {kctime('n');}
+void custime() {kctime('u');}
+void cmstime() {kctime('m');}
+void ctime() {kctime('s');}

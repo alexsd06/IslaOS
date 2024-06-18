@@ -102,7 +102,7 @@ void type_key(int key)
 		write_chard('|', true);
 		cursor_back();
 	}
-	last_key_print=get_system_ms();
+	last_key_print=get_system_time('m');
 	last_key_typed=key;
 }
 /*
@@ -121,7 +121,7 @@ void mainframe()
 		update_keyboard_status();
 		for (int i=0; i<256; i++) {
 			if (keypress[i]!=0) {
-				if (i!=last_key_typed&&(int)get_system_ms()-last_key_print>key_print_delay) type_key(i);
+				if (i!=last_key_typed&&(int)get_system_time('m')-last_key_print>key_print_delay) type_key(i);
 				else if (keypress[i]!=0) type_key(i);
 				keypress[i]=0;
 			}

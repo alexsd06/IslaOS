@@ -7,8 +7,8 @@
 //UPDATED: Using PIT without IRQs because fuck IRQs;
 void delay(int time)
 {
-	unsigned int mstime=get_system_ms();
-	while (get_system_ms()<mstime+time) {
+	unsigned int mstime=get_system_time('m');
+	while (get_system_time('m')<mstime+time) {
 		check_pit();
 		continue;
 	}
