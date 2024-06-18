@@ -7,27 +7,14 @@ OSDEV_LDFLAGS=-T linker/x32/linker.ld -ffreestanding -O0 -nostdlib -lgcc
 BITS?=x64
 UEFI=false
 
-ARCH=i686
-QEMU_ARCH=i386
-OVMF_ARCH=ia32
-OBJCOPY_ARCH1=elf32-i386
-OBJCOPY_ARCH2=i386
+ARCH=x86_64
+QEMU_ARCH=x86_64
+OVMF_ARCH=x64
+OBJCOPY_ARCH1=elf64-x86-64
+OBJCOPY_ARCH2=i386:x86-64
 
-ifeq ($(BITS), x64)
-	ARCH=x86_64
-	QEMU_ARCH=x86_64
-	OVMF_ARCH=x64
-	OBJCOPY_ARCH1=elf64-x86-64
-	OBJCOPY_ARCH2=i386:x86-64
-
-	OSDEV_CFLAGS= -g -Wall -Wextra -std=gnu11 -ffreestanding -fno-stack-protector -fno-stack-check -fno-lto -fPIE -m64 \
-	-march=x86-64 -mno-80387 -mno-mmx -mno-sse -mno-sse2 -mno-red-zone -I. -Ikernel
-	OSDEV_LDFLAGS=-nostdlib -pie -z text \-z max-page-size=0x1000 -T linker/x64/linker.ld
-
-
-	# Without -mno-red-zone the stack gets corrupted!
-	# Without this OSDEV_CFLAGS I get the first letter from write_serial_string();
-endif
+OSDEV_CFLAGS= -g -Wall -Wextra -std=gnu11 -ffreestanding -fno-stack-protector -fno-stack-check -fno-lto -fPIE -m64 -march=x86-64 -mno-80387 -mno-mmx -mno-sse -mno-sse2 -mno-red-zone -I. -Ikernel
+OSDEV_LDFLAGS=-nostdlib -pie -z text \-z max-page-size=0x1000 -T linker/x64/linker.ld
 
 ifeq ($(UEFI), true)
 	BIOS=-bios /usr/share/edk2/$(OVMF_ARCH)/OVMF.fd
