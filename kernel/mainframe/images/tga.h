@@ -12,6 +12,9 @@ typedef struct {
   unsigned char pixeltype;          // must be 40
 } __attribute__((packed)) tga_header_t;
 
+void show_image(tga_header_t *image, int x, int y);
+int get_image_width(tga_header_t *image);
+int get_image_height(tga_header_t *image);
 void fetch(char str[]);
 void islafetch();
 void homufetch();

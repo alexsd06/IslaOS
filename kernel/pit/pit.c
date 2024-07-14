@@ -38,7 +38,10 @@ void check_pit()
 
     pit_timer+=diff;
     if (pit_timer>MAXL/838) pit_timer=0;
+
+    //My seconds are shorter than seconds?? :/
     system_time_nsecs=pit_timer*838;
+
     if (abs(system_time_nsecs/1000-system_time_usecs)>1) system_time_usecs++;
     if (abs(system_time_usecs/1000-system_time_msecs)>1) system_time_msecs++;
     if (abs(system_time_msecs/1000-system_time_secs)>1) system_time_secs++;

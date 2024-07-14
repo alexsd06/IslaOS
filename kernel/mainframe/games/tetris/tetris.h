@@ -1,0 +1,2 @@
+void tetris();
+void dizzy();

@@ -37,7 +37,7 @@ compile:
 	$(ARCH)-elf-gcc -I. -c kernel/std/math.c -o kernel/std/math.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/fonts/font_lib.c -o kernel/fonts/font_lib.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/mainframe/images/tga.c -o kernel/mainframe/images/tga.o $(OSDEV_CFLAGS)
-	$(ARCH)-elf-gcc -I. -c kernel/mainframe/games/tetris.c -o kernel/mainframe/games/tetris.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/mainframe/games/tetris/tetris.c -o kernel/mainframe/games/tetris/tetris.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/ramdisk/ramdisk.c -o kernel/ramdisk/ramdisk.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/pit/pit.c -o kernel/pit/pit.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/serial/serial.c -o kernel/serial/serial.o $(OSDEV_CFLAGS)
@@ -50,7 +50,7 @@ compile:
 	 kernel/drivers/io/io.o kernel/drivers/keyboard/keyboard.o kernel/std/math.o \
 	 kernel/std/time.o kernel/mainframe/mainframe.o kernel/drivers/video/video.o kernel/std/string.o \
 	 kernel/mainframe/images/tga.o kernel/ramdisk/ramdisk.o initramfs.o  kernel/info/info.o \
-	 kernel/mainframe/games/tetris.o kernel/pit/pit.o kernel/serial/serial.o kernel/debug/debug.o
+	 kernel/mainframe/games/tetris/tetris.o kernel/pit/pit.o kernel/serial/serial.o kernel/debug/debug.o
 	
 	cp dist/$(BITS)/IslaOS.bin dist/IslaOS.bin
 

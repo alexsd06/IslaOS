@@ -24,6 +24,31 @@ Just use the following code snippet: */
 
 //readelf -s --wide isla_normal.o
 
+void show_image(tga_header_t *image, int x, int y)
+{
+    uint32_t  *image_normal = (uint32_t*) image;
+    uint32_t *image_pixels=(uint32_t*)((uint_t)image_normal+sizeof(tga_header_t));
+    int width=image->w, height=image->h;
+    int pixel_index=0;
+    for (int i=0; i<height; i++) {
+        for (int j=0; j<width; j++) { 
+            uint32_t  data=image_pixels[pixel_index];
+            write_pixel(i+x, j+y, data); //ARGB
+            pixel_index++;
+        }
+    }
+}
+
+int get_image_width(tga_header_t *image)
+{
+    return image->w;
+}
+
+int get_image_height(tga_header_t *image)
+{
+    return image->h;
+}
+
 void fetch(char str[])
 {
 
@@ -57,14 +82,8 @@ void fetch(char str[])
 	kprint ("                               Total RAM size: "); kprintint(ram_size('M')); kprintln(" MB");
 	kprint ("                               Total RAM available: "); kprintint(ram_available('M')); kprintln(" MB");
 
-    int pixel_index=0;
-    for (int i=0; i<height; i++) {
-        for (int j=0; j<width; j++) { 
-            uint32_t  data=image_pixels[pixel_index];
-            write_pixel(i+cursor_line*font_height, j+20, data); //ARGB
-            pixel_index++;
-        }
-    }
+    show_image(image, cursor_line*font_height, 20);
+    
 }
 
 void islafetch() {fetch("isla.tga");}

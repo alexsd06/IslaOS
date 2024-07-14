@@ -14,7 +14,7 @@
 #include "kernel/serial/serial.h"
 #include "kernel/debug/debug.h"
 #include "info/info.h"
-
+#include "pit/pit.h"
 
 #include "limine.h"
  

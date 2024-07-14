@@ -9,7 +9,7 @@
 #include "kernel/drivers/io/io.h"
 #include "kernel/std/string.h"
 #include "kernel/mainframe/images/tga.h"
-#include "kernel/mainframe/games/tetris.h"
+#include "kernel/mainframe/games/tetris/tetris.h"
 #include "kernel/drivers/video/video.h"
 #include "kernel/ramdisk/ramdisk.h"
 #include "kernel/pit/pit.h"
@@ -39,8 +39,10 @@ void help()
 	kprintln ("crdisk - Show info about the ramdisk");
 	kprintln ("dir / ls - List the file on the ramdisk");
 	kprintln ("tetris - Starts a cool game of tetris");
+	kprintln ("dizzy - Do you have seizures? Do not run this");
 	kprintln ("ns/us/ms/time - Prints time since boot in different si units");
 	kprintln ("c/ns/us/ms/time - Sames as normal time, except it does it forever");
+	kprintln ("exit - Shutdowns the computer (QEMU for now)");
 	kprintln("");
 }
 
@@ -55,13 +57,21 @@ typedef void (*FunctionCallback)();
 int last_key_typed;
 char command_string[][25]={
 	"help", "plm", "clear", "islafetch", "homufetch", "crdisk", "dir", "ls",
-	"tetris", "nstime", "ustime", "mstime", "time", "cnstime", "custime", "cmstime", "ctime"
+	"tetris", "dizzy", "nstime", "ustime", "mstime", "time", "cnstime", "custime", "cmstime", "ctime", "exit"
 };
+
+void exit(void) {
+	kprintln ("Exiting IslaOS...");
+    uint16_t port = 0x604;
+    uint16_t value = 0x2000;
+    asm volatile ("outw %0, %1" : : "a" (value), "Nd" (port));
+}
 
 FunctionCallback command_functions[]={
 	&help, &plm, &clear, &islafetch, &homufetch, &crdisk, &dir, &ls,
-	&tetris, &nstime, &ustime, &mstime, &time, &cnstime, &custime, &cmstime, &ctime
+	&tetris, &dizzy, &nstime, &ustime, &mstime, &time, &cnstime, &custime, &cmstime, &ctime, &exit
 };
+
 void exec()
 {
 	for (int i=0; i<(int)(sizeof(command_string)/25/sizeof(char)); i++) {
