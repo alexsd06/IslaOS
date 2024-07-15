@@ -92,7 +92,6 @@ struct tetrimino {
 
 struct tetrimino active_tetrimino;
 
-
 // Initializer function for struct tetrimino
 struct tetrimino init_tetrimino(int kind, int x, int y, int color_id, int mat_size) {
     struct tetrimino t;
@@ -154,6 +153,7 @@ void render_board()
 
 void init_board()
 {
+    clear();
     int block_width=get_image_width(tetris_blocks[0]), block_height=get_image_height(tetris_blocks[0]);
     int fb_width=get_framebuffer_width();
     int width_offset=fb_width/2-block_width*5-15;
@@ -169,9 +169,23 @@ void init_board()
     }
 }
 
-bool is_active_alive()
+int can_active_go(int y, int x)
 {
-    return active_tetrimino.y+active_tetrimino.mat_size<22;
+    int last_one=0;
+    TetriminoMatrix *mat=kind_to_matrix[active_tetrimino.kind];
+    int mat_dim = (*mat)[3][3];
+    for (int i=0; i<mat_dim; i++) {
+        for (int j=0; j<mat_dim; j++) {
+            int val = (*mat)[i][j];
+            if (val!=1) continue;
+            if (tetrimino_board[i+y][j+x]!=-1&&tetrimino_board[i+active_tetrimino.y][j+active_tetrimino.x]==-1) {
+                return 0;
+            }
+            last_one=i;
+        }
+    }
+    if (last_one+y>=22) return 0;
+    return 1;
 }
 
 void game_tick()
@@ -179,8 +193,7 @@ void game_tick()
     add_tetrimino_to_board(active_tetrimino);
 
     render_board();
-
-    if (is_active_alive()) clear_tetrimino(active_tetrimino);
+    if (can_active_go(active_tetrimino.y+1, active_tetrimino.x)) clear_tetrimino(active_tetrimino);
     if (is_key_pressed('a')) {
         cancel_keypress('a');
         if (active_tetrimino.x>0) active_tetrimino.x-=1;
@@ -204,11 +217,14 @@ int break_game()
 void fall(int *sys_ms)
 {
     int ctime=get_system_time('m');
-    if (ctime>(*sys_ms)+300) {
+    if (ctime>(*sys_ms)+100) {
         (*sys_ms)=get_system_time('m');
-        if (is_active_alive()) active_tetrimino.y+=1;
+        if (can_active_go(active_tetrimino.y+1, active_tetrimino.x)) {
+            active_tetrimino.y+=1;
+        }
         else {
             int choice=rand()%7;
+            add_tetrimino_to_board(active_tetrimino);
             active_tetrimino=init_tetrimino(tetrimino_kinds[choice], 0, 0, choice, 2);
         }
     }
@@ -240,7 +256,7 @@ void tetris()
         if (break_game()) break;
         game_tick();
         fall(&sys_ms);
-        sleep(100, 'm');
+        sleep(30, 'm');
     }
     
 }

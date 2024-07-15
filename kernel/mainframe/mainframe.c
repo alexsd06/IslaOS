@@ -14,6 +14,7 @@
 #include "kernel/ramdisk/ramdisk.h"
 #include "kernel/pit/pit.h"
 #include "arch/arch.h"
+#include "kernel/std/math.h"
 
 int last_key_print=0;
 int key_print_delay=50; //milliseconds
@@ -75,8 +76,6 @@ FunctionCallback command_functions[]={
 void exec()
 {
 	for (int i=0; i<(int)(sizeof(command_string)/25/sizeof(char)); i++) {
-		//kprint(command_string[i]); kprint(" "); kprintint(strcmppoz(command_buffer, command_string[i]));
-		//kprint(" "); kprintint(strlen(command_string[i])); kprintln("");
 		if (strcmppoz(command_buffer, command_string[i])==strlen(command_string[i])) {
 			command_functions[i]();
 			return;
@@ -115,6 +114,7 @@ void type_key(int key)
 	last_key_print=get_system_time('m');
 	last_key_typed=key;
 }
+int fast_type=0;
 /*
 BUGS:
 */
@@ -131,11 +131,17 @@ void mainframe()
 		update_keyboard_status();
 		for (int i=0; i<256; i++) {
 			if (is_key_pressed(i)) {
-				if (i!=last_key_typed&&(int)get_system_time('m')-last_key_print>key_print_delay) {
-					type_key(i);
-					cancel_keypress(i);
+				if (i==last_key_typed&&!fast_type) {
+					kprintint(abs((int)get_system_time('m')-last_key_print)); kprint(" "); kprintint(last_key_print); kprint(" "); kprintint((int)get_system_time('m')); kprintln("");
+					if (abs((int)get_system_time('m')-last_key_print)>key_print_delay) {
+						type_key(i);
+						fast_type=1;
+					}
 				}
-				else type_key(i);
+				else {
+					type_key(i);
+					if (i!=last_key_typed) fast_type=0;
+				}
 				cancel_keypress(i);
 			}
 		}

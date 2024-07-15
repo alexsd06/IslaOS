@@ -57,6 +57,7 @@ unsigned int get_system_ms() {return system_time_msecs;}
 unsigned int get_system_se() {return system_time_secs;}
 
 uint_t get_system_time(char c) {
+    check_pit();
     switch (c) {
         case 's':
             return system_time_secs;
@@ -75,6 +76,7 @@ uint_t get_system_time(char c) {
 //Only works when check_pit is run continously. It doesn't work even inside mainframe
 
 void ktime(char c)   {
+    check_pit();
     switch (c) {
         case 's':
             kprint ("Time in seconds since boot: "); kprintint(system_time_secs); kprintln("...");
