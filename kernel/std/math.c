@@ -1,4 +1,32 @@
 #include "kernel/fonts/font_lib.h"
+
+
+int sqrt(int x) {
+    if (x < 0) {
+        return -1; // Return -1 for negative inputs to indicate error
+    }
+    if (x == 0 || x == 1) {
+        return x; // The square root of 0 is 0, and the square root of 1 is 1
+    }
+    int start = 1, end = x, result;
+    while (start <= end) {
+        int mid = (start + end) / 2;
+        if (mid * mid == x) {
+            return mid;
+        }
+        // If mid*mid is less than x, discard the left half
+        if (mid * mid < x) {
+            start = mid + 1;
+            result = mid;
+        }
+        // If mid*mid is greater than x, discard the right half
+        else {
+            end = mid - 1;
+        }
+    }
+    return result;
+}
+
 int oglindit (int nr, int *zero_before)
 {
 	int ogli=0;

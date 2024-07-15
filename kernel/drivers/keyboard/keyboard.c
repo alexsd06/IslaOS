@@ -108,3 +108,15 @@ void keyboard_read_key()
 	if(inb(0x64) & 1)
 		lastkey = inb(0x60);
 }
+
+bool is_key_pressed(int c)
+{
+	update_keyboard_status();
+	if (keypress[c]!=0) return 1;
+	return 0;
+}
+
+void cancel_keypress(int c)
+{
+	keypress[c]=0;
+}

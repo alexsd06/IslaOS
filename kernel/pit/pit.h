@@ -14,3 +14,5 @@ void cnstime();
 void custime();
 void cmstime();
 void ctime();
+
+void sleep (int time, char unit);

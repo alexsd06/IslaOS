@@ -34,8 +34,8 @@ void help()
 	kprintln ("help - Shows this menu");
 	kprintln ("plm - Try it and see the result");
 	kprintln ("clear - Clears the screen");
-	kprintln ("islafetch / fetch - Neofetch for IslaOS");
-	kprintln ("homufetch - Homura neofetch for IslaOS");
+	kprintln ("isla - Neofetch for IslaOS");
+	kprintln ("homu - Homura neofetch for IslaOS");
 	kprintln ("crdisk - Show info about the ramdisk");
 	kprintln ("dir / ls - List the file on the ramdisk");
 	kprintln ("tetris - Starts a cool game of tetris");
@@ -56,7 +56,7 @@ void plm()
 typedef void (*FunctionCallback)();
 int last_key_typed;
 char command_string[][25]={
-	"help", "plm", "clear", "islafetch", "homufetch", "crdisk", "dir", "ls",
+	"help", "plm", "clear", "isla", "homu", "crdisk", "dir", "ls",
 	"tetris", "dizzy", "nstime", "ustime", "mstime", "time", "cnstime", "custime", "cmstime", "ctime", "exit"
 };
 
@@ -68,7 +68,7 @@ void exit(void) {
 }
 
 FunctionCallback command_functions[]={
-	&help, &plm, &clear, &islafetch, &homufetch, &crdisk, &dir, &ls,
+	&help, &plm, &clear, &isla, &homu, &crdisk, &dir, &ls,
 	&tetris, &dizzy, &nstime, &ustime, &mstime, &time, &cnstime, &custime, &cmstime, &ctime, &exit
 };
 
@@ -130,10 +130,13 @@ void mainframe()
 		if (last_key_print==INT32_MAX) last_key_print=0;
 		update_keyboard_status();
 		for (int i=0; i<256; i++) {
-			if (keypress[i]!=0) {
-				if (i!=last_key_typed&&(int)get_system_time('m')-last_key_print>key_print_delay) type_key(i);
-				else if (keypress[i]!=0) type_key(i);
-				keypress[i]=0;
+			if (is_key_pressed(i)) {
+				if (i!=last_key_typed&&(int)get_system_time('m')-last_key_print>key_print_delay) {
+					type_key(i);
+					cancel_keypress(i);
+				}
+				else type_key(i);
+				cancel_keypress(i);
 			}
 		}
 		check_pit();

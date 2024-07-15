@@ -72,6 +72,8 @@ uint_t get_system_time(char c) {
 }
 
 
+//Only works when check_pit is run continously. It doesn't work even inside mainframe
+
 void ktime(char c)   {
     switch (c) {
         case 's':
@@ -96,15 +98,22 @@ void kctime(char c)
         clear();
         ktime(c);
         update_keyboard_status();
-        if (keypress['c']!=0) {
-            keypress['c']=0;
+        if (is_key_pressed('c')) {
+            cancel_keypress('c');
             break;
         }
         delay(200);
     }
 }
 
-
+void sleep (int time, char unit)
+{
+    int sys_time=get_system_time(unit);
+    while ((int)abs(sys_time-get_system_time(unit))<time) {
+        check_pit();
+        continue;
+    }
+}
 
 void nstime() {ktime('n');}
 void ustime() {ktime('u');}

@@ -86,5 +86,5 @@ void fetch(char str[])
     
 }
 
-void islafetch() {fetch("isla.tga");}
-void homufetch() {fetch("devil_homura.tga");}
+void isla() {fetch("isla.tga");}
+void homu() {fetch("devil_homura.tga");}

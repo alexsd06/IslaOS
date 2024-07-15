@@ -43,6 +43,8 @@ compile:
 	$(ARCH)-elf-gcc -I. -c kernel/serial/serial.c -o kernel/serial/serial.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/debug/debug.c -o kernel/debug/debug.o $(OSDEV_CFLAGS)
 	$(ARCH)-elf-gcc -I. -c kernel/info/info.c -o kernel/info/info.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/random/random.c -o kernel/random/random.o $(OSDEV_CFLAGS)
+	$(ARCH)-elf-gcc -I. -c kernel/mainframe/shapes/shapes.c -o kernel/mainframe/shapes/shapes.o $(OSDEV_CFLAGS)
 
 	$(ARCH)-elf-gcc $(OSDEV_LDFLAGS) -o dist/$(BITS)/IslaOS.bin \
 	 kernel/kernel.o \
@@ -50,7 +52,8 @@ compile:
 	 kernel/drivers/io/io.o kernel/drivers/keyboard/keyboard.o kernel/std/math.o \
 	 kernel/std/time.o kernel/mainframe/mainframe.o kernel/drivers/video/video.o kernel/std/string.o \
 	 kernel/mainframe/images/tga.o kernel/ramdisk/ramdisk.o initramfs.o  kernel/info/info.o \
-	 kernel/mainframe/games/tetris/tetris.o kernel/pit/pit.o kernel/serial/serial.o kernel/debug/debug.o
+	 kernel/mainframe/games/tetris/tetris.o kernel/pit/pit.o kernel/serial/serial.o kernel/debug/debug.o \
+	 kernel/random/random.o kernel/mainframe/shapes/shapes.o
 	
 	cp dist/$(BITS)/IslaOS.bin dist/IslaOS.bin
 
