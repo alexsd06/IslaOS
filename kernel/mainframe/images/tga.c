@@ -30,8 +30,8 @@ void show_image(tga_header_t *image, int x, int y)
     uint32_t *image_pixels=(uint32_t*)((uint_t)image_normal+sizeof(tga_header_t));
     int width=image->w, height=image->h;
     int pixel_index=0;
-    for (int i=0; i<height; i++) {
-        for (int j=0; j<width; j++) { 
+    for (int i=0; i<width; i++) {
+        for (int j=0; j<height; j++) { 
             uint32_t  data=image_pixels[pixel_index];
             write_pixel(i+x, j+y, data); //ARGB
             pixel_index++;

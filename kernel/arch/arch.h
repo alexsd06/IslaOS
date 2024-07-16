@@ -6,3 +6,5 @@
 #define uint_t uint64_t
 #define ARCH "x64"
 #endif
+
+#define VERSION "1.0"

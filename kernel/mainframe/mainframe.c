@@ -17,7 +17,7 @@
 #include "kernel/std/math.h"
 
 int last_key_print=0;
-int key_print_delay=50; //milliseconds
+int key_print_delay=100; //milliseconds
 
 
 char command_buffer[1080*1920];
@@ -31,7 +31,7 @@ void unknown()
 void help()
 {
 	kprintln("");
-	kprintln ("Help for IslaOS "ARCH" Kernel 1.0");
+	kprintln ("Help for IslaOS "ARCH" Kernel "VERSION);
 	kprintln ("help - Shows this menu");
 	kprintln ("plm - Try it and see the result");
 	kprintln ("clear - Clears the screen");
@@ -41,7 +41,7 @@ void help()
 	kprintln ("dir / ls - List the file on the ramdisk");
 	kprintln ("tetris - Starts a cool game of tetris");
 	kprintln ("dizzy - Do you have seizures? Do not run this");
-	kprintln ("ns/us/ms/time - Prints time since boot in different si units");
+	kprintln ("ns/us/ms/time - Prints time since boot in different SI units");
 	kprintln ("c/ns/us/ms/time - Sames as normal time, except it does it forever");
 	kprintln ("exit - Shutdowns the computer (QEMU for now)");
 	kprintln("");
@@ -121,7 +121,7 @@ BUGS:
 void mainframe()
 {
 	last_key_typed=0;
-	kprint("IslaOS "ARCH" Kernel initialized!\n\n");
+	kprint("IslaOS "ARCH" Kernel version "VERSION" initialized!\n\n");
 	kprint("kernel@IslaOS:/$ ");
 	write_chard('|', true);
 	command_buffer[0]=0;
@@ -130,10 +130,11 @@ void mainframe()
 		if (last_key_print==INT32_MAX) last_key_print=0;
 		update_keyboard_status();
 		for (int i=0; i<256; i++) {
+			check_pit();
 			if (is_key_pressed(i)) {
 				if (i==last_key_typed&&!fast_type) {
-					kprintint(abs((int)get_system_time('m')-last_key_print)); kprint(" "); kprintint(last_key_print); kprint(" "); kprintint((int)get_system_time('m')); kprintln("");
-					if (abs((int)get_system_time('m')-last_key_print)>key_print_delay) {
+					//kprintint(abs((int)get_system_time('m')-last_key_print)); kprint(" "); kprintint(last_key_print); kprint(" "); kprintint((int)get_system_time('m')); kprintln("");
+					if ((int)abs((int)get_system_time('m')-last_key_print)>key_print_delay) {
 						type_key(i);
 						fast_type=1;
 					}
@@ -145,6 +146,5 @@ void mainframe()
 				cancel_keypress(i);
 			}
 		}
-		check_pit();
 	}
 }

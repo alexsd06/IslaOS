@@ -87,30 +87,69 @@ struct tetrimino {
     int kind;
     int x, y;
     int color_id;
-    int mat_size;
+    int mat_dim;
+    int left_border, right_border;
+    int matrix[4][4];
 };
 
 struct tetrimino active_tetrimino;
 
+struct tetrimino update_borders (struct tetrimino t)
+{
+    t.left_border=-1; t.right_border=-1;
+
+    for (int j=0; j<t.mat_dim; j++) {
+        for (int i=0; i<t.mat_dim; i++) {
+            if (t.matrix[i][j]==1) {
+                t.left_border=j;
+                break;
+            }
+        }
+        if (t.left_border!=-1) break;
+    } 
+    for (int j=t.mat_dim; j>=0; j--) {
+        for (int i=0; i<t.mat_dim; i++) {
+            if (t.matrix[i][j]==1) {
+                t.right_border=t.mat_dim-j-1;
+                break;
+            }
+        }
+        if (t.right_border!=-1) break;
+    } 
+    return t;
+}
+
 // Initializer function for struct tetrimino
-struct tetrimino init_tetrimino(int kind, int x, int y, int color_id, int mat_size) {
+struct tetrimino init_tetrimino(int kind, int x, int y, int color_id) {
     struct tetrimino t;
     t.kind = kind;
     t.x = x;
     t.y = y;
     t.color_id = color_id;
-    t.mat_size=mat_size;
+    TetriminoMatrix *mat=kind_to_matrix[t.kind];
+    t.mat_dim=(*mat)[3][3];
+    for (int i=0; i<4; i++) {
+        for (int j=0; j<4; j++) {
+            t.matrix[i][j]=(*mat)[i][j];
+        }
+    }
+    t=update_borders(t);
     return t;
 }
+
+const int default_game_speed=500;
+int GAME_SPEED=default_game_speed;
+int fast_game_speed=0;
+int multiplier=4;
+int game_lost=0;
 
 void add_tetrimino_to_board(struct tetrimino t)
 {
     int x=t.x, y=t.y;
-    TetriminoMatrix *mat=kind_to_matrix[t.kind];
-    int mat_dim = (*mat)[3][3];
+    int mat_dim = t.mat_dim;
     for (int i=0; i<mat_dim; i++) {
         for (int j=0; j<mat_dim; j++) {
-            int val = (*mat)[i][j];
+            int val = t.matrix[i][j];
             if (val!=1) continue;
             tetrimino_board[i+y][j+x]=t.color_id;
         }
@@ -120,27 +159,27 @@ void add_tetrimino_to_board(struct tetrimino t)
 void clear_tetrimino(struct tetrimino t)
 {
     int x=t.x, y=t.y;
-    TetriminoMatrix *mat=kind_to_matrix[t.kind];
-    int mat_dim = (*mat)[3][3];
+    int mat_dim = t.mat_dim;
     for (int i=0; i<mat_dim; i++) {
         for (int j=0; j<mat_dim; j++) {
-            int val = (*mat)[i][j];
+            int val = t.matrix[i][j];
             if (val!=1) continue;
             tetrimino_board[i+y][j+x]=-1;
         }
     }
 }
 
+int board_height=22, board_width=10;
+int height_offset=10;
 
 void render_board()
 {
     int block_width=get_image_width(tetris_blocks[0]), block_height=get_image_height(tetris_blocks[0]);
     int fb_width=get_framebuffer_width();
     int width_offset=fb_width/2-block_width*5-15;
-    int height_offset=10;
 
-    for (int i=0; i<22; i++) {
-        for (int j=0; j<10; j++) {
+    for (int i=0; i<board_height; i++) {
+        for (int j=0; j<board_width; j++) {
             int block_y=i*block_height+height_offset, block_x=j*block_width+width_offset;
             if (tetrimino_board[i][j]==-1) {
                 draw_rectangle(BLACK, block_y, block_x, block_height, block_width, 1, 1);
@@ -154,30 +193,37 @@ void render_board()
 void init_board()
 {
     clear();
+    game_lost=0;
+    GAME_SPEED=default_game_speed;
+    fast_game_speed=0;
     int block_width=get_image_width(tetris_blocks[0]), block_height=get_image_height(tetris_blocks[0]);
     int fb_width=get_framebuffer_width();
     int width_offset=fb_width/2-block_width*5-15;
-    int height_offset=10;
-    
+
     int rect_width=height_offset;
     draw_rectangle(WHITE, 0, width_offset-(rect_width), 22*block_height+(height_offset*2), 10*block_width+(rect_width*2), rect_width, 0);
 
-    for (int i=0; i<22; i++) {
-        for (int j=0; j<10; j++) {
+    for (int i=0; i<board_height; i++) {
+        for (int j=0; j<board_width; j++) {
             tetrimino_board[i][j]=-1;
         }
     }
+
+    tga_header_t *tetris_logo_left=(tga_header_t *) get_pointer_to_file("tetris_logo_left.tga");
+    show_image(tetris_logo_left, 60, 150);
+    tga_header_t *tetris_logo_right=(tga_header_t *) get_pointer_to_file("tetris_logo_right.tga");
+    show_image(tetris_logo_right, 60, 900);
 }
 
 int can_active_go(int y, int x)
 {
     int last_one=0;
-    TetriminoMatrix *mat=kind_to_matrix[active_tetrimino.kind];
-    int mat_dim = (*mat)[3][3];
+    int mat_dim=active_tetrimino.mat_dim;
     for (int i=0; i<mat_dim; i++) {
         for (int j=0; j<mat_dim; j++) {
-            int val = (*mat)[i][j];
+            int val=active_tetrimino.matrix[i][j];
             if (val!=1) continue;
+            if (x+j<0||x+j>=board_width) return 0; //Only after rotating it...
             if (tetrimino_board[i+y][j+x]!=-1&&tetrimino_board[i+active_tetrimino.y][j+active_tetrimino.x]==-1) {
                 return 0;
             }
@@ -188,6 +234,69 @@ int can_active_go(int y, int x)
     return 1;
 }
 
+void rotate_active_tetrimino_right()
+{
+    int mat_dim=active_tetrimino.mat_dim;
+    int new_mat[4][4];
+    for (int i=0; i<mat_dim; i++) {
+        for (int j=0; j<mat_dim; j++) {
+            new_mat[j][mat_dim-i-1]=active_tetrimino.matrix[i][j];
+        }
+    }
+    for (int i=0; i<mat_dim; i++) {
+        for (int j=0; j<mat_dim; j++) {
+            active_tetrimino.matrix[i][j]=new_mat[i][j];
+        }
+    }
+    active_tetrimino.matrix[3][3]=active_tetrimino.matrix[3][0];
+    active_tetrimino.matrix[3][0]=0;
+    active_tetrimino=update_borders(active_tetrimino);
+    while (!can_active_go(active_tetrimino.y, active_tetrimino.x)) {
+        int middle=active_tetrimino.mat_dim/2;
+        if (active_tetrimino.x+middle<=board_width/2) {
+            active_tetrimino.x+=1;
+        }
+        else {
+            active_tetrimino.x-=1;
+        }
+    }
+}
+
+void rotate_active_tetrimino_left()
+{
+    int mat_dim=active_tetrimino.mat_dim;
+    int new_mat[4][4];
+    for (int i=0; i<mat_dim; i++) {
+        for (int j=0; j<mat_dim; j++) {
+            new_mat[mat_dim-j-1][i]=active_tetrimino.matrix[i][j];
+        }
+    }
+    for (int i=0; i<mat_dim; i++) {
+        for (int j=0; j<mat_dim; j++) {
+            active_tetrimino.matrix[i][j]=new_mat[i][j];
+        }
+    }
+    active_tetrimino.matrix[3][3]=active_tetrimino.matrix[3][0];
+    active_tetrimino.matrix[3][0]=0;
+    active_tetrimino=update_borders(active_tetrimino);
+    while (!can_active_go(active_tetrimino.y, active_tetrimino.x)) {
+        int middle=active_tetrimino.mat_dim/2;
+        if (active_tetrimino.x+middle<=board_width/2) {
+            active_tetrimino.x+=1;
+        }
+        else {
+            active_tetrimino.x-=1;
+        }
+    }
+}
+
+void update_game_speed()
+{
+    if (!fast_game_speed) GAME_SPEED/=multiplier;
+    else GAME_SPEED*=multiplier;
+    fast_game_speed=!fast_game_speed;
+}
+
 void game_tick()
 {
     add_tetrimino_to_board(active_tetrimino);
@@ -196,11 +305,25 @@ void game_tick()
     if (can_active_go(active_tetrimino.y+1, active_tetrimino.x)) clear_tetrimino(active_tetrimino);
     if (is_key_pressed('a')) {
         cancel_keypress('a');
-        if (active_tetrimino.x>0) active_tetrimino.x-=1;
+        if (active_tetrimino.x+active_tetrimino.left_border>0&&can_active_go(active_tetrimino.y+1, active_tetrimino.x-1)) {
+            clear_tetrimino(active_tetrimino);
+            active_tetrimino.x-=1;
+        }
     }
     if (is_key_pressed('d')) {
         cancel_keypress('d');
-        if (active_tetrimino.x+active_tetrimino.mat_size<9) active_tetrimino.x+=1;
+        if (active_tetrimino.x+active_tetrimino.mat_dim-active_tetrimino.right_border<10&&can_active_go(active_tetrimino.y+1, active_tetrimino.x+1)) {
+            clear_tetrimino(active_tetrimino);
+            active_tetrimino.x+=1;
+        }
+    }
+    if (is_key_pressed('w')) {
+        cancel_keypress('w');
+        rotate_active_tetrimino_right();
+    }
+    if (is_key_pressed('s')) {
+        cancel_keypress('s');
+        update_game_speed();
     }
 }
 
@@ -209,15 +332,45 @@ int break_game()
     if (is_key_pressed('c')) {
         cancel_keypress('c');
         clear();
+        kprintln("Is this too much for you to handle?");
         return 1;
     }
     return 0;
 }
 
+void clear_line(int idx)
+{
+    for (int i=idx; i>=0; i--) {
+        for (int j=0; j<board_width; j++) {
+            tetrimino_board[i][j]=tetrimino_board[i-1][j];
+        }
+    }
+    for (int j=0; j<board_width; j++) {
+        tetrimino_board[0][j]=-1;
+    }
+}
+
+void clear_lines()
+{
+    for (int i=board_height-1; i>=0; i--) {
+        int found_empty=0;
+        for (int j=0; j<board_width; j++) {
+            if (tetrimino_board[i][j]==-1) {
+                found_empty=1;
+                break;
+            }
+        }
+        if (!found_empty) {
+            clear_line(i);
+            i+=1;
+        }
+    } 
+}
+
 void fall(int *sys_ms)
 {
     int ctime=get_system_time('m');
-    if (ctime>(*sys_ms)+100) {
+    if (ctime>(*sys_ms)+GAME_SPEED) {
         (*sys_ms)=get_system_time('m');
         if (can_active_go(active_tetrimino.y+1, active_tetrimino.x)) {
             active_tetrimino.y+=1;
@@ -225,10 +378,23 @@ void fall(int *sys_ms)
         else {
             int choice=rand()%7;
             add_tetrimino_to_board(active_tetrimino);
-            active_tetrimino=init_tetrimino(tetrimino_kinds[choice], 0, 0, choice, 2);
+            if (active_tetrimino.y==0) {
+                game_lost=1;
+                return;
+            }
+            active_tetrimino=init_tetrimino(tetrimino_kinds[choice], 0, 0, choice);
+            if (fast_game_speed) update_game_speed();
+            clear_lines();
         }
     }
 }
+
+/*
+TODO:
+Obtain random seed from the cpu in assembly
+Some pieces are still able to erase other pieces in special circumstances
+(the only observed time was a J going to the left near the bottom)
+*/
 
 void tetris()
 {
@@ -250,12 +416,17 @@ void tetris()
     init_board();
 
     int choice=rand()%7;
-    active_tetrimino=init_tetrimino(tetrimino_kinds[choice], 0, 0, choice, 2);
+    active_tetrimino=init_tetrimino(tetrimino_kinds[choice], 0, 0, choice);
     int sys_ms=get_system_time('m');
     while (1) {
         if (break_game()) break;
         game_tick();
         fall(&sys_ms);
+        if (game_lost) {
+            clear();
+            kprintln("You lost!");
+            break;
+        }
         sleep(30, 'm');
     }
     
