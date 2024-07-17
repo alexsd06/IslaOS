@@ -13,8 +13,6 @@
 #define free kfree
 #define malloc kmalloc
 
-extern tga_header_t _binary_isla_isla_tga_start;
-extern tga_header_t _binary_isla_devil_homura_tga_start;
 
 /* When saving with The GIMP, first convert the image to RGB (Image / Mode / RGB). Then add Alpha channel 
 (Layer / Transparency / Add Alpha Channel). If these options are inactive, that means your image is already RGB or has alpha. 
@@ -30,8 +28,8 @@ void show_image(tga_header_t *image, int x, int y)
     uint32_t *image_pixels=(uint32_t*)((uint_t)image_normal+sizeof(tga_header_t));
     int width=image->w, height=image->h;
     int pixel_index=0;
-    for (int i=0; i<width; i++) {
-        for (int j=0; j<height; j++) { 
+    for (int i=0; i<height; i++) {
+        for (int j=0; j<width; j++) { 
             uint32_t  data=image_pixels[pixel_index];
             write_pixel(i+x, j+y, data); //ARGB
             pixel_index++;

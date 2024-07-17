@@ -61,11 +61,17 @@ char command_string[][25]={
 	"tetris", "dizzy", "nstime", "ustime", "mstime", "time", "cnstime", "custime", "cmstime", "ctime", "exit"
 };
 
-void exit(void) {
-	kprintln ("Exiting IslaOS...");
-    uint16_t port = 0x604;
-    uint16_t value = 0x2000;
+void exit_islaos(uint16_t port, uint16_t value) {
     asm volatile ("outw %0, %1" : : "a" (value), "Nd" (port));
+}
+
+void exit(void)
+{
+	kprintln ("Exiting IslaOS...");
+	exit_islaos(0xB004, 0x2000); //For Bochs / older QEMU.
+	exit_islaos(0x604, 0x2000); //For newer QEMU.
+	exit_islaos(0x4004, 0x3400); //For Virtualbox. *not working :(*
+	exit_islaos(0x600, 0x34); //Cloud Hypervisor ??
 }
 
 FunctionCallback command_functions[]={

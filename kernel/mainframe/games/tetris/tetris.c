@@ -18,7 +18,7 @@ char block_colors[7][10]={
     "yellow", "blue", "cyan"
 };
 
-//for input_file in *.png; do convert "$input_file" -resize 31x31 -type TrueColorMatte -define tga:compression=none -define tga:origin=Top "${input_file%.png}.tga"; done
+//for input_file in *.png; do convert "$input_file" -resize 46x46 -type TrueColorMatte -define tga:compression=none -define tga:origin=Top "${input_file%.png}.tga"; done
 
 /*
 10x20 grid, with 2 rows buffer size
@@ -170,7 +170,8 @@ void clear_tetrimino(struct tetrimino t)
 }
 
 int board_height=22, board_width=10;
-int height_offset=10;
+int height_offset=25;
+int rect_gross=10;
 
 void render_board()
 {
@@ -180,7 +181,7 @@ void render_board()
 
     for (int i=0; i<board_height; i++) {
         for (int j=0; j<board_width; j++) {
-            int block_y=i*block_height+height_offset, block_x=j*block_width+width_offset;
+            int block_y=i*block_height+height_offset+rect_gross, block_x=j*block_width+width_offset;
             if (tetrimino_board[i][j]==-1) {
                 draw_rectangle(BLACK, block_y, block_x, block_height, block_width, 1, 1);
                 continue;
@@ -197,11 +198,10 @@ void init_board()
     GAME_SPEED=default_game_speed;
     fast_game_speed=0;
     int block_width=get_image_width(tetris_blocks[0]), block_height=get_image_height(tetris_blocks[0]);
-    int fb_width=get_framebuffer_width();
+    int fb_width=get_framebuffer_width(), fb_height=get_framebuffer_height();
     int width_offset=fb_width/2-block_width*5-15;
 
-    int rect_width=height_offset;
-    draw_rectangle(WHITE, 0, width_offset-(rect_width), 22*block_height+(height_offset*2), 10*block_width+(rect_width*2), rect_width, 0);
+    draw_rectangle(WHITE, height_offset, width_offset-(rect_gross), 22*block_height+(2*rect_gross), 10*block_width+(rect_gross*2), rect_gross, 0);
 
     for (int i=0; i<board_height; i++) {
         for (int j=0; j<board_width; j++) {
@@ -210,9 +210,17 @@ void init_board()
     }
 
     tga_header_t *tetris_logo_left=(tga_header_t *) get_pointer_to_file("tetris_logo_left.tga");
-    show_image(tetris_logo_left, 60, 150);
+    int logo_height=get_image_height(tetris_logo_left);
+    int logo_width=get_image_width(tetris_logo_left);
+    int board_width_pixel=board_width*block_width+2*rect_gross;
+    int logo_y=fb_height/2-logo_height/2;
+    int logo_x=(fb_width/2-board_width_pixel/2)/2-logo_width/2;
+
+
+    kprintint(logo_height); kprint(" "); kprintint(logo_width);
+    show_image(tetris_logo_left, logo_y, logo_x);
     tga_header_t *tetris_logo_right=(tga_header_t *) get_pointer_to_file("tetris_logo_right.tga");
-    show_image(tetris_logo_right, 60, 900);
+    show_image(tetris_logo_right, logo_y, fb_width-logo_x-logo_width);
 }
 
 int can_active_go(int y, int x)
