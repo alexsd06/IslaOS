@@ -1,5 +1,6 @@
 #include "arch/arch.h"
 
+void init_timer();
 void set_pit_count(unsigned count);
 void check_pit();
 uint_t get_system_time(char c);

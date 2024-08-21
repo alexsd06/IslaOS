@@ -305,6 +305,17 @@ void update_game_speed()
     fast_game_speed=!fast_game_speed;
 }
 
+int is_instant_piece=0;
+int insta_multi=100;
+
+void instant_piece()
+{
+    if (!is_instant_piece) {
+        GAME_SPEED/=insta_multi;
+        is_instant_piece=1;
+    }
+}
+
 void game_tick()
 {
     add_tetrimino_to_board(active_tetrimino);
@@ -332,6 +343,10 @@ void game_tick()
     if (is_key_pressed('s')) {
         cancel_keypress('s');
         update_game_speed();
+    }
+    if (is_key_pressed(' ')) {
+        cancel_keypress(' ');
+        instant_piece();
     }
 }
 
@@ -389,6 +404,10 @@ void fall(int *sys_ms)
             if (active_tetrimino.y==0) {
                 game_lost=1;
                 return;
+            }
+            if (is_instant_piece) {
+                is_instant_piece=0;
+                GAME_SPEED*=insta_multi;
             }
             active_tetrimino=init_tetrimino(tetrimino_kinds[choice], 0, 0, choice);
             if (fast_game_speed) update_game_speed();
