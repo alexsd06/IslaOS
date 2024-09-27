@@ -3,10 +3,11 @@
 #include "kernel/fonts/font_lib.h"
 #include "kernel/std/math.h"
 #include "kernel/std/time.h"
+#include "kernel/pit/pit.h"
 
 int lastkey;
 
-unsigned char scancodes[128] =
+int scancodes[128] =
 {
     0,  27, '1', '2', '3', '4', '5', '6', '7', '8',	/* 9 */
   '9', '0', '-', '=', '\b',	/* Backspace */
@@ -28,15 +29,15 @@ unsigned char scancodes[128] =
     0,	/* 69 - Num lock*/
     0,	/* Scroll Lock */
     0,	/* Home key */
-    0,	/* Up Arrow */
+    301,	/* Up Arrow */
     0,	/* Page Up */
   '-',
-    0,	/* Left Arrow */
+    304,	/* Left Arrow */
     0,
-    0,	/* Right Arrow */
+    302,	/* Right Arrow */
   '+',
     0,	/* 79 - End key*/
-    0,	/* Down Arrow */
+    303,	/* Down Arrow */
     0,	/* Page Down */
     0,	/* Insert Key */
     0,	/* Delete Key */
@@ -46,7 +47,7 @@ unsigned char scancodes[128] =
     0,	/* All other keys are undefined */
 };
 
-int keypress[256];
+int keypress[1024];
 
 int get_last_key_scancode()
 {

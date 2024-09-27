@@ -86,6 +86,6 @@ default:
 	make compile
 	make build_iso
 	#bochs -f bochsrc -q
-	qemu-system-$(QEMU_ARCH) -serial file:serial.log -cdrom iso/IslaOS.iso -machine q35 -m 1024M $(BIOS)
+	qemu-system-$(QEMU_ARCH) -full-screen -vga virtio -serial file:serial.log -cdrom iso/IslaOS.iso -machine q35 -m 1024M $(BIOS)
 	#-d int -no-shutdown -no-reboot $(BIOS)
 

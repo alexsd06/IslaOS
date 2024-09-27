@@ -137,7 +137,7 @@ struct tetrimino init_tetrimino(int kind, int x, int y, int color_id) {
     return t;
 }
 
-const int default_game_speed=500;
+const int default_game_speed=10;
 int GAME_SPEED=default_game_speed;
 int fast_game_speed=0;
 int multiplier=4;
@@ -217,7 +217,7 @@ void init_board()
     int logo_x=(fb_width/2-board_width_pixel/2)/2-logo_width/2;
 
 
-    kprintint(logo_height); kprint(" "); kprintint(logo_width);
+    // kprintint(logo_height); kprint(" "); kprintint(logo_width);
     show_image(tetris_logo_left, logo_y, logo_x);
     tga_header_t *tetris_logo_right=(tga_header_t *) get_pointer_to_file("tetris_logo_right.tga");
     show_image(tetris_logo_right, logo_y, fb_width-logo_x-logo_width);
@@ -322,26 +322,26 @@ void game_tick()
 
     render_board();
     if (can_active_go(active_tetrimino.y+1, active_tetrimino.x)) clear_tetrimino(active_tetrimino);
-    if (is_key_pressed('a')) {
-        cancel_keypress('a');
+    if (is_key_pressed(KEY_LEFT)) {
+        cancel_keypress(KEY_LEFT);
         if (active_tetrimino.x+active_tetrimino.left_border>0&&can_active_go(active_tetrimino.y+1, active_tetrimino.x-1)) {
             clear_tetrimino(active_tetrimino);
             active_tetrimino.x-=1;
         }
     }
-    if (is_key_pressed('d')) {
-        cancel_keypress('d');
+    if (is_key_pressed(KEY_RIGHT)) {
+        cancel_keypress(KEY_RIGHT);
         if (active_tetrimino.x+active_tetrimino.mat_dim-active_tetrimino.right_border<10&&can_active_go(active_tetrimino.y+1, active_tetrimino.x+1)) {
             clear_tetrimino(active_tetrimino);
             active_tetrimino.x+=1;
         }
     }
-    if (is_key_pressed('w')) {
-        cancel_keypress('w');
+    if (is_key_pressed(KEY_UP)) {
+        cancel_keypress(KEY_UP);
         rotate_active_tetrimino_right();
     }
-    if (is_key_pressed('s')) {
-        cancel_keypress('s');
+    if (is_key_pressed(KEY_DOWN)) {
+        cancel_keypress(KEY_DOWN);
         update_game_speed();
     }
     if (is_key_pressed(' ')) {

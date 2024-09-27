@@ -107,6 +107,9 @@ void kctime(char c)
         delay(200);
     }
 }
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
+
 
 void sleep (int time, char unit)
 {
@@ -116,7 +119,7 @@ void sleep (int time, char unit)
         continue;
     }
 }
-
+#pragma GCC pop_options
 void nstime() {ktime('n');}
 void ustime() {ktime('u');}
 void mstime() {ktime('m');}
