@@ -2,8 +2,7 @@
 #include "keyboard.h"
 #include "kernel/fonts/font_lib.h"
 #include "kernel/std/math.h"
-#include "kernel/std/time.h"
-#include "kernel/pit/pit.h"
+#include "kernel/time/time.h"
 
 int lastkey;
 

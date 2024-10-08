@@ -3,7 +3,7 @@
 #include "ramdisk/ramdisk.h"
 #include "std/string.h"
 #include "drivers/video/video.h"
-#include "pit/pit.h"
+#include "time/time.h"
 #include "std/math.h"
 #include "random/random.h"
 #include "mainframe/shapes/shapes.h"

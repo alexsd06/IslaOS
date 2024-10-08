@@ -5,14 +5,13 @@
 #include "kernel/fonts/font_lib.h"
 #include "kernel/memory/kmalloc.h"
 #include "kernel/drivers/keyboard/keyboard.h"
-#include "kernel/std/time.h"
 #include "kernel/drivers/io/io.h"
 #include "kernel/std/string.h"
 #include "kernel/mainframe/images/tga.h"
 #include "kernel/mainframe/games/tetris/tetris.h"
 #include "kernel/drivers/video/video.h"
 #include "kernel/ramdisk/ramdisk.h"
-#include "kernel/pit/pit.h"
+#include "kernel/time/time.h"
 #include "arch/arch.h"
 #include "kernel/std/math.h"
 
@@ -56,10 +55,6 @@ void plm()
 
 typedef void (*FunctionCallback)();
 int last_key_typed;
-char command_string[][25]={
-	"help", "plm", "clear", "isla", "homu", "crdisk", "dir", "ls",
-	"tetris", "dizzy", "nstime", "ustime", "mstime", "time", "cnstime", "custime", "cmstime", "ctime", "exit"
-};
 
 void exit_islaos(uint16_t port, uint16_t value) {
     asm volatile ("outw %0, %1" : : "a" (value), "Nd" (port));
@@ -73,6 +68,11 @@ void exit(void)
 	exit_islaos(0x4004, 0x3400); //For Virtualbox. *not working :(*
 	exit_islaos(0x600, 0x34); //Cloud Hypervisor ??
 }
+
+char command_string[][25]={
+	"help", "plm", "clear", "isla", "homu", "crdisk", "dir", "ls",
+	"tetris", "dizzy", "nstime", "ustime", "mstime", "time", "cnstime", "custime", "cmstime", "ctime", "exit"
+};
 
 FunctionCallback command_functions[]={
 	&help, &plm, &clear, &isla, &homu, &crdisk, &dir, &ls,

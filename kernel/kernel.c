@@ -9,14 +9,13 @@
 #include "kernel/std/math.h"
 #include "mainframe/mainframe.h"
 #include "kernel/drivers/video/video.h"
-#include "kernel/std/time.h"
 #include "kernel/ramdisk/ramdisk.h"
 #include "kernel/serial/serial.h"
 #include "kernel/debug/debug.h"
 #include "info/info.h"
-#include "pit/pit.h"
+#include "kernel/time/time.h"
 #include "random/random.h"
-
+#include "kernel/drivers/io/io.h"
 
 #include "limine.h"
  
@@ -156,10 +155,11 @@ void _start(void)
 	//kinit_timer(); We are having PIT baby :)!
 	
 	kinit_videobuffer(framebuffer_request);
-	kprintln("Video buffer got initialized successfully!");
-	kinit_keyboard();
-	init_bootloader_info(bootloader_info);
+    kprintln("Video buffer got initialized successfully!");
+    kinit_keyboard();
+    init_bootloader_info(bootloader_info);
     srand(42);
-	mainframe();
-	hcf();
+    mainframe();           // Start the main application loop
+    hcf();                 // Halt or exit
+
 }
