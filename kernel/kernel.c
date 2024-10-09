@@ -16,7 +16,6 @@
 #include "kernel/time/time.h"
 #include "random/random.h"
 #include "kernel/drivers/io/io.h"
-//#include "kernel/idt/idt.h"
 
 #include "limine.h"
  
