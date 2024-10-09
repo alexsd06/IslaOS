@@ -16,6 +16,7 @@
 #include "kernel/time/time.h"
 #include "random/random.h"
 #include "kernel/drivers/io/io.h"
+//#include "kernel/idt/idt.h"
 
 #include "limine.h"
  
@@ -159,6 +160,7 @@ void _start(void)
     kinit_keyboard();
     init_bootloader_info(bootloader_info);
     srand(42);
+    cli();
     mainframe();           // Start the main application loop
     hcf();                 // Halt or exit
 
