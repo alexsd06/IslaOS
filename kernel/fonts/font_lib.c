@@ -190,6 +190,7 @@ bool last_char_deletable()
 
 void write_chard (char c, bool deletable)
 {
+    write_serial(c);
     if (!__init_putchar) init_putchar();
     int bytesperline=pixelwidth*get_framebuffer_width();
     PSF_font *font = (PSF_font *) get_pointer_to_file("font.psf");
@@ -234,6 +235,7 @@ void write_stringd (char *s, bool deletable)
         write_chard(s[i], deletable);
         i++;
     }
+    //write_serial_string(s);
 }
 
 void kprintd(char *s, bool deletable)

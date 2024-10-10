@@ -97,7 +97,7 @@ void kinit_keyboard()
 	else if (mode==0x41) kprintln("Keyboard is in scancode 1 because of the PS/2 Controller! "); //Scanmode 2
 	else if (mode==0x3f) kprintln("Keyboard is in scancode 3! ");
 	else {kprintln("Keyboard is an unknown scancode! ");}
-
+	kprintln("Keyboard initialized!");
 	//char *hex_mode=dec_to_hex(mode);
 	//kprintln(hex_mode);
 }

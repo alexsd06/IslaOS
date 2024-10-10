@@ -16,7 +16,7 @@
 #include "kernel/time/time.h"
 #include "random/random.h"
 #include "kernel/drivers/io/io.h"
-
+#include "kernel/gdt/gdt.h"
 #include "limine.h"
  
 /* Check if the compiler thinks you are targeting the wrong operating system. */
@@ -160,6 +160,7 @@ void _start(void)
     init_bootloader_info(bootloader_info);
     srand(42);
     cli();
+    init_gdt();
     mainframe();           // Start the main application loop
     hcf();                 // Halt or exit
 

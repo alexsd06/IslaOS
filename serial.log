@@ -2,3 +2,18 @@ Hello from IslaOS x64!
 Lower Memory: 1048576 bytes!
 Upper Memory: 1063464960 bytes!
 Availabe RAM: 1013MB
+Video buffer got initialized successfully!
+Keyboard driver initialization called!
+Keyboard scan mode aknowledged!
+Keyboard is in scancode 1 because of the PS/2 Controller! 
+Keyboard initialized!
+Obtaining info from the bootloader!
+Obtained info from the bootloader!
+Creating GDT structures...
+Loading the GDT using LGDT...
+GDT Loaded!
+Segments reloaded!
+IslaOS x64 Kernel version 1.0 initialized!
+
+kernel@IslaOS:/$ |e|x|i|t| 
+Exiting IslaOS...
