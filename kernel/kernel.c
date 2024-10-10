@@ -17,6 +17,7 @@
 #include "random/random.h"
 #include "kernel/drivers/io/io.h"
 #include "kernel/gdt/gdt.h"
+#include "kernel/int/idt.h"
 #include "limine.h"
  
 /* Check if the compiler thinks you are targeting the wrong operating system. */
@@ -133,11 +134,24 @@ void debug_framebuffer()
     }
 }
 
+void verify_kernel_address() {
+    uint64_t rip;
+    asm volatile ("lea (%%rip), %0" : "=r"(rip));
+    //kprintln("Current RIP is: "); kprintint(rip); kprintln("");
+
+    if (rip < 0xffffffff80000000) {
+        kprintln("Error: Kernel is not running in higher-half memory!");
+        // You might want to halt here or panic
+    } else {
+        kprintln("Kernel is running in the correct address space.");
+    }
+}
+
 /*
 git clone https://github.com/limine-bootloader/limine.git --branch=v7.x-binary --depth=1
 make -C limine
 */
-
+#include "kernel/int/isr.h"
 int NEXT_RAND;
 //https://github.com/limine-bootloader/limine/blob/trunk/PROTOCOL.md
 void _start(void) 
@@ -156,11 +170,31 @@ void _start(void)
 	
 	kinit_videobuffer(framebuffer_request);
     kprintln("Video buffer got initialized successfully!");
-    kinit_keyboard();
+    verify_kernel_address();
+
+    //Why isn't this required?
+    //kinit_keyboard();
+
     init_bootloader_info(bootloader_info);
     srand(42);
     cli();
+
+    //kprintln("Magic break 1 (before init_gdt();)");
+    //__asm__ volatile("xchgw %bx, %bx");
     init_gdt();
+
+    //kprintln("Magic break 2 (before init_idt();)");
+    //__asm__ volatile("xchgw %bx, %bx");
+    init_idt();
+
+    int64_t handler_addr = (int64_t)exception_handler;
+    kprintln("The address of the exception handler: "); kprintinthex(handler_addr); kprintln("");
+    //kprintln("Magic break 3 (after init_idt();)");
+    //__asm__ volatile("xchgw %bx, %bx");
+    kprintln("Calling int $69...");
+    __asm__ volatile ("int $69");
+    kprintln("Calling int $69 once again to be sure it wasn't luck...");
+    __asm__ volatile ("int $69");
     mainframe();           // Start the main application loop
     hcf();                 // Halt or exit
 

@@ -43,7 +43,7 @@ void init_gdt()
 
     init_descriptor(&null_descriptor, 0, 0, 0, 0);
     init_descriptor(&kernel_code, 0, 0xFFFFF, 0x9A, 0xA);
-    init_descriptor(&kernel_data, 0, 0xFFFFF, 0x92, 0xC);
+    init_descriptor(&kernel_data, 0, 0xFFFFF, 0x92, 0xA); /* Was 0xC */
 
     encodeGdtEntry((uint8_t*)gdt_table, null_descriptor);
     encodeGdtEntry((uint8_t*)(gdt_table+1), kernel_code);

@@ -4,7 +4,7 @@
 log: bochs.log
 
 # Memory settings
-megs: 2048
+megs: 1024
 
 # Display settings
 display_library: x, options="gui_debug"

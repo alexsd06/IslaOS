@@ -23,11 +23,6 @@ SECTIONS
     /* that is the beginning of the region. */
     . = 0xffffffff80000000;
 
-    .multiboot ALIGN(4) :
-    {
-        *(.multiboot .multiboot.*)
-    }
-
     .text : {
         *(.text .text.*)
     } :text

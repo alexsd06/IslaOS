@@ -81,9 +81,8 @@ void update_keyboard_status()
 void kinit_keyboard()
 {
 	kprintln("Keyboard driver initialization called!");
-	/*
-	outb(0x60, bin_to_dec(00100000)); //00100000 00000100
-	*/
+	
+	//outb(0x60, bin_to_dec(00100000)); //00100000 00000100
 	outb(0x60, 0xf0); delay(10); outb(0x60, 0x2); //Scan code 2; //Scan code 2 gets translated to scan code 1
 	//The line above should stop that, but it doesn't work;
 	outb(0x60, 0xf0); delay(10); outb(0x60, 0x0);
