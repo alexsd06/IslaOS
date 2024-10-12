@@ -18,6 +18,7 @@
 #include "kernel/drivers/io/io.h"
 #include "kernel/gdt/gdt.h"
 #include "kernel/int/idt.h"
+#include "kernel/pic/pic.h"
 #include "limine.h"
  
 /* Check if the compiler thinks you are targeting the wrong operating system. */
@@ -156,8 +157,8 @@ int NEXT_RAND;
 //https://github.com/limine-bootloader/limine/blob/trunk/PROTOCOL.md
 void _start(void) 
 {
+    //In bochs numbers are bogus (int numbers, file sizes...) Why?
 	if (LIMINE_BASE_REVISION_SUPPORTED == false) {hcf();}
-    //debug_framebuffer();
 	init_serial();
 	write_serial_string("Hello from IslaOS "ARCH"!\n\0"); //IT PRINTS THE FIRST LETTER IN X64!!!
 	kinit_memory(memory_request);
@@ -165,8 +166,6 @@ void _start(void)
     write_serial_string("Upper Memory: "); write_serial_int(get_memory_upper()); write_serial_string(" bytes!\n");
 	write_serial_string("Availabe RAM: "); write_serial_int(ram_available('M')); write_serial_string("MB\n");
 	parse_ramdisk();
-	
-	//kinit_timer(); We are having PIT baby :)!
 	
 	kinit_videobuffer(framebuffer_request);
     kprintln("Video buffer got initialized successfully!");
@@ -178,23 +177,19 @@ void _start(void)
     init_bootloader_info(bootloader_info);
     srand(42);
     cli();
-
-    //kprintln("Magic break 1 (before init_gdt();)");
+    //kprintln("Magic break (before init_gdt();)");
     //__asm__ volatile("xchgw %bx, %bx");
     init_gdt();
-
-    //kprintln("Magic break 2 (before init_idt();)");
-    //__asm__ volatile("xchgw %bx, %bx");
     init_idt();
-
-    int64_t handler_addr = (int64_t)exception_handler;
-    kprintln("The address of the exception handler: "); kprintinthex(handler_addr); kprintln("");
-    //kprintln("Magic break 3 (after init_idt();)");
-    //__asm__ volatile("xchgw %bx, %bx");
     kprintln("Calling int $69...");
     __asm__ volatile ("int $69");
-    kprintln("Calling int $69 once again to be sure it wasn't luck...");
-    __asm__ volatile ("int $69");
+    kprintln("Calling int $112 to see if other numbers are working...");
+    __asm__ volatile ("int $112");
+     kprintln("Calling int $215 as well for fun!");
+    __asm__ volatile ("int $215");
+    kprintln("Initializing the Programmable Interrupt Controller...");
+    //init_pic();
+    kprintln("The PIC has been initialized successfully!");
     mainframe();           // Start the main application loop
     hcf();                 // Halt or exit
 

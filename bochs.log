@@ -24,7 +24,7 @@
 00000000000i[USBCTL] Pluggable USB devices
 00000000000i[USBCTL]   floppy mouse tablet keypad keyboard hub disk cdrom
 00000000000i[USBCTL]   printer
-00000000000i[MEM0  ] allocated memory at 0x7a3d50bdd010. after alignment, vector=0x7a3d50bde000, block_size = 128K
+00000000000i[MEM0  ] allocated memory at 0x7c99379dd010. after alignment, vector=0x7c99379de000, block_size = 128K
 00000000000i[MEM0  ] 1024.00MB
 00000000000i[MEM0  ] mem block size = 0x00020000, blocks=8192
 00000000000i[MEM0  ] rom at 0xfffe0000/131072 ('/usr/share/bochs/BIOS-bochs-latest')
@@ -37,7 +37,7 @@
 00000000000i[DEV   ] PIIX3 PCI-to-ISA bridge present at device 1, function 0
 00000000000i[PLUGIN] init_dev of 'cmos' plugin device by virtual method
 00000000000i[CMOS  ] Using local time for initial clock
-00000000000i[CMOS  ] Setting initial clock to: Thu Oct 10 20:52:57   2024 tz=utc (time0=1728593577)
+00000000000i[CMOS  ] Setting initial clock to: Fri Oct 11 17:37:38   2024 tz=utc (time0=1728668258)
 00000000000i[PLUGIN] init_dev of 'dma' plugin device by virtual method
 00000000000i[DMA   ] channel 4 used by cascade
 00000000000i[PLUGIN] init_dev of 'pic' plugin device by virtual method
@@ -73,7 +73,7 @@
 00000000000i[CD1   ] load cdrom with path='iso/IslaOS.iso'
 00000000000i[CD1   ] Opening image file as a cd.
 00000000000i[HD    ] Media present in CD-ROM drive
-00000000000i[HD    ] Capacity is 2530 sectors (4.94 MB)
+00000000000i[HD    ] Capacity is 2562 sectors (5.00 MB)
 00000000000i[PLUGIN] init_dev of 'pci_ide' plugin device by virtual method
 00000000000i[DEV   ] PIIX3 PCI IDE controller present at device 1, function 1
 00000000000i[PLUGIN] init_dev of 'unmapped' plugin device by virtual method
@@ -251,387 +251,23 @@
 00000000000i[PLUGIN] reset of 'serial' plugin device by virtual method
 00000000000i[PLUGIN] reset of 'iodebug' plugin device by virtual method
 00000000000i[PLUGIN] reset of 'usb_uhci' plugin device by virtual method
-00000001740i[BIOS  ] BIOS BUILD DATE: 03/10/24
-00000313994i[KBD   ] reset-disable command received
-00000315066i[BIOS  ] Starting rombios32
-00000315504i[BIOS  ] Shutdown flag 0
-00000316112i[BIOS  ] ram_size=0x40000000
-00000316590i[BIOS  ] ram_end=1024MB
-00000328850i[BIOS  ] Found 1 cpu(s)
-00000342788i[BIOS  ] bios_table_addr: 0x000fa128 end=0x000fcc00
-00000670604i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
-00000998539i[P2ISA ] PCI IRQ routing: PIRQA# set to 0x0b
-00000998563i[P2ISA ] PCI IRQ routing: PIRQB# set to 0x09
-00000998587i[P2ISA ] PCI IRQ routing: PIRQC# set to 0x0b
-00000998611i[P2ISA ] PCI IRQ routing: PIRQD# set to 0x09
-00000998621i[P2ISA ] write: ELCR2 = 0x0a
-00000999390i[BIOS  ] PIIX3/PIIX4 init: elcr=00 0a
-00001013066i[BIOS  ] PCI: bus=0 devfn=0x00: vendor_id=0x8086 device_id=0x1237 class=0x0600
-00001015410i[BIOS  ] PCI: bus=0 devfn=0x08: vendor_id=0x8086 device_id=0x7000 class=0x0601
-00001017593i[BIOS  ] PCI: bus=0 devfn=0x09: vendor_id=0x8086 device_id=0x7010 class=0x0101
-00001017828i[PIDE  ] BAR #4: i/o base address = 0xc000
-00001018444i[BIOS  ] region 4: 0x0000c000
-00001020479i[BIOS  ] PCI: bus=0 devfn=0x0a: vendor_id=0x8086 device_id=0x7020 class=0x0c03
-00001020692i[UHCI  ] BAR #4: i/o base address = 0xc020
-00001021308i[BIOS  ] region 4: 0x0000c020
-00001021436i[UHCI  ] new IRQ line = 9
-00001023358i[BIOS  ] PCI: bus=0 devfn=0x0b: vendor_id=0x8086 device_id=0x7113 class=0x0680
-00001023634i[ACPI  ] new IRQ line = 11
-00001023648i[ACPI  ] new IRQ line = 9
-00001023676i[ACPI  ] new PM base address: 0xb000
-00001023690i[ACPI  ] new SM base address: 0xb100
-00001023718i[PCI   ] setting SMRAM control register to 0x4a
-00001187853i[CPU0  ] Enter to System Management Mode
-00001187863i[CPU0  ] RSM: Resuming from System Management Mode
-00001351919i[PCI   ] setting SMRAM control register to 0x0a
-00001378584i[BIOS  ] MP table addr=0x000fa200 MPC table addr=0x000fa130 size=0xc8
-00001380291i[BIOS  ] SMBIOS table addr=0x000fa210
-00001382390i[BIOS  ] ACPI tables: RSDP addr=0x000fa330 ACPI DATA addr=0x3fff0000 size=0xff8
-00001385397i[BIOS  ] Firmware waking vector 0x3fff00cc
-00001387651i[PCI   ] i440FX PMC write to PAM register 59 (TLB Flush)
-00001388381i[BIOS  ] bios_table_cur_addr: 0x000fa354
-00001499088i[VBIOS ] VGABios ID: vgabios.c 2024-03-03
-00001499159i[BXVGA ] VBE known Display Interface b0c0
-00001499191i[BXVGA ] VBE known Display Interface b0c5
-00001500612i[VBIOS ] VBE Bios ID: vbe.c 2024-03-03
-00005108533i[BIOS  ] IDE time out
-02532598232i[BIOS  ] Booting from 07c0:0000
-02537249829i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=80
-02537253590i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=81
-02537257328i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=82
-02537261066i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=83
-02537264804i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=84
-02537268542i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=85
-02537272280i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=86
-02537276018i[BIOS  ] int13_harddisk: function 48, unmapped device for ELDL=87
-02537279369i[BIOS  ] int13_harddisk: function 48, ELDL out of range 88
-02537282720i[BIOS  ] int13_harddisk: function 48, ELDL out of range 89
-02537286072i[BIOS  ] int13_harddisk: function 48, ELDL out of range 8a
-02537289424i[BIOS  ] int13_harddisk: function 48, ELDL out of range 8b
-02537292776i[BIOS  ] int13_harddisk: function 48, ELDL out of range 8c
-02537296128i[BIOS  ] int13_harddisk: function 48, ELDL out of range 8d
-02537299480i[BIOS  ] int13_harddisk: function 48, ELDL out of range 8e
-02537302832i[BIOS  ] int13_harddisk: function 48, ELDL out of range 8f
-02537306183i[BIOS  ] int13_harddisk: function 48, ELDL out of range 90
-02537309534i[BIOS  ] int13_harddisk: function 48, ELDL out of range 91
-02537312885i[BIOS  ] int13_harddisk: function 48, ELDL out of range 92
-02537316236i[BIOS  ] int13_harddisk: function 48, ELDL out of range 93
-02537319587i[BIOS  ] int13_harddisk: function 48, ELDL out of range 94
-02537322938i[BIOS  ] int13_harddisk: function 48, ELDL out of range 95
-02537326289i[BIOS  ] int13_harddisk: function 48, ELDL out of range 96
-02537329640i[BIOS  ] int13_harddisk: function 48, ELDL out of range 97
-02537332991i[BIOS  ] int13_harddisk: function 48, ELDL out of range 98
-02537336342i[BIOS  ] int13_harddisk: function 48, ELDL out of range 99
-02537339694i[BIOS  ] int13_harddisk: function 48, ELDL out of range 9a
-02537343046i[BIOS  ] int13_harddisk: function 48, ELDL out of range 9b
-02537346398i[BIOS  ] int13_harddisk: function 48, ELDL out of range 9c
-02537349750i[BIOS  ] int13_harddisk: function 48, ELDL out of range 9d
-02537353102i[BIOS  ] int13_harddisk: function 48, ELDL out of range 9e
-02537356454i[BIOS  ] int13_harddisk: function 48, ELDL out of range 9f
-02537359806i[BIOS  ] int13_harddisk: function 48, ELDL out of range a0
-02537363158i[BIOS  ] int13_harddisk: function 48, ELDL out of range a1
-02537366510i[BIOS  ] int13_harddisk: function 48, ELDL out of range a2
-02537369862i[BIOS  ] int13_harddisk: function 48, ELDL out of range a3
-02537373214i[BIOS  ] int13_harddisk: function 48, ELDL out of range a4
-02537376566i[BIOS  ] int13_harddisk: function 48, ELDL out of range a5
-02537379918i[BIOS  ] int13_harddisk: function 48, ELDL out of range a6
-02537383270i[BIOS  ] int13_harddisk: function 48, ELDL out of range a7
-02537386622i[BIOS  ] int13_harddisk: function 48, ELDL out of range a8
-02537389974i[BIOS  ] int13_harddisk: function 48, ELDL out of range a9
-02537393327i[BIOS  ] int13_harddisk: function 48, ELDL out of range aa
-02537396680i[BIOS  ] int13_harddisk: function 48, ELDL out of range ab
-02537400033i[BIOS  ] int13_harddisk: function 48, ELDL out of range ac
-02537403386i[BIOS  ] int13_harddisk: function 48, ELDL out of range ad
-02537406739i[BIOS  ] int13_harddisk: function 48, ELDL out of range ae
-02537410092i[BIOS  ] int13_harddisk: function 48, ELDL out of range af
-02537413444i[BIOS  ] int13_harddisk: function 48, ELDL out of range b0
-02537416796i[BIOS  ] int13_harddisk: function 48, ELDL out of range b1
-02537420148i[BIOS  ] int13_harddisk: function 48, ELDL out of range b2
-02537423500i[BIOS  ] int13_harddisk: function 48, ELDL out of range b3
-02537426852i[BIOS  ] int13_harddisk: function 48, ELDL out of range b4
-02537430204i[BIOS  ] int13_harddisk: function 48, ELDL out of range b5
-02537433556i[BIOS  ] int13_harddisk: function 48, ELDL out of range b6
-02537436908i[BIOS  ] int13_harddisk: function 48, ELDL out of range b7
-02537440260i[BIOS  ] int13_harddisk: function 48, ELDL out of range b8
-02537443612i[BIOS  ] int13_harddisk: function 48, ELDL out of range b9
-02537446965i[BIOS  ] int13_harddisk: function 48, ELDL out of range ba
-02537450318i[BIOS  ] int13_harddisk: function 48, ELDL out of range bb
-02537453671i[BIOS  ] int13_harddisk: function 48, ELDL out of range bc
-02537457024i[BIOS  ] int13_harddisk: function 48, ELDL out of range bd
-02537460377i[BIOS  ] int13_harddisk: function 48, ELDL out of range be
-02537463730i[BIOS  ] int13_harddisk: function 48, ELDL out of range bf
-02537467082i[BIOS  ] int13_harddisk: function 48, ELDL out of range c0
-02537470434i[BIOS  ] int13_harddisk: function 48, ELDL out of range c1
-02537473786i[BIOS  ] int13_harddisk: function 48, ELDL out of range c2
-02537477138i[BIOS  ] int13_harddisk: function 48, ELDL out of range c3
-02537480490i[BIOS  ] int13_harddisk: function 48, ELDL out of range c4
-02537483842i[BIOS  ] int13_harddisk: function 48, ELDL out of range c5
-02537487194i[BIOS  ] int13_harddisk: function 48, ELDL out of range c6
-02537490546i[BIOS  ] int13_harddisk: function 48, ELDL out of range c7
-02537493898i[BIOS  ] int13_harddisk: function 48, ELDL out of range c8
-02537497250i[BIOS  ] int13_harddisk: function 48, ELDL out of range c9
-02537500603i[BIOS  ] int13_harddisk: function 48, ELDL out of range ca
-02537503956i[BIOS  ] int13_harddisk: function 48, ELDL out of range cb
-02537507309i[BIOS  ] int13_harddisk: function 48, ELDL out of range cc
-02537510662i[BIOS  ] int13_harddisk: function 48, ELDL out of range cd
-02537514015i[BIOS  ] int13_harddisk: function 48, ELDL out of range ce
-02537517368i[BIOS  ] int13_harddisk: function 48, ELDL out of range cf
-02537520720i[BIOS  ] int13_harddisk: function 48, ELDL out of range d0
-02537524072i[BIOS  ] int13_harddisk: function 48, ELDL out of range d1
-02537527424i[BIOS  ] int13_harddisk: function 48, ELDL out of range d2
-02537530776i[BIOS  ] int13_harddisk: function 48, ELDL out of range d3
-02537534128i[BIOS  ] int13_harddisk: function 48, ELDL out of range d4
-02537537480i[BIOS  ] int13_harddisk: function 48, ELDL out of range d5
-02537540832i[BIOS  ] int13_harddisk: function 48, ELDL out of range d6
-02537544184i[BIOS  ] int13_harddisk: function 48, ELDL out of range d7
-02537547536i[BIOS  ] int13_harddisk: function 48, ELDL out of range d8
-02537550888i[BIOS  ] int13_harddisk: function 48, ELDL out of range d9
-02537554241i[BIOS  ] int13_harddisk: function 48, ELDL out of range da
-02537557594i[BIOS  ] int13_harddisk: function 48, ELDL out of range db
-02537560947i[BIOS  ] int13_harddisk: function 48, ELDL out of range dc
-02537564300i[BIOS  ] int13_harddisk: function 48, ELDL out of range dd
-02537567653i[BIOS  ] int13_harddisk: function 48, ELDL out of range de
-02537571006i[BIOS  ] int13_harddisk: function 48, ELDL out of range df
-02539322993i[BIOS  ] int13_cdrom: function 48, unmapped device for ELDL=e1
-02539326571i[BIOS  ] int13_cdrom: function 48, unmapped device for ELDL=e2
-02539330149i[BIOS  ] int13_cdrom: function 48, unmapped device for ELDL=e3
-02539333727i[BIOS  ] int13_cdrom: function 48, unmapped device for ELDL=e4
-02539337305i[BIOS  ] int13_cdrom: function 48, unmapped device for ELDL=e5
-02539340883i[BIOS  ] int13_cdrom: function 48, unmapped device for ELDL=e6
-02539344461i[BIOS  ] int13_cdrom: function 48, unmapped device for ELDL=e7
-02539347652i[BIOS  ] int13_cdrom: function 48, ELDL out of range e8
-02539350843i[BIOS  ] int13_cdrom: function 48, ELDL out of range e9
-02539354035i[BIOS  ] int13_cdrom: function 48, ELDL out of range ea
-02539357227i[BIOS  ] int13_cdrom: function 48, ELDL out of range eb
-02539360419i[BIOS  ] int13_cdrom: function 48, ELDL out of range ec
-02539363611i[BIOS  ] int13_cdrom: function 48, ELDL out of range ed
-02539366803i[BIOS  ] int13_cdrom: function 48, ELDL out of range ee
-02539369995i[BIOS  ] int13_cdrom: function 48, ELDL out of range ef
-02539373186i[BIOS  ] int13_cdrom: function 48, ELDL out of range f0
-02539376377i[BIOS  ] int13_cdrom: function 48, ELDL out of range f1
-02539379568i[BIOS  ] int13_cdrom: function 48, ELDL out of range f2
-02539382759i[BIOS  ] int13_cdrom: function 48, ELDL out of range f3
-02539385950i[BIOS  ] int13_cdrom: function 48, ELDL out of range f4
-02539389141i[BIOS  ] int13_cdrom: function 48, ELDL out of range f5
-02539392332i[BIOS  ] int13_cdrom: function 48, ELDL out of range f6
-02539395523i[BIOS  ] int13_cdrom: function 48, ELDL out of range f7
-02539398714i[BIOS  ] int13_cdrom: function 48, ELDL out of range f8
-02539401905i[BIOS  ] int13_cdrom: function 48, ELDL out of range f9
-02539405097i[BIOS  ] int13_cdrom: function 48, ELDL out of range fa
-02539408289i[BIOS  ] int13_cdrom: function 48, ELDL out of range fb
-02539411481i[BIOS  ] int13_cdrom: function 48, ELDL out of range fc
-02539414673i[BIOS  ] int13_cdrom: function 48, ELDL out of range fd
-02539417865i[BIOS  ] int13_cdrom: function 48, ELDL out of range fe
-02539421057i[BIOS  ] int13_cdrom: function 48, ELDL out of range ff
-02543261712i[BXVGA ] VBE set bpp (32)
-02543261724i[BXVGA ] VBE set xres (1024)
-02543261736i[BXVGA ] VBE set yres (768)
-02543261818i[BXVGA ] VBE enabling x 1024, y 768, bpp 32, 3145728 bytes visible
-02770156874i[BIOS  ] *** int 15h function AX=ec00, BX=0002 not yet supported!
-02780158267i[SER   ] com1: FIFO enabled
-02781585120i[CPU0  ] [2781585120] Stopped on MAGIC BREAKPOINT
-02782446369i[CPU0  ] [2782446369] Stopped on MAGIC BREAKPOINT
-02784314496i[CPU0  ] [2784314496] Stopped on MAGIC BREAKPOINT
-02784667853e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02785021208e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02785374563e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02785727918e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02786081273e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02786434628e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02786787983e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02787141338e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02787494693e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02787848048e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02788201403e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02788554758e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02788908113e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02789261468e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02789614823e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02789968178e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02790321533e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02790674888e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02791028243e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02791381598e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02791734953e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02792088308e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02792441663e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02792795018e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02793148373e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02793501728e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02793855083e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02794208438e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02794561793e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02794915148e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02795268503e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02832601858e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02832955213e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02833308568e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02833661923e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02834015278e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02834368633e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02834721988e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02835075343e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02835428698e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02835782053e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02836135408e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02836488763e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02836842118e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02837195473e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02837548828e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02837902183e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02838255538e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02838608893e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02838962248e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02839315603e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02839668958e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02840022313e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02840375668e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02840729023e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02841082378e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02841435733e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02841789088e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02842142443e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02842495798e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02842849153e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02843202508e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02843555863e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02843909218e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02844262573e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02844615928e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02844969283e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02845322638e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02845675993e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02846029348e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02846382703e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02846736058e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02847089413e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02847442768e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02847796123e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02848149478e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02848502833e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02848856188e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02849209543e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02886542898e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02886896253e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02887249608e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02887602963e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02887956318e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02888309673e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02888663028e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02889016383e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02889369738e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02889723093e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02890076448e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02890429803e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02890783158e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02891136513e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02891489868e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02891843223e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02892196578e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02892549933e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02892903288e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02893256643e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02893609998e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02893963353e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02894316708e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02894670063e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02895023418e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02895376773e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02895730128e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02896083483e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02896436838e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02896790193e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02897143548e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02897496903e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02897850258e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02898203613e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02898556968e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02898910323e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02899263678e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02899617033e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02899970388e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02900323743e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02900677098e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02901030453e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02901383808e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02901737163e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02902090518e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02902443873e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02902797228e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02903150583e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02940483938e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02940837293e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02941190648e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02941544003e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02941897358e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02942250713e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02942604068e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02942957423e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02943310778e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02943664133e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02944017488e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02944370843e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02944724198e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02945077553e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02945430908e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02945784263e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02946137618e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02946490973e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02946844328e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02947197683e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02947551038e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02947904393e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02948257748e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02948611103e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02948964458e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02949317813e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02949671168e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02950024523e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02950377878e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02950731233e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02951084588e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02951437943e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02951791298e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02952144653e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02952498008e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02952851363e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02953204718e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02953558073e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02953911428e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02954264783e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02954618138e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02954971493e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02955324848e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02955678203e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02956031558e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02956384913e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02956738268e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02957091623e[CPU0  ] fetch_raw_descriptor: GDT: index (56e7) adc > limit (17)
-02976463000i[CPU0  ] CPU is in long mode (active)
-02976463000i[CPU0  ] CS.mode = 64 bit
-02976463000i[CPU0  ] SS.mode = 64 bit
-02976463000i[CPU0  ] EFER   = 0x00000d00
-02976463000i[CPU0  ] | RAX=0000000000000192  RBX=0000000000000009
-02976463000i[CPU0  ] | RCX=000000000000001a  RDX=0000000000000000
-02976463000i[CPU0  ] | RSP=ffff80003ff672c8  RBP=ffff80003ff672d8
-02976463000i[CPU0  ] | RSI=000000000000001a  RDI=0000000000000192
-02976463000i[CPU0  ] |  R8=000000000000002f   R9=0000000000ffffff
-02976463000i[CPU0  ] | R10=0000000000000000  R11=0000000000000000
-02976463000i[CPU0  ] | R12=0000000000000000  R13=0000000000000000
-02976463000i[CPU0  ] | R14=0000000000000000  R15=0000000000000000
-02976463000i[CPU0  ] | IOPL=0 id vip vif ac vm rf nt of df if tf SF zf af pf CF
-02976463000i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
-02976463000i[CPU0  ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 0
-02976463000i[CPU0  ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 0
-02976463000i[CPU0  ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 0
-02976463000i[CPU0  ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 0
-02976463000i[CPU0  ] |  FS:0010( 0002| 0|  0) 00000000 ffffffff 1 0
-02976463000i[CPU0  ] |  GS:0010( 0002| 0|  0) 00000000 ffffffff 1 0
-02976463000i[CPU0  ] |  MSR_FS_BASE:0000000000000000
-02976463000i[CPU0  ] |  MSR_GS_BASE:0000000000000000
-02976463000i[CPU0  ] | RIP=ffffffff800004c0 (ffffffff800004c0)
-02976463000i[CPU0  ] | CR0=0x80010011 CR2=0x0000000000000000
-02976463000i[CPU0  ] | CR3=0x000000003ff59000 CR4=0x00000020
-02976463000i[CMOS  ] Last time: 1728596553 tz=utc (Thu Oct 10 21:42:33   2024)
-02976463000i[XGUI  ] Exit
-02976463000i[SIM   ] quit_sim called with exit code 0
+00000000000i[CPU0  ] CPU is in real mode (active)
+00000000000i[CPU0  ] CS.mode = 16 bit
+00000000000i[CPU0  ] SS.mode = 16 bit
+00000000000i[CPU0  ] EFER   = 0x00000000
+00000000000i[CPU0  ] | EAX=00000000  EBX=00000000  ECX=00000000  EDX=00000000
+00000000000i[CPU0  ] | ESP=00000000  EBP=00000000  ESI=00000000  EDI=00000000
+00000000000i[CPU0  ] | IOPL=0 id vip vif ac vm rf nt of df if tf sf zf af pf cf
+00000000000i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00000000000i[CPU0  ] |  CS:f000( 1e00| 0|  0) ffff0000 0000ffff 0 0
+00000000000i[CPU0  ] |  DS:0000( 0000| 0|  0) 00000000 0000ffff 0 0
+00000000000i[CPU0  ] |  SS:0000( 0000| 0|  0) 00000000 0000ffff 0 0
+00000000000i[CPU0  ] |  ES:0000( 0000| 0|  0) 00000000 0000ffff 0 0
+00000000000i[CPU0  ] |  FS:0000( 0000| 0|  0) 00000000 0000ffff 0 0
+00000000000i[CPU0  ] |  GS:0000( 0000| 0|  0) 00000000 0000ffff 0 0
+00000000000i[CPU0  ] | EIP=0000fff0 (0000fff0)
+00000000000i[CPU0  ] | CR0=0x60000010 CR2=0x00000000
+00000000000i[CPU0  ] | CR3=0x00000000 CR4=0x00000000
+00000000000i[CMOS  ] Last time: 1728668258 tz=utc (Fri Oct 11 17:37:38   2024)
+00000000000i[XGUI  ] Exit
+00000000000i[SIM   ] quit_sim called with exit code 0

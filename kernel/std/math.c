@@ -88,3 +88,9 @@ unsigned int abs (int data)
 	if (data<0) return -1*data;
 	return data;
 }
+
+void div0()
+{
+	int x=9;
+	x/=0;
+}

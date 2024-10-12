@@ -64,3 +64,10 @@ void sti()
 {
     __asm__ volatile ("sti");
 }
+
+__attribute__((optimize("O0")))
+void io_wait() {
+    for (int i=0; i<1000000; i++) {
+        continue;
+    }
+}

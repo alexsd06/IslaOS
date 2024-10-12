@@ -1,0 +1,1 @@
+void fill_idt();

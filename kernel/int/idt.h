@@ -1,4 +1,6 @@
 #include <stdint.h>
+#define IDT_MAX_DESCRIPTORS 256
+#define GDT_OFFSET_KERNEL_CODE 0x08 
 
 typedef struct {
 	uint16_t    isr_low;      // The lower 16 bits of the ISR's address
@@ -16,5 +18,11 @@ typedef struct {
 	uint64_t	base;
 } __attribute__((packed)) idtr_t;
 
+__attribute__((aligned(0x10))) 
+extern idt_entry_t idt[IDT_MAX_DESCRIPTORS]; // Create an array of IDT entries; aligned for performance
+extern idtr_t idtr;
+
 void init_idt();
 void test_int();
+void idt_set_descriptor(uint8_t vector, void* isr, uint8_t flags);
+void inter();

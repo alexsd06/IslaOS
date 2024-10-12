@@ -14,6 +14,7 @@
 #include "kernel/time/time.h"
 #include "arch/arch.h"
 #include "kernel/std/math.h"
+#include "kernel/int/idt.h"
 
 int last_key_print=0;
 int key_print_delay=100; //milliseconds
@@ -43,6 +44,8 @@ void help()
 	kprintln ("ns/us/ms/time - Prints time since boot in different SI units");
 	kprintln ("c/ns/us/ms/time - Sames as normal time, except it does it forever");
 	kprintln ("exit - Shutdowns the computer (QEMU for now)");
+	kprintln ("inter - Trigger interrupt 69");
+	kprintln ("div0 - Divide by 0 to see how it is handled");
 	kprintln("");
 }
 
@@ -71,12 +74,14 @@ void exit(void)
 
 char command_string[][25]={
 	"help", "plm", "clear", "isla", "homu", "crdisk", "dir", "ls",
-	"tetris", "dizzy", "nstime", "ustime", "mstime", "time", "cnstime", "custime", "cmstime", "ctime", "exit"
+	"tetris", "dizzy", "nstime", "ustime", "mstime", "time", "cnstime", "custime", "cmstime", "ctime", "exit",
+	"inter", "div0"
 };
 
 FunctionCallback command_functions[]={
 	&help, &plm, &clear, &isla, &homu, &crdisk, &dir, &ls,
-	&tetris, &dizzy, &nstime, &ustime, &mstime, &time, &cnstime, &custime, &cmstime, &ctime, &exit
+	&tetris, &dizzy, &nstime, &ustime, &mstime, &time, &cnstime, &custime, &cmstime, &ctime, &exit,
+	&inter, &div0
 };
 
 void exec()
