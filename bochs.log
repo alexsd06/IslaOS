@@ -24,7 +24,7 @@
 00000000000i[USBCTL] Pluggable USB devices
 00000000000i[USBCTL]   floppy mouse tablet keypad keyboard hub disk cdrom
 00000000000i[USBCTL]   printer
-00000000000i[MEM0  ] allocated memory at 0x7c99379dd010. after alignment, vector=0x7c99379de000, block_size = 128K
+00000000000i[MEM0  ] allocated memory at 0x7dff1b5dd010. after alignment, vector=0x7dff1b5de000, block_size = 128K
 00000000000i[MEM0  ] 1024.00MB
 00000000000i[MEM0  ] mem block size = 0x00020000, blocks=8192
 00000000000i[MEM0  ] rom at 0xfffe0000/131072 ('/usr/share/bochs/BIOS-bochs-latest')
@@ -37,7 +37,7 @@
 00000000000i[DEV   ] PIIX3 PCI-to-ISA bridge present at device 1, function 0
 00000000000i[PLUGIN] init_dev of 'cmos' plugin device by virtual method
 00000000000i[CMOS  ] Using local time for initial clock
-00000000000i[CMOS  ] Setting initial clock to: Fri Oct 11 17:37:38   2024 tz=utc (time0=1728668258)
+00000000000i[CMOS  ] Setting initial clock to: Fri Oct 25 20:52:48   2024 tz=utc (time0=1729889568)
 00000000000i[PLUGIN] init_dev of 'dma' plugin device by virtual method
 00000000000i[DMA   ] channel 4 used by cascade
 00000000000i[PLUGIN] init_dev of 'pic' plugin device by virtual method
@@ -73,7 +73,7 @@
 00000000000i[CD1   ] load cdrom with path='iso/IslaOS.iso'
 00000000000i[CD1   ] Opening image file as a cd.
 00000000000i[HD    ] Media present in CD-ROM drive
-00000000000i[HD    ] Capacity is 2562 sectors (5.00 MB)
+00000000000i[HD    ] Capacity is 2556 sectors (4.99 MB)
 00000000000i[PLUGIN] init_dev of 'pci_ide' plugin device by virtual method
 00000000000i[DEV   ] PIIX3 PCI IDE controller present at device 1, function 1
 00000000000i[PLUGIN] init_dev of 'unmapped' plugin device by virtual method
@@ -251,23 +251,3 @@
 00000000000i[PLUGIN] reset of 'serial' plugin device by virtual method
 00000000000i[PLUGIN] reset of 'iodebug' plugin device by virtual method
 00000000000i[PLUGIN] reset of 'usb_uhci' plugin device by virtual method
-00000000000i[CPU0  ] CPU is in real mode (active)
-00000000000i[CPU0  ] CS.mode = 16 bit
-00000000000i[CPU0  ] SS.mode = 16 bit
-00000000000i[CPU0  ] EFER   = 0x00000000
-00000000000i[CPU0  ] | EAX=00000000  EBX=00000000  ECX=00000000  EDX=00000000
-00000000000i[CPU0  ] | ESP=00000000  EBP=00000000  ESI=00000000  EDI=00000000
-00000000000i[CPU0  ] | IOPL=0 id vip vif ac vm rf nt of df if tf sf zf af pf cf
-00000000000i[CPU0  ] | SEG sltr(index|ti|rpl)     base    limit G D
-00000000000i[CPU0  ] |  CS:f000( 1e00| 0|  0) ffff0000 0000ffff 0 0
-00000000000i[CPU0  ] |  DS:0000( 0000| 0|  0) 00000000 0000ffff 0 0
-00000000000i[CPU0  ] |  SS:0000( 0000| 0|  0) 00000000 0000ffff 0 0
-00000000000i[CPU0  ] |  ES:0000( 0000| 0|  0) 00000000 0000ffff 0 0
-00000000000i[CPU0  ] |  FS:0000( 0000| 0|  0) 00000000 0000ffff 0 0
-00000000000i[CPU0  ] |  GS:0000( 0000| 0|  0) 00000000 0000ffff 0 0
-00000000000i[CPU0  ] | EIP=0000fff0 (0000fff0)
-00000000000i[CPU0  ] | CR0=0x60000010 CR2=0x00000000
-00000000000i[CPU0  ] | CR3=0x00000000 CR4=0x00000000
-00000000000i[CMOS  ] Last time: 1728668258 tz=utc (Fri Oct 11 17:37:38   2024)
-00000000000i[XGUI  ] Exit
-00000000000i[SIM   ] quit_sim called with exit code 0

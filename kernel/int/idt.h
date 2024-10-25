@@ -25,4 +25,3 @@ extern idtr_t idtr;
 void init_idt();
 void test_int();
 void idt_set_descriptor(uint8_t vector, void* isr, uint8_t flags);
-void inter();

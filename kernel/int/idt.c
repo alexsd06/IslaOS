@@ -43,5 +43,3 @@ void init_idt()
     kprintln("Interrupts enabled successfully!");
     
 }
-
-void inter() {__asm__ volatile("int $69");}

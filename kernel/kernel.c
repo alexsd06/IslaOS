@@ -183,13 +183,17 @@ void _start(void)
     init_idt();
     kprintln("Calling int $69...");
     __asm__ volatile ("int $69");
-    kprintln("Calling int $112 to see if other numbers are working...");
-    __asm__ volatile ("int $112");
-     kprintln("Calling int $215 as well for fun!");
-    __asm__ volatile ("int $215");
-    kprintln("Initializing the Programmable Interrupt Controller...");
+    
+    //kprintln("Calling int $112 to see if other numbers are working...");
+    //__asm__ volatile ("int $112");
+    //kprintln("Calling int $215 as well for fun!");
+    //__asm__ volatile ("int $215");
+    
+    //kprintln("Initializing the Programmable Interrupt Controller...");
     //init_pic();
-    kprintln("The PIC has been initialized successfully!");
+    //kprintln("The PIC has been initialized successfully!");
+    
+    print_stack();
     mainframe();           // Start the main application loop
     hcf();                 // Halt or exit
 

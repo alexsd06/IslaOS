@@ -14,7 +14,7 @@
 #include "kernel/time/time.h"
 #include "arch/arch.h"
 #include "kernel/std/math.h"
-#include "kernel/int/idt.h"
+#include "kernel/int/isr.h"
 
 int last_key_print=0;
 int key_print_delay=100; //milliseconds
@@ -46,6 +46,7 @@ void help()
 	kprintln ("exit - Shutdowns the computer (QEMU for now)");
 	kprintln ("inter - Trigger interrupt 69");
 	kprintln ("div0 - Divide by 0 to see how it is handled");
+	kprintln ("print-stack - Prints the last 20 entries in stack!");
 	kprintln("");
 }
 
@@ -75,13 +76,13 @@ void exit(void)
 char command_string[][25]={
 	"help", "plm", "clear", "isla", "homu", "crdisk", "dir", "ls",
 	"tetris", "dizzy", "nstime", "ustime", "mstime", "time", "cnstime", "custime", "cmstime", "ctime", "exit",
-	"inter", "div0"
+	"inter", "div0", "print-stack"
 };
 
 FunctionCallback command_functions[]={
 	&help, &plm, &clear, &isla, &homu, &crdisk, &dir, &ls,
 	&tetris, &dizzy, &nstime, &ustime, &mstime, &time, &cnstime, &custime, &cmstime, &ctime, &exit,
-	&inter, &div0
+	&inter, &div0, &print_stack
 };
 
 void exec()

@@ -89,6 +89,7 @@ unsigned int abs (int data)
 	return data;
 }
 
+__attribute__((optimize("O0")))
 void div0()
 {
 	int x=9;
