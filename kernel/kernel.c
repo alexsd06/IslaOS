@@ -189,11 +189,11 @@ void _start(void)
     //kprintln("Calling int $215 as well for fun!");
     //__asm__ volatile ("int $215");
     
-    //kprintln("Initializing the Programmable Interrupt Controller...");
-    //init_pic();
-    //kprintln("The PIC has been initialized successfully!");
+    kprintln("Initializing the Programmable Interrupt Controller...");
+    init_pic();
+    kprintln("The PIC has been initialized successfully!");
     
-    print_stack();
+    //print_stack();
     mainframe();           // Start the main application loop
     hcf();                 // Halt or exit
 

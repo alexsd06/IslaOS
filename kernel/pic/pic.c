@@ -102,9 +102,11 @@ uint16_t pic_get_isr(void)
 }
 
 void init_pic() {
-    PIC_remap(0x20, 0x28);
     io_wait();
     pic_disable();
-    //io_wait();
+    io_wait();
+    PIC_remap(0x20, 0x28);
+    io_wait();
+    IRQ_clear_mask(0);
     //IRQ_clear_mask(1);
 }

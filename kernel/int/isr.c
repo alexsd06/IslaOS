@@ -1,6 +1,7 @@
 #include "kernel/fonts/font_lib.h"
 #include "kernel/serial/serial.h"
 #include "isr.h"
+#include "kernel/pit/pit.h"
 
 void print_stack() {
     uint64_t *stack;
@@ -16,17 +17,18 @@ void print_stack() {
 }
 
 void inter() {
-    kprintln("inter() in!");
-    print_stack();
+    //kprintln("inter() in!");
+    //print_stack();
     __asm__ volatile("int $69");
-    print_stack();
-    kprintln("inter() out!");
+    //print_stack();
+    //kprintln("inter() out!");
     // __asm__ volatile("xchgw %bx, %bx");
 }
 
+
 void isr_handler(int int_num) {
-     kprint("INT "); kprintint(int_num); kprintln(" received!");
      if (int_num<32) {
+        kprint("INT "); kprintint(int_num); kprintln(" received!");
         print_stack();
         kprintln("IslaOS crashed! Bailing out, you are on your own. Good luck.");
         __asm__ volatile("cli");
@@ -34,4 +36,6 @@ void isr_handler(int int_num) {
             __asm__ volatile("hlt");
         }
      }
+     else if (int_num==32) pit_isr_handler();
+     else {kprint("INT "); kprintint(int_num); kprintln(" received!");}
 }

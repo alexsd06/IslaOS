@@ -36,7 +36,7 @@ void init_idt()
     */
     //idt_set_descriptor(69, isr_handler_asm, 0x8E); 
     fill_idt();
-    kprintln("IDT descriptors created! Loading IDT using lidt...");
+    kprintln("IDT descriptors created! Loading IDT using LIDT...");
     __asm__ volatile ("lidt %0" : : "m"(idtr)); // load the new IDT
     kprintln("IDT loaded successfully! Now enabling interrupts!");
     __asm__ volatile ("sti"); // set the interrupt flag
