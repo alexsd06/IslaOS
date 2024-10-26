@@ -28,4 +28,70 @@ Last 10 stack entries:
 
 IslaOS x64 Kernel version 1.0 initialized!
 
-kernel@IslaOS:/$ |
+kernel@IslaOS:/$ |i|s|l|a|f|  | 
+
+                               IslaOS x64 Version 1.0!
+                               RAW Image width: 200
+                               RAW Image height: 200
+                               RAW Image bpp: 32
+                               RAW Image pixeltype: 40
+                               Header adress: 0x8003318A
+                               Data adress: 0x8003319C
+                               Size of uint_t: 8 bytes
+                               The bootloader name is: Limine 8.2.0
+                               The framebuffer width is: 1920 pixels
+                               The framebuffer height is: 1080 pixels
+                               Total RAM size: 1013 MB
+                               Total RAM available: 1013 MB
+kernel@IslaOS:/$ |h|o|m|u| 
+
+                               IslaOS x64 Version 1.0!
+                               RAW Image width: 200
+                               RAW Image height: 200
+                               RAW Image bpp: 32
+                               RAW Image pixeltype: 40
+                               Header adress: 0x8000A98A
+                               Data adress: 0x8000A99C
+                               Size of uint_t: 8 bytes
+                               The bootloader name is: Limine 8.2.0
+                               The framebuffer width is: 1920 pixels
+                               The framebuffer height is: 1080 pixels
+                               Total RAM size: 1013 MB
+                               Total RAM available: 1013 MB
+kernel@IslaOS:/$ |c|l|e|a|r| 
+kernel@IslaOS:/$ |h|e|l|p| 
+
+Help for IslaOS x64 Kernel 1.0
+help - Shows this menu
+plm - Try it and see the result
+clear - Clears the screen
+isla - Neofetch for IslaOS
+homu - Homura neofetch for IslaOS
+crdisk - Show info about the ramdisk
+dir / ls - List the file on the ramdisk
+tetris - Starts a cool game of tetris
+dizzy - Do you have seizures? Do not run this
+ns/us/ms/time - Prints time since boot in different SI units
+c/ns/us/ms/time - Sames as normal time, except it does it forever
+exit - Shutdowns the computer (QEMU for now)
+inter - Trigger interrupt 69
+div0 - Divide by 0 to see how it is handled
+print-stack - Prints the last 20 entries in stack!
+
+kernel@IslaOS:/$ |p|l|m| 
+
+Ba de ce ma injuri bagami-as eax-ul in ecx-ul matii!?
+
+kernel@IslaOS:/$ |d|i|v|0| 
+INT 0 received!
+
+Stack pointer: 0x3FF65ED8
+Last 10 stack entries:
+    0x3FF65ED8     0x80009805     0x3FF65F08     0x80003079 
+    0x3FF6D000     0x3FF65F30     0x3FF65F18     0x80004A9E 
+    0x3FF65F60     0x800084F5     0x80007216     0x8 
+    0x10086     0x3FF65F50     0x10     0x3FF65F70 
+    0x43     0x3FF65F90     0x800028CB     0x3FF65F90 
+
+
+IslaOS crashed! Bailing out, you are on your own. Good luck.
