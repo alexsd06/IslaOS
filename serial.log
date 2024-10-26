@@ -1,6 +1,6 @@
 Hello from IslaOS x64!
 Lower Memory: 1048576 bytes!
-Upper Memory: 1063383040 bytes!
+Upper Memory: 900904632 bytes!
 Availabe RAM: 1013MB
 Video buffer got initialized successfully!
 Kernel is running in the correct address space.
@@ -17,51 +17,15 @@ Interrupts enabled successfully!
 Calling int $69...
 INT 69 received!
 
-Stack pointer: 0x3FF58FC0
+Stack pointer: 0x3FF65FC0
 Last 10 stack entries:
-    0x3FF58FC0     0x246     0x3FF58FF0     0x80004B6A 
+    0x3FF65FC0     0x246     0x3FF65FF0     0x80006A8A 
     0x     0x     0x     0x 
-    0x4B280037     0xFFFF     0x     0x 
+    0x5C800037     0xFFFF     0x     0x 
     0x     0x     0x     0x 
     0x     0x     0x     0x 
 
 
 IslaOS x64 Kernel version 1.0 initialized!
 
-kernel@IslaOS:/$ |i|n|t|e|r| 
-inter() in!
-
-Stack pointer: 0x3FF58F40
-Last 10 stack entries:
-    0x3FF58F40     0x80009BEF     0x3FF58F60     0x8000575F 
-    0x3FF58F90     0x800031E2     0x3FF58F90     0x3FF60000 
-    0x     0x3FF60000     0x3FF58FB0     0x8000331E 
-    0x     0x3D87     0x3FF58FD0     0x8000346E 
-    0x3FF58FC0     0x246     0x3FF58FF0     0x80004B74 
-
-
-INT 69 received!
-
-Stack pointer: 0x3FF58F40
-Last 10 stack entries:
-    0x3FF58F40     0x46     0x3FF58F60     0x8000576B 
-    0x3FF58F90     0x800031E2     0x3FF58F90     0x3FF60000 
-    0x     0x3FF60000     0x3FF58FB0     0x8000331E 
-    0x     0x3D87     0x3FF58FD0     0x8000346E 
-    0x3FF58FC0     0x246     0x3FF58FF0     0x80004B74 
-
-
-inter() out!
-kernel@IslaOS:/$ |d|i|v|0| 
-INT 0 received!
-
-Stack pointer: 0x3FF58ED8
-Last 10 stack entries:
-    0x3FF58ED8     0x80009C0D     0x3FF58F08     0x800057C0 
-    0x3FF60000     0x3FF58F30     0x3FF58F18     0x800070EB 
-    0x3FF58F60     0x800084F5     0x80003E21     0x8 
-    0x10086     0x3FF58F50     0x10     0x3FF58F70 
-    0x43     0x3FF58F90     0x800031E2     0x3FF58F90 
-
-
-IslaOS crashed! Bailing out, you are on your own. Good luck.
+kernel@IslaOS:/$ |
