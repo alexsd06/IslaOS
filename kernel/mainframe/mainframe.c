@@ -15,7 +15,7 @@
 #include "arch/arch.h"
 #include "kernel/std/math.h"
 #include "kernel/int/isr.h"
-
+#include "kernel/pit/pit.h"
 
 char command_buffer[1080*1920];
 int command_buffer_size=0;
@@ -38,12 +38,14 @@ void help()
 	kprintln ("dir / ls - List the file on the ramdisk");
 	kprintln ("tetris - Starts a cool game of tetris");
 	kprintln ("dizzy - Do you have seizures? Do not run this");
-	kprintln ("ns/us/ms/time - Prints time since boot in different SI units");
-	kprintln ("c/ns/us/ms/time - Sames as normal time, except it does it forever");
+	kprintln ("ms/s/time - Prints time since boot in different SI units");
+	kprintln ("c/ms/s/time - Sames as normal time, except it does it forever");
 	kprintln ("exit - Shutdowns the computer (QEMU for now)");
 	kprintln ("inter - Trigger interrupt 69");
 	kprintln ("div0 - Divide by 0 to see how it is handled");
 	kprintln ("print-stack - Prints the last 20 entries in stack!");
+	kprintln ("kpit - Print the PIT counter held by the OS!");
+	kprintln ("rtc-(c)time - Print the RTC time!");
 	kprintln("");
 }
 
@@ -72,14 +74,14 @@ void exit(void)
 
 char command_string[][25]={
 	"help", "plm", "clear", "isla", "homu", "crdisk", "dir", "ls",
-	"tetris", "dizzy", "nstime", "ustime", "mstime", "time", "cnstime", "custime", "cmstime", "ctime", "exit",
-	"inter", "div0", "print-stack"
+	"tetris", "dizzy", "mstime", "stime", "cmstime", "cstime", "exit",
+	"inter", "div0", "print-stack", "kpit", "rtc-time", "rtc-ctime"
 };
 
 FunctionCallback command_functions[]={
 	&help, &plm, &clear, &isla, &homu, &crdisk, &dir, &ls,
-	&tetris, &dizzy, &nstime, &ustime, &mstime, &time, &cnstime, &custime, &cmstime, &ctime, &exit,
-	&inter, &div0, &print_stack
+	&tetris, &dizzy, &mstime, &stime, &cmstime, &cstime, &exit,
+	&inter, &div0, &print_stack, &kpit, &rtc_time, &rtc_ctime
 };
 
 void exec()

@@ -102,5 +102,6 @@ void init_pic() {
     PIC_remap(0x20, 0x28);
     io_wait();
     IRQ_clear_mask(1);
-    //PIC_sendEOI(1);
+    io_wait();
+    IRQ_clear_mask(0);
 }

@@ -3,7 +3,7 @@
 #include "ramdisk/ramdisk.h"
 #include "std/string.h"
 #include "drivers/video/video.h"
-#include "time/time.h"
+#include "kernel/time/time.h"
 #include "std/math.h"
 #include "random/random.h"
 #include "mainframe/shapes/shapes.h"
@@ -454,7 +454,7 @@ void tetris()
             kprintln("You lost!");
             break;
         }
-        sleep(30, 'm');
+        delay(200);
     }
     
 }
@@ -476,7 +476,6 @@ void dizzy()
         for (int i=0; i<fb_height/block_height; i++) {
             for (int j=0; j<fb_width/block_width; j++) {
                 //TODO: Obtain random seed from cpu. Currently defaulting to 42.
-                check_pit();
                 show_image(tetris_blocks[rand()%7], i*block_height, j*block_width);
             }
         }
