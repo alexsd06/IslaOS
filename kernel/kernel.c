@@ -194,6 +194,7 @@ void _start(void)
     kprintln("The PIC has been initialized successfully!");
     
     //print_stack();
+    // while(1) {};
     mainframe();           // Start the main application loop
     hcf();                 // Halt or exit
 

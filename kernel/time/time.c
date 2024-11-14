@@ -15,6 +15,8 @@ unsigned int read_pit_count(void) {
  
 	count = inb(0x40);		// Low byte
 	count |= inb(0x40)<<8;		// High byte
+
+    sti(); // I forgot to reenable interrupts...
  
 	return count;
 }
@@ -186,11 +188,11 @@ void ctime() {
     while (true) {
         clear();
         time();
-        update_keyboard_status();
         if (is_key_pressed('c')) {
-            cancel_keypress('c');
+            keypress_aknowledged();
             break;
         }
+        //keypress_aknowledged();
         delay(200);
     }
 }

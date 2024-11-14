@@ -5,8 +5,6 @@
 #include "kernel/time/time.h"
 #include "kernel/pic/pic.h"
 
-int lastkey;
-
 int scancodes[128] =
 {
     0,  27, '1', '2', '3', '4', '5', '6', '7', '8',	/* 9 */
@@ -47,14 +45,8 @@ int scancodes[128] =
     0,	/* All other keys are undefined */
 };
 
-int keypress[1024];
 
-int get_last_key_scancode()
-{
-	return lastkey;
-}
-
-int get_last_key_char(bool *pressed)
+int get_last_key_char(int lastkey, bool *pressed)
 {
 	if (lastkey>0x80) { //Key released
 		*pressed=false;
@@ -66,16 +58,39 @@ int get_last_key_char(bool *pressed)
 	}
 }
 
+bool is_key_pressed(int c) {
+	if (key_pressed==c) return 1;
+	return 0;
+}
+
+void cancel_keypress(int c)
+{
+	key_pressed=-1;
+}
+
+void keypress_aknowledged()
+{
+	key_pressed=-1;
+}
+
+int keyboard_read_key()
+{
+	int lastkey = 0;
+	//lastkey = inb(0x60);
+	if(inb(0x64) & 1)
+		lastkey = inb(0x60);
+	return lastkey;
+}
+
+int key_pressed=-1;
 void update_keyboard_status()
 {
-	keyboard_read_key();
+	int key = keyboard_read_key();
 	bool pressed;
-	int keycode=get_last_key_char(&pressed);
+	int keycode=get_last_key_char(key, &pressed);
 	if (keycode==0) return;
 	if (pressed) {
-		if (keypress[keycode]<INT32_MAX) {
-			keypress[keycode]++;
-		}
+		key_pressed=keycode;
 	}
 }
 
@@ -101,29 +116,10 @@ void kinit_keyboard()
 	//char *hex_mode=dec_to_hex(mode);
 	//kprintln(hex_mode);
 }
-void keyboard_read_key()
-{
-	lastkey = 0;
-	//lastkey = inb(0x60);
-	if(inb(0x64) & 1)
-		lastkey = inb(0x60);
-}
-
-bool is_key_pressed(int c)
-{
-	update_keyboard_status();
-	if (keypress[c]!=0) return 1;
-	return 0;
-}
-
-void cancel_keypress(int c)
-{
-	keypress[c]=0;
-}
 
 void keyboard_isr_handler()
 {
-	kprintln("Keyboard INT received!");
-	io_wait();
+	// kprintln("Keyboard INT received!");
+	update_keyboard_status();
 	PIC_sendEOI(1);
 }

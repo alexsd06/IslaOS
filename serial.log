@@ -1,6 +1,6 @@
 Hello from IslaOS x64!
 Lower Memory: 1048576 bytes!
-Upper Memory: 503667302 bytes!
+Upper Memory: 1063383040 bytes!
 Availabe RAM: 1013MB
 Video buffer got initialized successfully!
 Kernel is running in the correct address space.
@@ -20,32 +20,40 @@ Initializing the Programmable Interrupt Controller...
 The PIC has been initialized successfully!
 IslaOS x64 Kernel version 1.0 initialized!
 
-kernel@IslaOS:/$ |i|n|t|e|r| 
-INT 69 received!
-Keyboard INT received!
-kernel@IslaOS:/$ |i|n|t|e|r| 
-INT 69 received!
-Keyboard INT received!
-Keyboard INT received!
-kernel@IslaOS:/$ |i|n|t|e|r| 
-INT 69 received!
-Keyboard INT received!
-kernel@IslaOS:/$ |i|n|t|e|r| 
-INT 69 received!
-Keyboard INT received!
-Keyboard INT received!
-kernel@IslaOS:/$ |i|n|t|e|r| 
-INT 69 received!
-Keyboard INT received!
-kernel@IslaOS:/$ |i|n|t|e|r| 
-INT 69 received!
-Keyboard INT received!
-kernel@IslaOS:/$ | 
-kernel@IslaOS:/$ | 
-kernel@IslaOS:/$ | 
-kernel@IslaOS:/$ |i|n|t|e|r| 
-INT 69 received!
-Keyboard INT received!
-Keyboard INT received!
-kernel@IslaOS:/$ |e|x|i|t| 
-Exiting IslaOS...
+kernel@IslaOS:/$ |i|n|t|  |  |  |c|t|i|m|e| 
+Current time: 15:31:40
+Current date: 14/11/24
+Current time: 15:31:41
+Current date: 14/11/24
+Current time: 15:31:41
+Current date: 14/11/24
+Current time: 15:31:41
+Current date: 14/11/24
+Current time: 15:31:41
+Current date: 14/11/24
+Current time: 15:31:42
+Current date: 14/11/24
+Current time: 15:31:42
+Current date: 14/11/24
+Current time: 15:31:42
+Current date: 14/11/24
+kernel@IslaOS:/$ |l|s| 
+
+devil_homura.tga                         160044 bytes...
+font.psf                                 4128 bytes...
+isla.tga                                 160044 bytes...
+ramdisk.inf                              20 bytes...
+blue_block.tga                           8482 bytes...
+cyan_block.tga                           8482 bytes...
+green_block.tga                          8482 bytes...
+pink_block.tga                           8482 bytes...
+purple_block.tga                         8482 bytes...
+red_block.tga                            8482 bytes...
+yellow_block.tga                         8482 bytes...
+tetris_logo_left.tga                     1062044 bytes...
+tetris_logo_right.tga                    1062044 bytes...
+
+kernel@IslaOS:/$ |l|o|l| 
+Unknown command typed!
+
+kernel@IslaOS:/$ |

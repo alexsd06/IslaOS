@@ -40,6 +40,10 @@ void isr_handler(int int_num) {
      }
      else if (int_num==32) pit_isr_handler();
      else if (int_num==33) keyboard_isr_handler();
+     else if (int_num==48) { //Debug INT, ignore it and don't print anything;
+        __asm__ volatile("sti");
+        return;
+     }
      else {kprint("INT "); kprintint(int_num); kprintln(" received!");}
      __asm__ volatile ("sti");
 }

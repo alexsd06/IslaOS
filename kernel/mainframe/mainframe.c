@@ -16,9 +16,6 @@
 #include "kernel/std/math.h"
 #include "kernel/int/isr.h"
 
-int last_key_print=0;
-int key_print_delay=100; //milliseconds
-
 
 char command_buffer[1080*1920];
 int command_buffer_size=0;
@@ -123,8 +120,6 @@ void type_key(int key)
 		write_chard('|', true);
 		cursor_back();
 	}
-	last_key_print=get_system_time('m');
-	last_key_typed=key;
 }
 int fast_type=0;
 /*
@@ -139,24 +134,11 @@ void mainframe()
 	command_buffer[0]=0;
 	cursor_back();
 	while (true) {
-		if (last_key_print==INT32_MAX) last_key_print=0;
-		update_keyboard_status();
-		for (int i=0; i<256; i++) {
-			check_pit();
-			if (is_key_pressed(i)) {
-				if (i==last_key_typed&&!fast_type) {
-					//kprintint(abs((int)get_system_time('m')-last_key_print)); kprint(" "); kprintint(last_key_print); kprint(" "); kprintint((int)get_system_time('m')); kprintln("");
-					if ((int)abs((int)get_system_time('m')-last_key_print)>key_print_delay) {
-						type_key(i);
-						fast_type=1;
-					}
-				}
-				else {
-					type_key(i);
-					if (i!=last_key_typed) fast_type=0;
-				}
-				cancel_keypress(i);
-			}
+		if (key_pressed==-1) {
+			io_wait();
+			continue;
 		}
+		type_key(key_pressed);
+		keypress_aknowledged();
 	}
 }
