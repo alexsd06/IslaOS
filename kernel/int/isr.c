@@ -2,6 +2,7 @@
 #include "kernel/serial/serial.h"
 #include "isr.h"
 #include "kernel/pit/pit.h"
+#include "kernel/drivers/keyboard/keyboard.h"
 
 void print_stack() {
     uint64_t *stack;
@@ -27,6 +28,7 @@ void inter() {
 
 
 void isr_handler(int int_num) {
+    __asm__ volatile ("cli");
      if (int_num<32) {
         kprint("INT "); kprintint(int_num); kprintln(" received!");
         print_stack();
@@ -37,5 +39,7 @@ void isr_handler(int int_num) {
         }
      }
      else if (int_num==32) pit_isr_handler();
+     else if (int_num==33) keyboard_isr_handler();
      else {kprint("INT "); kprintint(int_num); kprintln(" received!");}
+     __asm__ volatile ("sti");
 }

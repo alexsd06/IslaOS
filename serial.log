@@ -1,7 +1,7 @@
 Hello from IslaOS x64!
-Lower Memory: 6758401 bytes!
-Upper Memory: 2365441601 bytes!
-Availabe RAM: 1101MB
+Lower Memory: 1048576 bytes!
+Upper Memory: 503667302 bytes!
+Availabe RAM: 1013MB
 Video buffer got initialized successfully!
 Kernel is running in the correct address space.
 Obtaining info from the bootloader!
@@ -15,17 +15,37 @@ IDT descriptors created! Loading IDT using LIDT...
 IDT loaded successfully! Now enabling interrupts!
 Interrupts enabled successfully!
 Calling int $69...
-INT u received!
+INT 69 received!
 Initializing the Programmable Interrupt Controller...
-INT 8 received!
+The PIC has been initialized successfully!
+IslaOS x64 Kernel version 1.0 initialized!
 
-Stack pointer: 0x3FF69F08
-Last 10 stack entries:
-    0x3FF69F08     0x80009C5C     0x3FF69F38     0x800057AC 
-    0x3FF71000     0x     0x3FF69F48     0x80007199 
-    0x3FF69F90     0x8000857D     0x80000C1E     0x8 
-    0x202     0x3FF69F80     0x10     0x800057F9 
-    0x80009011     0x3FF69FC0     0x80008278     0x800075A6 
-
-
-IslaOS crashed! Bailing out, you are on your own. Good luck.
+kernel@IslaOS:/$ |i|n|t|e|r| 
+INT 69 received!
+Keyboard INT received!
+kernel@IslaOS:/$ |i|n|t|e|r| 
+INT 69 received!
+Keyboard INT received!
+Keyboard INT received!
+kernel@IslaOS:/$ |i|n|t|e|r| 
+INT 69 received!
+Keyboard INT received!
+kernel@IslaOS:/$ |i|n|t|e|r| 
+INT 69 received!
+Keyboard INT received!
+Keyboard INT received!
+kernel@IslaOS:/$ |i|n|t|e|r| 
+INT 69 received!
+Keyboard INT received!
+kernel@IslaOS:/$ |i|n|t|e|r| 
+INT 69 received!
+Keyboard INT received!
+kernel@IslaOS:/$ | 
+kernel@IslaOS:/$ | 
+kernel@IslaOS:/$ | 
+kernel@IslaOS:/$ |i|n|t|e|r| 
+INT 69 received!
+Keyboard INT received!
+Keyboard INT received!
+kernel@IslaOS:/$ |e|x|i|t| 
+Exiting IslaOS...

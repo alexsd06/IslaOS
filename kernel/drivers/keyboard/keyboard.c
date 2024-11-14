@@ -3,6 +3,7 @@
 #include "kernel/fonts/font_lib.h"
 #include "kernel/std/math.h"
 #include "kernel/time/time.h"
+#include "kernel/pic/pic.h"
 
 int lastkey;
 
@@ -118,4 +119,11 @@ bool is_key_pressed(int c)
 void cancel_keypress(int c)
 {
 	keypress[c]=0;
+}
+
+void keyboard_isr_handler()
+{
+	kprintln("Keyboard INT received!");
+	io_wait();
+	PIC_sendEOI(1);
 }
