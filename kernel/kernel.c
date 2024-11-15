@@ -189,7 +189,7 @@ void _start(void)
     //__asm__ volatile ("int $112");
     //kprintln("Calling int $215 as well for fun!");
     //__asm__ volatile ("int $215");
-    
+
     kprintln("Initializing the Programmable Interrupt Controller...");
     init_pic();
     kprintln("The PIC has been initialized successfully!");

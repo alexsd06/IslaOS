@@ -103,5 +103,5 @@ void init_pic() {
     io_wait();
     IRQ_clear_mask(1);
     io_wait();
-    IRQ_clear_mask(0);
+    // IRQ_clear_mask(0);
 }

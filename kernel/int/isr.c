@@ -3,6 +3,7 @@
 #include "isr.h"
 #include "kernel/pit/pit.h"
 #include "kernel/drivers/keyboard/keyboard.h"
+#include "kernel/pic/pic.h"
 
 void print_stack() {
     uint64_t *stack;
@@ -26,9 +27,25 @@ void inter() {
     // __asm__ volatile("xchgw %bx, %bx");
 }
 
+void print_registers() {
+    uint64_t rip, rsp;
+
+    // Inline assembly to get RIP and RSP
+    asm volatile(
+        "lea (%%rip), %0\n"  // Load RIP into rip
+        "mov %%rsp, %1\n"    // Move RSP into rsp
+        : "=r"(rip), "=r"(rsp) // Output operands
+        :                     // No input operands
+        :                     // No clobbers
+    );
+
+    kprint("RIP: 0x"); kprintinthex(rip);  
+    kprint(", RSP: 0x"); kprintinthex(rsp); 
+    kprintln(""); 
+}
 
 void isr_handler(int int_num) {
-    __asm__ volatile ("cli");
+    // __asm__ volatile ("cli");
      if (int_num<32) {
         kprint("\n\nINT "); kprintint(int_num); kprintln(" received!");
         kprint("PIT Count: "); kprintint(pit_count); kprintln("");
@@ -45,6 +62,9 @@ void isr_handler(int int_num) {
         __asm__ volatile("sti");
         return;
      }
-     else {kprint("INT "); kprintint(int_num); kprintln(" received!");}
-     __asm__ volatile ("sti");
+     else {
+        kprint("INT "); kprintint(int_num); kprintln(" received!");
+        print_registers();
+    }
+    //  __asm__ volatile ("sti");
 }

@@ -5,7 +5,7 @@
 #define PIT_COMMAND_PORT 0x43
 #define PIT_CHANNEL_0_DATA_PORT 0x40
 #define PIT_FREQUENCY 1193182
-#define TARGET_FREQUENCY 100 // 1ms = 100 Hz (Setting to 1000Hz would give page fault...)
+#define TARGET_FREQUENCY 100000 // 1ms = 100 Hz (Setting to 1000Hz would give page fault...)
 
 unsigned long long pit_count=0;
 
@@ -24,8 +24,10 @@ void init_timer() {
 }
 
 void pit_isr_handler() {
+    //kprintln("PIT INT");
     pit_count++;
     PIC_sendEOI(0);
+    
 }
 
 void kpit()
