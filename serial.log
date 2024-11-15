@@ -21,51 +21,80 @@ The PIC has been initialized successfully!
 Setting PIT frequency at 1 kHz...
 IslaOS x64 Kernel version 1.0 initialized!
 
-kernel@IslaOS:/$ |s|i|t|m|e| 
-Unknown command typed!
+kernel@IslaOS:/$ |i|s|l|a|f|e|t|c|h| 
 
-kernel@IslaOS:/$ |s|t|i|e|  |m|e| 
-Time in seconds since boot: 2...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 3...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 4...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 5...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 6...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 7...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 8...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 8...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 9...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 11...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 11...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 12...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 13...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 14...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 15...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 15...
-kernel@IslaOS:/$ |s|t|i|m|e| 
-Time in seconds since boot: 16...INT 14 received!
+                               IslaOS x64 Version 1.0!
+                               RAW Image width: 200
+                               RAW Image height: 200
+                               RAW Image bpp: 32
+                               RAW Image pixeltype: 40
+                               Header adress: 0x8003315A
+                               Data adress: 0x8003316C
+                               Size of uint_t: 8 bytes
+                               The bootloader name is: Limine 7.7.2
+                               The framebuffer width is: 1920 pixels
+                               The framebuffer height is: 1080 pixels
+                               Total RAM size: 1013 MB
+                               Total RAM available: 1013 MB
+kernel@IslaOS:/$ |i|s|l|a|f|e|t|c|h| 
 
-Stack pointer: 0x3FF58CD0
-Last 10 stack entries:
-    0x3FF58CD0     0x80009C84     0x3FF58D00     0x800053D7 
-    0x20     0x3FF58D18     0x3FF58D10     0x80006E45 
-    0x3FF58D68     0x80008257     0x     0x800037A5 
-    0x8     0x10202     0x3FF58D50     0x10 
-    0x20     0x3FF58D68     0x80008175     0x3FF58DA0 
+                               IslaOS x64 Version 1.0!
+                               RAW Image width: 200
+                               RAW Image height: 200
+                               RAW Image bpp: 32
+                               RAW Image pixeltype: 40
+                               Header adress: 0x8003315A
+                               Data adress: 0x8003316C
+                               Size of uint_t: 8 bytes
+                               The bootloader name is: Limine 7.7.2
+                               The framebuffer width is: 1920 pixels
+                               The framebuffer height is: 1080 pixels
+                               Total RAM size: 1013 MB
+                               Total RAM available: 1013 MB
+kernel@IslaOS:/$ |i|l|s|a|f|  |  |  |  |s|l|a|f|e|t|c|h| 
 
+                               IslaOS x64 Version 1.0!
+                               RAW Image width: 200
+                               RAW Image height: 200
+                               RAW Image bpp: 32
+                               RAW Image pixeltype: 40
+                               Header adress: 0x8003315A
+                               Data adress: 0x8003316C
+                               Size of uint_t: 8 bytes
+                               The bootloader name is: Limine 7.7.2
+                               The framebuffer width is: 1920 pixels
+                               The framebuffer height is: 1080 pixels
+                               Total RAM size: 1013 MB
+                               Total RAM available: 1013 MB
+kernel@IslaOS:/$ |h|  |e|  |c|l|e|a|r| 
+kernel@IslaOS:/$ |h|o|m|u|f|e|t|c|h| 
 
-IslaOS crashed! Bailing out, you are on your own. Good luck.
+                               IslaOS x64 Version 1.0!
+                               RAW Image width: 200
+                               RAW Image height: 200
+                               RAW Image bpp: 32
+                               RAW Image pixeltype: 40
+                               Header adress: 0x8000A95A
+                               Data adress: 0x8000A96C
+                               Size of uint_t: 8 bytes
+                               The bootloader name is: Limine 7.7.2
+                               The framebuffer width is: 1920 pixels
+                               The framebuffer height is: 1080 pixels
+                               Total RAM size: 1013 MB
+                               Total RAM available: 1013 MB
+kernel@IslaOS:/$ |h|o|m|u|f|e|t|c|h| 
+
+                               IslaOS x64 Version 1.0!
+                               RAW Image width: 200
+                               RAW Image height: 200
+                               RAW Image bpp: 32
+                               RAW Image pixeltype: 40
+                               Header adress: 0x8000A95A
+                               Data adress: 0x8000A96C
+                               Size of uint_t: 8 bytes
+                               The bootloader name is: Limine 7.7.2
+                               The framebuffer width is: 1920 pixels
+                               The framebuffer height is: 1080 pixels
+                               Total RAM size: 1013 MB
+                               Total RAM available: 1013 MB
+kernel@IslaOS:/$ |

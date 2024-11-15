@@ -196,6 +196,7 @@ void _start(void)
     
     //print_stack();
     // while(1) {};
+
     kprintln("Setting PIT frequency at 1 kHz...");
     init_timer();
     mainframe();           // Start the main application loop

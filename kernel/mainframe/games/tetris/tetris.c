@@ -137,7 +137,7 @@ struct tetrimino init_tetrimino(int kind, int x, int y, int color_id) {
     return t;
 }
 
-const int default_game_speed=10;
+const int default_game_speed=200;
 int GAME_SPEED=default_game_speed;
 int fast_game_speed=0;
 int multiplier=4;
@@ -454,7 +454,7 @@ void tetris()
             kprintln("You lost!");
             break;
         }
-        delay(200);
+        delay(10);
     }
     
 }

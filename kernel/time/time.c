@@ -7,17 +7,17 @@
 
 const uint_t MAXL=2000000000;
 
-unsigned int get_system_ms() {return pit_count;}
-unsigned int get_system_se() {return pit_count/1000;}
+unsigned int get_system_ms() {return pit_count*10;}
+unsigned int get_system_se() {return pit_count/100;}
 
 uint_t get_system_time(char c) {
     int ret=0;
     switch (c) {
         case 's':
-            ret = pit_count/1000;
+            ret = get_system_se();
             break;
         case 'm':
-            ret = pit_count;
+            ret = get_system_ms();
             break;
     }
     return ret;
@@ -30,7 +30,6 @@ void sleep (int time, char unit)
 {
     int sys_time=get_system_time(unit);
     while ((int)abs(get_system_time(unit)-sys_time)<time) {
-        //continue;
         io_wait();
     }
 }
@@ -43,24 +42,42 @@ void delay (int time) {
 void pit_time(char c)   {
     switch (c) {
         case 's':
-            kprint ("Time in seconds since boot: "); kprintint(pit_count/1000); kprintln("...");
+            kprint ("Time in seconds since boot: "); kprintint(get_system_se()); kprintln("...");
             break;
         case 'm':
-            kprint ("Time in milliseconds since boot: "); kprintint(pit_count); kprintln("...");
+            kprint ("Time in milliseconds since boot: "); kprintint(get_system_ms()); kprintln("...");
             break;
     }
 }
 
 void pit_ctime(char c)
 {
+    switch (c) {
+        case 's':
+            kprint ("Time in seconds since boot: ");
+            break;
+        case 'm':
+            kprint ("Time in milliseconds since boot: ");
+            break;
+    }
     while (true) {
-        clear();
-        pit_time(c);
+        int erase_size;
+        switch (c) {
+            case 's':
+                kprintint(get_system_se()); kprintln("...");
+                erase_size=num_len(get_system_se());
+                break;
+            case 'm':
+                kprintint(get_system_ms()); kprintln("...");
+                erase_size=num_len(get_system_ms());
+                break;
+        }
         if (is_key_pressed('c')) {
             cancel_keypress('c');
             break;
         }
         delay(100);
+        for (int i=0; i<erase_size+3; i++) cursor_back();
     }
 }
 void mstime() {pit_time('m');}
@@ -124,6 +141,6 @@ void rtc_ctime() {
             break;
         }
         //keypress_aknowledged();
-        delay(200);
+        delay(1000);
     }
 }

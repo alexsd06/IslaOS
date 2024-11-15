@@ -30,7 +30,8 @@ void inter() {
 void isr_handler(int int_num) {
     __asm__ volatile ("cli");
      if (int_num<32) {
-        kprint("INT "); kprintint(int_num); kprintln(" received!");
+        kprint("\n\nINT "); kprintint(int_num); kprintln(" received!");
+        kprint("PIT Count: "); kprintint(pit_count); kprintln("");
         print_stack();
         kprintln("IslaOS crashed! Bailing out, you are on your own. Good luck.");
         __asm__ volatile("cli");

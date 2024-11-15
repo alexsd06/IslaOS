@@ -89,6 +89,15 @@ unsigned int abs (int data)
 	return data;
 }
 
+int num_len (int nr) {
+	int cnt=0;
+	while (nr) {
+		cnt++;
+		nr/=10;
+	}
+	return cnt;
+}
+
 __attribute__((optimize("O0")))
 void div0()
 {

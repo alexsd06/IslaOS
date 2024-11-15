@@ -5,9 +5,9 @@
 #define PIT_COMMAND_PORT 0x43
 #define PIT_CHANNEL_0_DATA_PORT 0x40
 #define PIT_FREQUENCY 1193182
-#define TARGET_FREQUENCY 1000 // 1ms = 1000 Hz
+#define TARGET_FREQUENCY 100 // 1ms = 100 Hz (Setting to 1000Hz would give page fault...)
 
-int pit_count=0;
+unsigned long long pit_count=0;
 
 void set_pit_frequency(int frequency) {
     uint16_t divisor = (uint16_t)(PIT_FREQUENCY / frequency);

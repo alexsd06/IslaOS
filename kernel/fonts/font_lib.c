@@ -249,7 +249,7 @@ void kprint(char *s)
 
 void kputintd (int cif, bool deletable)
 {
-	char c=cif+'0';
+	char c=(char)(cif+(int)'0');
 	write_chard(c, deletable);
 }
 
